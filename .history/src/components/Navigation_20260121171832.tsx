@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import BadgeCard from './BadgeCard';
-import PageContainer from './PageContainer';
-import Navigation from './Navigation';
-const BentoGrid = () => {
-    const [currentPage, setCurrentPage] = useState(0);
 
-    // Dummy data for cards - 3 pages × 12 cards each
+export default function Navigation() {
+      const [currentPage, setCurrentPage] = useState(0);
     const pages = [
         // Page 1
         [
@@ -39,57 +34,51 @@ const BentoGrid = () => {
 
         ],
     ];
-    const nextPage = () => {
-        if (currentPage < pages.length - 1) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const prevPage = () => {
-        if (currentPage > 0) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
+  
+      const nextPage = () => {
+            if (currentPage < pages.length - 1) {
+                setCurrentPage(currentPage + 1);
+            }
+        };
+    
+        const prevPage = () => {
+            if (currentPage > 0) {
+                setCurrentPage(currentPage - 1);
+            }
+        };
     return (
-        <div className="w-full h-full px-1 sm:px-1 md:px-2 lg:px-3 xl:px-5 flex flex-col overflow-hidden">
-            {/* Navigation Section */}
-            <Navigation
-              currentPage={currentPage}
-              totalPages={pages.length}
-              onPrev={prevPage}
-              onNext={nextPage}
-            />
-
-            {/* Grid Container */}
-            <div className="flex-1 overflow-hidden w-full min-h-0">
-                <div
-                    className="flex h-full w-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                    style={{ transform: `translateX(-${currentPage * 100}%)` }}
-                >
-                    {pages.map((page, pageIndex) => (
-                        <PageContainer key={pageIndex}>
-                            {page.map((card) => (
-                                <BadgeCard key={card.id} card={card} />
-                            ))}
-                        </PageContainer>
-                    ))}
+                <div className="flex items-center justify-between mb-3 sm:mb-5 shrink-0">
+                    <div className="flex gap-2 sm:gap-3 justify-between w-full">
+                        <button
+                            onClick={prevPage}
+                            disabled={currentPage === 0}
+                            className={`rounded-full p-0.5 sm:p-1 md:p-1.5 lg:p-2 xl:p-3 transition-all ${currentPage === 0
+                                ? 'cursor-not-allowed'
+                                : 'cursor-pointer'
+                                }`}
+                        >
+                            <img
+                                src={currentPage === 0 ? "/cards/Buttom Icon(1).svg" : "/cards/Buttom Icon(2).svg"}
+                                alt="Previous"
+                                className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6"
+                            />
+                        </button>
+    
+                        <button
+                            onClick={nextPage}
+                            disabled={currentPage === pages.length - 1}
+                            className={`rounded-full p-0.5 sm:p-1 md:p-1.5 lg:p-2 xl:p-3 transition-all ${currentPage === pages.length - 1
+                                ? 'cursor-not-allowed'
+                                : 'cursor-pointer'
+                                }`}
+                        >
+                            <img
+                                src={currentPage === pages.length - 1 ? "/cards/Buttom Icon(3).svg" : "/cards/Buttom Icon5.svg"}
+                                alt="Next"
+                                className="w-2 h-2 sm:w-4 sm:h-4 lg:w-6 lg:h-6"
+                            />
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            {/* Page Indicators */}
-            <div className="flex justify-center gap-2 mt-4 sm:mt-6 shrink-0">
-                {pages.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setCurrentPage(index)}
-                        className={`h-4 rounded-full transition-all ${currentPage === index ? 'w-5 sm:w-7 bg-white' : 'w-3 bg-white/30'
-                            }`}
-                    />
-                ))}
-            </div>
-        </div>
     );
-};
-
-export default BentoGrid;
+}

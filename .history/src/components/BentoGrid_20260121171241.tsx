@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import BadgeCard from './BadgeCard';
 import PageContainer from './PageContainer';
-import Navigation from './Navigation';
 const BentoGrid = () => {
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -39,6 +38,20 @@ const BentoGrid = () => {
 
         ],
     ];
+
+    const getTitleSizeClass = (id: number) => {
+        if ([3, 5, 8, 11, 12, 15].includes(id)) return "title-lg";
+        if ([9, 13, 14, 16].includes(id)) return "title-md";
+        if ([1, 6, 7].includes(id)) return "title-sm";
+        return "title-md";
+    };
+
+    const getDescSizeClass = (id: number) => {
+        if ([3, 5, 8, 11, 12, 15].includes(id)) return "desc-lg";
+        if ([9, 13, 14, 16].includes(id)) return "desc-md";
+        if ([1, 6, 7].includes(id)) return "desc-sm";
+        return "desc-md";
+    };
     const nextPage = () => {
         if (currentPage < pages.length - 1) {
             setCurrentPage(currentPage + 1);
@@ -54,12 +67,7 @@ const BentoGrid = () => {
     return (
         <div className="w-full h-full px-1 sm:px-1 md:px-2 lg:px-3 xl:px-5 flex flex-col overflow-hidden">
             {/* Navigation Section */}
-            <Navigation
-              currentPage={currentPage}
-              totalPages={pages.length}
-              onPrev={prevPage}
-              onNext={nextPage}
-            />
+            <Na
 
             {/* Grid Container */}
             <div className="flex-1 overflow-hidden w-full min-h-0">

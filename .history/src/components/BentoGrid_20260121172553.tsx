@@ -39,6 +39,20 @@ const BentoGrid = () => {
 
         ],
     ];
+
+    const getTitleSizeClass = (id: number) => {
+        if ([3, 5, 8, 11, 12, 15].includes(id)) return "title-lg";
+        if ([9, 13, 14, 16].includes(id)) return "title-md";
+        if ([1, 6, 7].includes(id)) return "title-sm";
+        return "title-md";
+    };
+
+    const getDescSizeClass = (id: number) => {
+        if ([3, 5, 8, 11, 12, 15].includes(id)) return "desc-lg";
+        if ([9, 13, 14, 16].includes(id)) return "desc-md";
+        if ([1, 6, 7].includes(id)) return "desc-sm";
+        return "desc-md";
+    };
     const nextPage = () => {
         if (currentPage < pages.length - 1) {
             setCurrentPage(currentPage + 1);

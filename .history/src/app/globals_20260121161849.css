@@ -14,12 +14,12 @@
   /* Reduced from 2rem to 1rem (32px → 16px min) - saves 16px on small-height screens */
 }
 
-.card-3,.card-12,.card-11 {
+.card-3,.card-12 {
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
 }
 /* .card-12 {
   display: flex;
@@ -50,21 +50,14 @@
   justify-content: space-between;
   padding-bottom: 22px;
 } */
-.card-13,.card-7{
+.card-6,.card-13,.card-7{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 20px;
 }
-.card-6{
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 25px;
-}
-/* .card-13{
+.card-13{
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -77,15 +70,15 @@
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 20px;
-} */
-.card-8,.card-10,.card-15{
+}
+.card-8{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 10px;
 }
-/* .card-14{
+.card-14{
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -98,9 +91,9 @@
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 10px;
-} */
+}
 
-.card-icon-8,.card-icon-15,.card-icon-13{
+.card-icon-8,.card-icon-15{
   position: absolute;
   right: 24px;;
   bottom: 24px;

@@ -14,7 +14,7 @@
   /* Reduced from 2rem to 1rem (32px → 16px min) - saves 16px on small-height screens */
 }
 
-.card-3,.card-12,.card-11 {
+.card-3,.card-12 {
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -50,19 +50,12 @@
   justify-content: space-between;
   padding-bottom: 22px;
 } */
-.card-13,.card-7{
+.card-6,.card-13,.card-7{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 20px;
-}
-.card-6{
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 25px;
+  padding-bottom: 16px;
 }
 /* .card-13{
   display: flex;

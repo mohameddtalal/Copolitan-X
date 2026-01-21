@@ -39,6 +39,8 @@ const BentoGrid = () => {
 
         ],
     ];
+
+ 
     const nextPage = () => {
         if (currentPage < pages.length - 1) {
             setCurrentPage(currentPage + 1);

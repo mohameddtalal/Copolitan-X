@@ -14,57 +14,43 @@
   /* Reduced from 2rem to 1rem (32px → 16px min) - saves 16px on small-height screens */
 }
 
-.card-3,.card-12,.card-11 {
+.card-3 {
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 20px;
+  padding-bottom: 52px;
 }
-/* .card-12 {
+.card-12 {
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 40px;
-} */
+  padding-bottom: 52px;
+}
 
-.card-1,.card-16,.card-9 {
+.card-1{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 22px;
 }
-/* .card-16{
+.card-9{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 22px;
-} */
-/* .card-9{
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 22px;
-} */
-.card-13,.card-7{
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 20px;
 }
 .card-6{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
 }
-/* .card-13{
+.card-13{
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -77,34 +63,25 @@
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 20px;
-} */
-.card-8,.card-10,.card-15{
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 10px;
 }
-/* .card-14{
+.card-8{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
-.card-15{
+.card-14{
+  
+}
+.card-14{
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 10px;
-} */
+  padding-bottom: 20px;
+}
 
-.card-icon-8,.card-icon-15,.card-icon-13{
-  position: absolute;
-  right: 24px;;
-  bottom: 24px;
-}
 
 .logo-img {
   margin: clamp(1.75rem, 1.6536rem + 0.4259vw, 2.0625rem);
@@ -295,7 +272,7 @@ body {
 /* Responsive type scales */
 .title-lg {
   font-size: clamp(1.125rem, 0.8571rem + 1.1905vw, 2rem);
-  line-height:30px; 
+  line-height: clamp(1.625rem, 1.3571rem + 1.1905vw, 2.5rem);
 }
 
 .desc-lg {

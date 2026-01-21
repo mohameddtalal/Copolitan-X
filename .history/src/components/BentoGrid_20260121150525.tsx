@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import BadgeCard from './BadgeCard';
-import PageContainer from './PageContainer';
-import Navigation from './Navigation';
 const BentoGrid = () => {
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -39,6 +37,20 @@ const BentoGrid = () => {
 
         ],
     ];
+
+    const getTitleSizeClass = (id: number) => {
+        if ([3, 5, 8, 11, 12, 15].includes(id)) return "title-lg";
+        if ([9, 13, 14, 16].includes(id)) return "title-md";
+        if ([1, 6, 7].includes(id)) return "title-sm";
+        return "title-md";
+    };
+
+    const getDescSizeClass = (id: number) => {
+        if ([3, 5, 8, 11, 12, 15].includes(id)) return "desc-lg";
+        if ([9, 13, 14, 16].includes(id)) return "desc-md";
+        if ([1, 6, 7].includes(id)) return "desc-sm";
+        return "desc-md";
+    };
     const nextPage = () => {
         if (currentPage < pages.length - 1) {
             setCurrentPage(currentPage + 1);
@@ -54,12 +66,39 @@ const BentoGrid = () => {
     return (
         <div className="w-full h-full px-1 sm:px-1 md:px-2 lg:px-3 xl:px-5 flex flex-col overflow-hidden">
             {/* Navigation Section */}
-            <Navigation
-              currentPage={currentPage}
-              totalPages={pages.length}
-              onPrev={prevPage}
-              onNext={nextPage}
-            />
+            <div className="flex items-center justify-between mb-3 sm:mb-5 shrink-0">
+                <div className="flex gap-2 sm:gap-3 justify-between w-full" style={{ marginRight: 'clamp(1rem, 0rem + 3.125vw, 1.5rem)', marginLeft: 'clamp(1rem, 0rem + 3.125vw, 1.5rem)' }}>
+                    <button
+                        onClick={prevPage}
+                        disabled={currentPage === 0}
+                        className={`rounded-full p-0.5 sm:p-1 md:p-1.5 lg:p-2 xl:p-3 transition-all ${currentPage === 0
+                            ? 'cursor-not-allowed'
+                            : 'cursor-pointer'
+                            }`}
+                    >
+                        <img
+                            src={currentPage === 0 ? "/cards/Buttom Icon(1).svg" : "/cards/Buttom Icon(2).svg"}
+                            alt="Previous"
+                            className="w-2 h-2 sm:w-3 sm:h-3 lg:w-5 lg:h-5"
+                        />
+                    </button>
+
+                    <button
+                        onClick={nextPage}
+                        disabled={currentPage === pages.length - 1}
+                        className={`rounded-full p-0.5 sm:p-1 md:p-1.5 lg:p-2 xl:p-3 transition-all ${currentPage === pages.length - 1
+                            ? 'cursor-not-allowed'
+                            : 'cursor-pointer'
+                            }`}
+                    >
+                        <img
+                            src={currentPage === pages.length - 1 ? "/cards/Buttom Icon(3).svg" : "/cards/Buttom Icon5.svg"}
+                            alt="Next"
+                            className="w-2 h-2 sm:w-3 sm:h-3 lg:w-5 lg:h-5"
+                        />
+                    </button>
+                </div>
+            </div>
 
             {/* Grid Container */}
             <div className="flex-1 overflow-hidden w-full min-h-0">
@@ -68,11 +107,11 @@ const BentoGrid = () => {
                     style={{ transform: `translateX(-${currentPage * 100}%)` }}
                 >
                     {pages.map((page, pageIndex) => (
-                        <PageContainer key={pageIndex}>
-                            {page.map((card) => (
-                                <BadgeCard key={card.id} card={card} />
-                            ))}
-                        </PageContainer>
+                        <
+                                {page.map((card) => (
+                                   <BadgeCard key={card.id} card={card} />
+                                ))}
+                        
                     ))}
                 </div>
             </div>
@@ -83,7 +122,7 @@ const BentoGrid = () => {
                     <button
                         key={index}
                         onClick={() => setCurrentPage(index)}
-                        className={`h-4 rounded-full transition-all ${currentPage === index ? 'w-5 sm:w-7 bg-white' : 'w-3 bg-white/30'
+                        className={`h-2 rounded-full transition-all ${currentPage === index ? 'w-6 sm:w-8 bg-white' : 'w-2 bg-white/30'
                             }`}
                     />
                 ))}
