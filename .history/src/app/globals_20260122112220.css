@@ -46,7 +46,7 @@
   padding-bottom: 25px;
 }
 
-.card-8,.card-10,.card-14{
+.card-8,.card-10,.card-15{
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -55,7 +55,7 @@
 }
 
 
-.card-icon-8,.card-icon-14,.card-icon-12{
+.card-icon-8,.card-icon-15,.card-icon-13{
   position: absolute;
   right: 24px;;
   bottom: 24px;

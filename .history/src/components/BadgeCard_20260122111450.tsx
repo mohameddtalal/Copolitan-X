@@ -5,15 +5,15 @@ import { motion } from 'framer-motion';
 export default function BadgeCard({ card }: any) {
 
     const getTitleSizeClass = (id: number) => {
-        if ([3, 5, 8, 10, 11, 14].includes(id)) return "title-lg";
-        if ([9, 12, 13, 15].includes(id)) return "title-md";
+        if ([3, 5, 8, 10, 12, 15].includes(id)) return "title-lg";
+        if ([9, 13, 14, 16].includes(id)) return "title-md";
         if ([1, 6, 7].includes(id)) return "title-sm";
         return "title-md";
     };
 
     const getDescSizeClass = (id: number) => {
-        if ([3, 5, 8, 10, 11, 14].includes(id)) return "desc-lg";
-        if ([9, 12, 12, 15].includes(id)) return "desc-md";
+        if ([3, 5, 8, 10, 12, 15].includes(id)) return "desc-lg";
+        if ([9, 13, 14, 16].includes(id)) return "desc-md";
         if ([1, 6, 7].includes(id)) return "desc-sm";
         return "desc-md";
     };
@@ -56,24 +56,17 @@ export default function BadgeCard({ card }: any) {
             <>
                 <div className="absolute inset-0">
                     {card.id === 2 ? (
-                        <>
-                            <motion.img
-                                src="/cards/frame.svg"
-                                alt="frame"
-                                className="w-full h-full"
-                                animate={{ rotate: 360 }}
-                                transition={{
-                                    duration: 10,
-                                    ease: "linear",
-                                    repeat: Infinity,
-                                }}
-                            />
-                            <img
-                                src="/cards/X.svg"
-                                alt="X"
-                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/3 object-contain"
-                            />
-                        </>
+                        <motion.img
+                            src={card.image}
+                            alt={card.title}
+                            className="w-full h-full"
+                            animate={{ rotate: 360 }}
+                            transition={{
+                                duration: 10,
+                                ease: "linear",
+                                repeat: Infinity,
+                            }}
+                        />
                     ) : (
                         <img
                             src={card.image}
@@ -130,8 +123,8 @@ export default function BadgeCard({ card }: any) {
             // Card without image
             <>
                 <div className={`card-${card.id}`}>
-                    <h2 className={`mb-0.5 sm:mb-1 md:mb-1.5 lg:mb-2 xl:mb-3 lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? 'text-black' : 'text-white'}`}>{card.title}</h2>
-                    <p className={` font-gtwalsheim whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? 'text-black' : 'text-white'}`}>{card.description}</p>
+                    <h2 className={`mb-0.5 sm:mb-1 md:mb-1.5 lg:mb-2 xl:mb-3 lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 || card.id === 1 || card.id === 9 || card.id === 16 ? 'text-black' : 'text-white'}`}>{card.title}</h2>
+                    <p className={` font-gtwalsheim whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 || card.id === 1 || card.id === 9 || card.id === 16 ? 'text-black' : 'text-white'}`}>{card.description}</p>
                 </div>
                 <div className={`card-icon-${card.id} flex justify-end `}>{/*shrink-0 mt-auto*/}
                     <img

@@ -56,24 +56,17 @@ export default function BadgeCard({ card }: any) {
             <>
                 <div className="absolute inset-0">
                     {card.id === 2 ? (
-                        <>
-                            <motion.img
-                                src="/cards/frame.svg"
-                                alt="frame"
-                                className="w-full h-full"
-                                animate={{ rotate: 360 }}
-                                transition={{
-                                    duration: 10,
-                                    ease: "linear",
-                                    repeat: Infinity,
-                                }}
-                            />
-                            <img
-                                src="/cards/X.svg"
-                                alt="X"
-                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/3 object-contain"
-                            />
-                        </>
+                        <motion.img
+                            src={card.image}
+                            alt={card.title}
+                            className="w-full h-full"
+                            animate={{ rotate: 360 }}
+                            transition={{
+                                duration: 10,
+                                ease: "linear",
+                                repeat: Infinity,
+                            }}
+                        />
                     ) : (
                         <img
                             src={card.image}
