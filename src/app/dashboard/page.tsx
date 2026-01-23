@@ -1,7 +1,8 @@
 
 'use client';
 
-import BentoGrid from "@/components/BentoGrid";
+import BentoGrid from "@/components/BentoGrid/BentoGrid";
+
 
 
 
