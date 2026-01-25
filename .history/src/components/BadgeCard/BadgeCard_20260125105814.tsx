@@ -47,7 +47,7 @@ export default function BadgeCard({ card }: any) {
             </div>
           </div>
           {/* Bottom section - Character Image */}
-          <div className= {`rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden flex items-center justify-center card-image-${card.id}`} >
+          <div className= rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden flex items-center justify-center >
             {card.characterImage && (
               <img
                 src={card.characterImage}
