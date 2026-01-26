@@ -36,7 +36,7 @@ export default function Navigation({
           }`}
         >
           <img
-            src={currentPage === totalPages - 1 ? "/cards/DimmedRight.svg" : "/cards/Right.svg"}
+            src={currentPage === totalPages - 1 ? "/cards/Buttom Icon(3).svg" : "/cards/Buttom Icon5.svg"}
             alt="Next"
             className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6"
           />

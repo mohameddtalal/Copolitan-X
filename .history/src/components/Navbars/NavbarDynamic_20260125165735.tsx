@@ -14,7 +14,7 @@ const Navbar = () => {
     setIsSearchOpen((prev) => !prev); // toggle input
   };
   return (
-    <nav className="navbar">
+    <nav className="navbar border">
       <div className="row">
         <Link href="/dashboard">
           <div className="logo">

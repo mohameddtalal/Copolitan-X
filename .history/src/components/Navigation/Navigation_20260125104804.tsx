@@ -22,7 +22,7 @@ export default function Navigation({
           }`}
         >
           <img
-            src={currentPage === 0 ? "/cards/DimmedLeft.svg" : "/cards/Left.svg"}
+            src={currentPage === 0 ? "/cards/Buttom Icon(1).svg" : "/cards/Buttom Icon(2).svg"}
             alt="Previous"
             className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6"
           />
@@ -36,7 +36,7 @@ export default function Navigation({
           }`}
         >
           <img
-            src={currentPage === totalPages - 1 ? "/cards/DimmedRight.svg" : "/cards/Right.svg"}
+            src={currentPage === totalPages - 1 ? "/cards/Buttom Icon(3).svg" : "/cards/Buttom Icon5.svg"}
             alt="Next"
             className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6"
           />
