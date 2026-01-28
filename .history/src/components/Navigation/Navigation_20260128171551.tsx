@@ -32,12 +32,12 @@ export default function Navigation({
           />
         </button>
    {/* Page Indicators */}
-            <div className="flex justify-center gap-2  shrink-0 ">
+            <div className="flex justify-center gap-2  shrink-0 cursor-pointer">
                 {pages.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrentPage(index)}
-                        className={`h-4 cursor-pointer rounded-full transition-all ${currentPage === index ? 'w-5 sm:w-7 bg-white' : 'w-3 bg-white/30'
+                        className={`h-4 rounded-full transition-all ${currentPage === index ? 'w-5 sm:w-7 bg-white' : 'w-3 bg-white/30'
                             }`}
                     />
                 ))}

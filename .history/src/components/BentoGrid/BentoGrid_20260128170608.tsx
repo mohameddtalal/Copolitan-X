@@ -57,8 +57,6 @@ const BentoGrid = () => {
             {/* Navigation Section */}
             <Navigation
               currentPage={currentPage}
-              pages={pages}
-              setCurrentPage={setCurrentPage}
               totalPages={pages.length}
               onPrev={prevPage}
               onNext={nextPage}
@@ -80,7 +78,17 @@ const BentoGrid = () => {
                 </div>
             </div>
 
-         
+            {/* Page Indicators */}
+            <div className="flex justify-center gap-2 mt-4 sm:mt-6 shrink-0">
+                {pages.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setCurrentPage(index)}
+                        className={`h-4 rounded-full transition-all ${currentPage === index ? 'w-5 sm:w-7 bg-white' : 'w-3 bg-white/30'
+                            }`}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

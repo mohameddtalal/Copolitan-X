@@ -57,8 +57,6 @@ const BentoGrid = () => {
             {/* Navigation Section */}
             <Navigation
               currentPage={currentPage}
-              pages={pages}
-              setCurrentPage={setCurrentPage}
               totalPages={pages.length}
               onPrev={prevPage}
               onNext={nextPage}

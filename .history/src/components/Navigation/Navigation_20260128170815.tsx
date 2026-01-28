@@ -4,20 +4,18 @@ export default function Navigation({
   currentPage,
   totalPages,
   setCurrentPage,
-  pages,
   onPrev,
   onNext,
 }: {
   currentPage: number;
   totalPages: number;
-  setCurrentPage:Function,
-  pages:any[],
+  setCurrentPage
   onPrev: () => void;
   onNext: () => void;
 }) {
   return (
     <div className="flex items-center justify-between mb-1.5 sm:mb-3 shrink-0 h-[26px]">
-      <div className="flex gap-2 sm:gap-3 justify-between w-full items-center">
+      <div className="flex gap-2 sm:gap-3 justify-between w-full">
         <button
           onClick={onPrev}
           disabled={currentPage === 0}
@@ -32,12 +30,12 @@ export default function Navigation({
           />
         </button>
    {/* Page Indicators */}
-            <div className="flex justify-center gap-2  shrink-0 ">
+            <div className="flex justify-center gap-2 mt-4 sm:mt-6 shrink-0">
                 {pages.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrentPage(index)}
-                        className={`h-4 cursor-pointer rounded-full transition-all ${currentPage === index ? 'w-5 sm:w-7 bg-white' : 'w-3 bg-white/30'
+                        className={`h-4 rounded-full transition-all ${currentPage === index ? 'w-5 sm:w-7 bg-white' : 'w-3 bg-white/30'
                             }`}
                     />
                 ))}
