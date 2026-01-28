@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased  w-full flex flex-col m-0 p-0`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased  w-ful flex flex-col m-0 p-0`}
       >   
      
         <NavProvider>
