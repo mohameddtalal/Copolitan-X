@@ -12,12 +12,12 @@ export default function Navigation({
   onNext: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between mb-1.5 sm:mb-3 shrink-0 h-[26px]">
+    <div className="flex items-center justify-between mb-1.5 sm:mb-5 shrink-0">
       <div className="flex gap-2 sm:gap-3 justify-between w-full">
         <button
           onClick={onPrev}
           disabled={currentPage === 0}
-          className={`rounded-full p-0.5 sm:p-0.6 md:p-0.8 lg:p-1 xl:p-2 transition-all ${
+          className={`rounded-full p-0.5 sm:p-1 md:p-1.5 lg:p-2 xl:p-3 transition-all ${
             currentPage === 0 ? 'cursor-not-allowed' : 'cursor-pointer'
           }`}
         >

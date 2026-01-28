@@ -12,7 +12,7 @@ export default function Navigation({
   onNext: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between mb-1.5 sm:mb-3 shrink-0 h-[26px]">
+    <div className="flex items-center justify-between mb-1.5 sm:mb-3 shrink-0">
       <div className="flex gap-2 sm:gap-3 justify-between w-full">
         <button
           onClick={onPrev}
