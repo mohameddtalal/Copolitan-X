@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import styles from "./BadgeCard.module.css"
 export default function BadgeCard({ card }: any) {
   const getTitleSizeClass = (id: number) => {
     if ([3, 5, 8, 10, 11, 14].includes(id)) return "title-lg";
@@ -47,7 +47,7 @@ export default function BadgeCard({ card }: any) {
             </div>
           </div>
           {/* Bottom section - Character Image */}
-          <div className= {`rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden flex items-center justify-center card-image-${card.id}`} >
+          <div className= {`rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden flex items-center justify-center ${styles[`card-image-${card.id}`]}`} >
             {card.characterImage && (
               <img
                 src={card.characterImage}
@@ -130,7 +130,7 @@ export default function BadgeCard({ card }: any) {
             // Row layout for card 8: title, description, and image all in one row
             <div className="flex flex-row gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 xl:gap-3 items-start h-full">
               <div
-                className={`flex flex-col flex-1 gap-0.5 sm:gap-0.5 md:gap-1 lg:gap-1.5 xl:gap-2 card-${card.id}`}
+                className={`flex flex-col flex-1 gap-0.5 sm:gap-0.5 md:gap-1 lg:gap-1.5 xl:gap-2 ${styles[`card-${card.id}`]}`}
               >
                 <h2
                   className={`lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
@@ -150,7 +150,7 @@ export default function BadgeCard({ card }: any) {
               />
             </div>
           )}
-          <div className={`card-icon-${card.id} flex justify-end`}>
+          <div className={`${styles[`card-icon-${card.id}`]} flex justify-end`}>
             {/*flex justify-end*/}
             <img
               src="/cards/Buttom Icon.svg"
@@ -162,7 +162,7 @@ export default function BadgeCard({ card }: any) {
       ) : (
         // Card without image
         <>
-          <div className={`card-${card.id}`}>
+          <div className={styles[`card-${card.id}`]}>
             <h2
               className={`mb-0.5 sm:mb-1 md:mb-1.5 lg:mb-2 xl:mb-3 lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? "text-black" : "text-white"}`}
             >
@@ -174,7 +174,7 @@ export default function BadgeCard({ card }: any) {
               {card.description}
             </p>
           </div>
-          <div className={`card-icon-${card.id} flex justify-end `}>
+          <div className={`${styles[`card-icon-${card.id}`]} flex justify-end `}>
             {/*shrink-0 mt-auto*/}
             <img
               src="/cards/Buttom Icon.svg"

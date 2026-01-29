@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useNav } from "@/components/Context/Navcontext";
+import styles from "./Navbar.module.css"
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -14,51 +15,46 @@ const Navbar = () => {
     setIsSearchOpen((prev) => !prev); // toggle input
   };
   return (
-    <nav className="navbar ">
-      <div className="row">
+    <nav className={styles.navbar}>
+      <div className={styles.row}>
         <Link href="/dashboard">
           <div className="logo">
             <Image
               src="/navbar/Layer_1.svg"
               alt="LogoImage"
-              className="logo-img"
+              className={styles.logoImg}
               width={301}
               height={19}
             />
           </div>
         </Link>
-        <div className="nav-inside">
+        <div className={styles.navInside}>
           <div
-            className=""
-            style={{ marginBottom: "0px", color: "var(--black)" }}
+            className={styles.title}
           >
             <p>{selectedTitle}</p>
           </div>
           <div
-            className=""
-            style={{
-              marginTop: "0px",
-              color: "var(--black)",
-              fontSize: "16px",
-            }}
+            className={styles.selectedBtn}
+         
           >
             <p>{selectedButton}</p>
           </div>
         </div>
-        <div className="navItems" style={{ position: "relative" }}>
+        <div className={styles.navItems} >
           {isSearchOpen && (
             <input
               type="text"
-              className="search-input"
+              className={styles.searchInput}
               placeholder="Search..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               autoFocus
             />
           )}
-          <div className="search">
+          <div className={styles.search}>
             <button
-              className="search"
+              className={styles.search}
               style={{ zIndex: 10, cursor: "pointer" }}
               onClick={handleSearch}
             >
@@ -72,8 +68,8 @@ const Navbar = () => {
             </button>
             {/* Search input (show only if open) */}
           </div>
-          <div className="line"></div>
-          <div className="notifications">
+          <div className={styles.line}></div>
+          <div className={styles.notifications}>
             <button
               className="notification"
               style={{ cursor: "pointer" }}
@@ -88,8 +84,8 @@ const Navbar = () => {
               />
             </button>
           </div>
-          <div className="line"></div>
-          <div className="quote">
+          <div className={styles.line}></div>
+          <div className={styles.quote}>
             <Image
               src="/navbar/quote.svg"
               alt="quote"
