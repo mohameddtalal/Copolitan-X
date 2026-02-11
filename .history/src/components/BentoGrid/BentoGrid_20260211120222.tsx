@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '../Navigation/Navigation';
 import PageContainer from '../PageContainer/PageContainer';
-import BadgeCard from '../Cards/CardContainer';
+import BadgeCard from '../Cards/BadgeCard';
 
 const BentoGrid = () => {
     const [currentPage, setCurrentPage] = useState(0);
