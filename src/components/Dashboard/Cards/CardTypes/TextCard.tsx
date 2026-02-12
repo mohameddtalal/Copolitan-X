@@ -21,7 +21,7 @@ export default function TextCard({card}:any) {
           <img
             src="/cards/Buttom Icon.svg"
             alt="icon"
-            className="w-4 h-4 sm:w-4 sm:h-4 lg:w-7 lg:h-7"
+            className="w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
           />
         </div>
       </>

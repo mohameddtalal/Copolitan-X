@@ -17,7 +17,7 @@ export default function CardTextImage({card}:any) {
                 <img
                   src={card.cardTextImage}
                   alt={card.title}
-                  className="w-15 h-15 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-15 lg:h-15 xl:w-20 xl:h-20 object-contain"
+                  className="w-18 h-18 sm:w-11 sm:h-11 md:w-13 md:h-13 lg:w-17 lg:h-17 xl:w-24 xl:h-24 object-contain"
                 />
               </div>
               <p
@@ -55,7 +55,7 @@ export default function CardTextImage({card}:any) {
             <img
               src="/cards/Buttom Icon.svg"
               alt="icon"
-              className="w-4 h-4 sm:w-4 sm:h-4 lg:w-7 lg:h-7"
+              className="w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
           </div>
         </>

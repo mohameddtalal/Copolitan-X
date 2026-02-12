@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { useNav } from "@/components/Context/Navcontext";
+import { useNav } from "@/components/Dashboard/Context/Navcontext";
 import styles from "./Navbar.module.css"
 
 const Navbar = () => {

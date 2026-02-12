@@ -16,8 +16,8 @@ export default function Navigation({
   onNext: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between  shrink-0 px-1.5 sm:px-2 md:px-2 lg:px-3 xl:px-4  ">
-      <div className="flex  justify-between w-full items-center mb-2">
+    <div className="flex items-center justify-between  shrink-0 px-2 sm:px-4 md:px-3 lg:px-3 xl:px-3  ">
+      <div className="flex  justify-between w-full items-center mb-1">
         <button
           onClick={onPrev}
           disabled={currentPage === 0}
@@ -28,7 +28,7 @@ export default function Navigation({
           <img
             src={currentPage === 0 ? "/cards/DimmedLeft.svg" : "/cards/Left.svg"}
             alt="Previous"
-            className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6"
+            className="w-7 h-7 sm:w-7 sm:h-7 lg:w-9 lg:h-9"
           />
         </button>
    {/* Page Indicators */}
@@ -52,7 +52,7 @@ export default function Navigation({
           <img
             src={currentPage === totalPages - 1 ? "/cards/DimmedRight.svg" : "/cards/Right.svg"}
             alt="Next"
-            className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6"
+            className="w-7 h-7 sm:w-7 sm:h-7 lg:w-9 lg:h-9"
           />
         </button>
       </div>
