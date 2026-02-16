@@ -1,0 +1,234 @@
+.container {
+  background-image: url('/login/background.svg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  height: 100dvh;
+}
+
+@media (min-width: 600px) {
+  .container {
+    justify-content:flex-end!important;
+    padding-right: clamp(1rem, 4vw + 1rem, 183px);
+  }
+}
+@media (max-width:767px) {
+ .container {
+    justify-content: center!important;
+    padding: 0;
+  } 
+}
+@media (max-height:600px) {
+  .container{
+    height: auto!important;
+  }
+  
+}
+
+.card {
+  max-height: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.5rem, -0.1304rem + 3.2609vw, 3rem);
+  width: clamp(21.875rem, 19.8852rem + 8.8435vw, 28.375rem);
+  height: 600px;;
+  background-color: #242424;
+  border-radius: 32px;
+}
+@media(max-height:600px){
+  .card{
+    transform: scale(0.8);
+  }
+}
+
+.brandHeader {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: clamp(2.1875rem, 1.9388rem + 1.1054vw, 3rem);
+}
+
+
+
+.welcomeHeading {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 6px;
+  text-align: center;
+  font-family:"lora-semibold-italic";
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #9E9E9E;
+  text-align: center;
+  margin-bottom: 24px;
+ font-family:"GT Walsheim";
+}
+
+.formGroup {
+  width: 100%;
+  margin-bottom: 16px;
+  font-family:"GT Walsheim";
+}
+
+.formGroupSmall {
+  font-family:"GT Walsheim";
+  width: 100%;
+  margin-bottom: 24px;
+  
+}
+
+.label {
+  font-size: 11px;
+  color: #FFFFFF;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 200;
+ font-family:"GT Walsheim";
+}
+
+.input {
+  font-size: 12px;
+  font-family:"GT Walsheim";
+  border: 1px solid #9E9E9E;
+  width: 100%;
+  min-height: 48px;
+  padding: 0px 24px;
+  background-color: transparent;
+  border-radius: 1536px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input::placeholder{
+  color: #808080!important;
+  font-family: "GT Walsheim"!important;
+  font-weight: 400;
+  opacity: .6;
+}
+
+.inputError {
+  font-size: 12px;
+  color: #FA6E6E;
+  background-color: #2a2a2a;
+  border: 1px solid #ef4444;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.passwordWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #9E9E9E;
+  border-radius: 1536px;
+  padding: 0px 16px;
+  min-height: 48px;
+  transition: border-color 0.2s;
+}
+input:autofill{
+  background-color: transparent !important;
+}
+
+.passwordWrapperError {
+  display: flex;
+  align-items: center;
+  background-color: #2a2a2a;
+  border: 1px solid #ef4444;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  transition: border-color 0.2s;
+}
+
+.passwordInput {
+  flex: 1;
+  outline: none;
+  background-color: transparent;
+  font-size: 13px;
+  font-weight: bold;
+  color: #9E9E9E;
+}
+.passwordInput::placeholder {
+  color: #808080!important;
+  font-weight: 400;
+  opacity: .6;
+}
+
+.passwordInputError {
+  flex: 1;
+  outline: none;
+  background-color: transparent;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ef4444;
+}
+
+.eyeIcon {
+  cursor: pointer;
+  /* filter: invert(1) brightness(0.6); */
+}
+
+.errorMessage {
+  color: #FA6E6E;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.forgotPassword {
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #555;
+}
+
+.signInButton {
+  background-color: #7029CF;
+  width: 240px;
+  min-height: 56px;
+  border-radius: 9999px;
+  color: #F7F7F7;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  transition: background-color 0.2s, transform 0.1s;
+  font-family:"GT Walsheim";
+  align-self: center;
+}
+
+.signInButton:hover {
+  background-color: #6d28d9;
+}
+
+.signInButton:active {
+  transform: scale(0.97);
+}
+
+.footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footerIcon {
+  filter: invert(1) brightness(0.6);
+}
+

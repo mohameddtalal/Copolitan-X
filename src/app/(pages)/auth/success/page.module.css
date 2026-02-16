@@ -1,0 +1,90 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/login/background.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 2rem);
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .container {
+    justify-content: flex-end;
+    padding-right: clamp(1rem, 4vw + 1rem, 183px);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.5rem, -0.1304rem + 3.2609vw, 3rem);
+  width: clamp(22rem, 26vw, 28.375rem);
+  background-color: #1a1a1a;
+  border-radius: 16px;
+}
+
+.brandHeader {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo {
+  height: auto;
+  width: auto;
+  max-width: 200px;
+}
+
+.successImage {
+  margin-bottom: 28px;
+}
+
+.textCenter {
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  font-size: clamp(1.1rem, 0.9rem + 0.8vw, 1.4rem);
+  font-weight: 700;
+  font-style: italic;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.description {
+  font-size: 11px;
+  color: #9E9E9E;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+
+.signInButton {
+  background-color: #7c3aed;
+  width: 182px;
+  height: 48px;
+  border-radius: 9999px;
+  color: #F7F7F7;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.signInButton:hover {
+  background-color: #6d28d9;
+}
+
+.signInButton:active {
+  transform: scale(0.97);
+}
+

@@ -85,6 +85,7 @@
   font-weight: 500;
   font-style: italic;
   font-display: swap;
+
 }
 
 @font-face {
@@ -93,6 +94,8 @@
   font-weight: 600;
   font-style: italic;
   font-display: swap;
+
+
 }
 
 @font-face {
@@ -101,6 +104,8 @@
   font-weight: 700;
   font-style: italic;
   font-display: swap;
+  
+
 }
 
 body {
@@ -116,6 +121,10 @@ body {
   font-weight: 400;
 }
 
+.font-gtwalsheim-semibold {
+  font-family: "GT Walsheim";
+  font-weight: 600!important;
+}
 .font-lora {
   font-family: "Lora";
 }

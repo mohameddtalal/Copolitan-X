@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '../Navigation/Navigation';
 import PageContainer from '../PageContainer/PageContainer';
-
 import CardContainer from '../Cards/CardContainer';
+
 
 const BentoGrid = () => {
     const [currentPage, setCurrentPage] = useState(0);
-
     // Dummy data for cards - 3 pages × 12 cards each
     const pages = [
         // Page 1
@@ -42,10 +41,7 @@ const BentoGrid = () => {
             { id: 12, title: "Experience& \nEngagement Lab", description: "A tools lab that drives engagement and growth where experience is refined and elevated.", color: "invisible pointer-events-none", span: "col-span-1 row-span-1" },
             { id: 13, title: "Data Hub", description: "A streamlined repository for all data collect, analyze, and access key metrics to drive informed decisions.", color: "invisible pointer-events-none", span: "col-span-1 row-span-1" },
             { id: 14, title: "Facility \nManagement ", description: "Central hub linking key operational tasks for seamless tracking, reporting, and workflow management.", color: "invisible pointer-events-none", span: "col-span-2 row-span-1", cardTextImage: "/cards/card15.svg", layoutType: "row" },
-        ],
-         
-           
-        
+        ],   
     ];
     const nextPage = () => {
         if (currentPage < pages.length - 1) {
