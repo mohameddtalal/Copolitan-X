@@ -1,53 +1,50 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import styles from "./page.module.css";
-
+import mainStyles from "./page.module.css";
+import styles from "../login/page.module.css";
 const Page = () => {
   const router = useRouter();
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
+      <div className={mainStyles.card}>
         {/* Brand header */}
-        <div className={styles.brandHeader}>
+        <div className={mainStyles.brandHeader}>
           <Image
-            src="/login/logo (3).svg"
+            src="/login/logo.svg"
             alt="COPOLITAN"
-            width={150}
-            height={40}
+            width={197}
+            height={13}
             className={styles.logo}
             priority
+            
           />
         </div>
 
         {/* GIF */}
-        <Image
+        {/* <Image
           src="/assets/gif.gif"
           alt="success"
           width={106}
           height={95}
           className={styles.successImage}
-        />
+        /> */}
 
-        {/* Text */}
-        <div className={styles.textCenter}>
-          <h2 className={styles.title}>
-            New Password
-            <br />
-            Successfully Changed
+        {/* Text */}     
+          <h2 className={mainStyles.welcomeHeading}>
+           Password <br/>
+         changed successfully
           </h2>
-          <p className={styles.description}>
-            You can now use your new password
-            <br />
-            to login to your account.
+          <p className={styles.subtitle}>
+            You can now Sign In using your <br/>
+             new password.
           </p>
-        </div>
 
         {/* Sign In button */}
         <button
           onClick={() => router.push("/dashboard")}
-          className={styles.signInButton}
+          className={mainStyles.signInButton}
         >
           Sign In
         </button>

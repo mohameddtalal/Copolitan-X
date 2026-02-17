@@ -55,10 +55,12 @@ export default function page() {
                                     onClick={() => setShowNewPassword(!showNewPassword)}
                                 />
                             </div>
-
+                           
                             {/* Conditions */}
                             {newPassword.length > 0 && (
+                                
                                 <div className={mainStyles.conditionsList}>
+                                    <p>Your password must have:</p>
                                     {[
                                         { label: "At least 1 Uppercase & 1 lowercase character", valid: conditions.uppercaseLowercase },
                                         { label: "At least 8 Characters", valid: conditions.minLength },
@@ -90,7 +92,7 @@ export default function page() {
                                     type={showConfirmPassword ? "text" : "password"}
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
-                                    placeholder="Confirm password"
+                                    placeholder="Re-enter password"
                                     className={styles.passwordInput}
                                 />
                                 <Image

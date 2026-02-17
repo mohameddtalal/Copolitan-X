@@ -84,7 +84,7 @@
 }
 
 .label {
-  font-size: 11px;
+  font-size: 14px;
   color: #FFFFFF;
   display: block;
   margin-bottom: 8px;
@@ -103,6 +103,7 @@
   border-radius: 1536px;
   outline: none;
   transition: border-color 0.2s;
+  color:white;
 }
 .input::placeholder{
   color: #808080!important;
@@ -152,10 +153,10 @@ input:autofill{
   background-color: transparent;
   font-size: 13px;
   font-weight: bold;
-  color: #9E9E9E;
+  color: white;
 }
 .passwordInput::placeholder {
-  color: #808080!important;
+  color: #9E9E9E!important;
   font-weight: 400;
   opacity: .6;
 }
@@ -197,7 +198,7 @@ input:autofill{
   background-color: #7029CF;
   width: 240px;
   min-height: 56px;
-  border-radius: 9999px;
+  border-radius: 32px;
   color: #F7F7F7;
   cursor: pointer;
   font-size: 16px;
