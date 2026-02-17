@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import mainStyles from "./page.module.css";
-import styles from "../LoginForm/page.module.css";
+import mainStyles from "./SuccessReset.module.css";
+import styles from "../LoginForm/Login.module.css";
 
 export default function SuccessComponent() {
   const router = useRouter();

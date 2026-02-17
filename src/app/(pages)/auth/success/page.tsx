@@ -1,9 +1,9 @@
 "use client";
 
-import SuccessComponent from "@/components/LoginSystem/SucessForm/SucessComponent";
+import SuccessReset from "@/components/LoginSystem/SucessReset/SucessReset";
 
 const Page = () => {
-  return <SuccessComponent />;
+  return <SuccessReset />;
 };
 
 export default Page;

@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import styles from "../LoginForm/page.module.css";
-import mainStyles from "./page.module.css";
+import styles from "../LoginForm/Login.module.css";
+import mainStyles from "./ResetPassword.module.css";
 import { BrandHeader } from "@/app/Shared/Functions";
-export default function ResetPasswordPage() {
+export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);

@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import mainStyles from "./page.module.css";
-import styles from "../LoginForm/page.module.css";
+import mainStyles from "./Reset.module.css";
+import styles from "../LoginForm/Login.module.css";
 import { BrandHeader } from "@/app/Shared/Functions";
-export default function ResetComponent() {
+export default function Reset() {
   const [email, setEmail] = useState("");
   const router = useRouter();
 

@@ -1,12 +1,11 @@
 "use client";
-import { BrandHeader } from "@/app/Shared/Functions";
-import ResetComponent from "@/components/LoginSystem/ResetForm/ResetComponent";
+import Reset from "@/components/LoginSystem/ResetForm/Reset";
 
 const Page = () => {
   return (
     <>
    
-      <ResetComponent />
+      <Reset />
     </>
   );
 };

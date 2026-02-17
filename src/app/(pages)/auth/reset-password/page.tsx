@@ -1,11 +1,11 @@
 "use client"
 import { BrandHeader } from "@/app/Shared/Functions";
-import ResetPasswordComponent from "@/components/LoginSystem/ResetPasswordForm/ResetPasswordComponent";
+import ResetPassword from "@/components/LoginSystem/ResetPasswordForm/ResetPassword";
 
 export default function ResetPasswordPage() {
     return (
         <>
-         <ResetPasswordComponent />
+         <ResetPassword />
      </>
     )
 }

@@ -4,7 +4,7 @@ import { BrandHeader } from "@/app/Shared/Functions";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
-import styles from "./page.module.css";
+import styles from "./Login.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
