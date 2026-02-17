@@ -1,8 +1,4 @@
-import { motion } from "framer-motion";
-import styles from "./CardContainer.module.css";
-import { useState } from "react";
 import SplitCard from "./CardTypes/SplitCard";
-import { getDescSizeClass, getTitleSizeClass } from "@/app/Shared/Functions";
 import ImageCard from "./CardTypes/ImageCard";
 import CardTextImage from "./CardTypes/CardTextImage";
 import TextCard from "./CardTypes/TextCard";

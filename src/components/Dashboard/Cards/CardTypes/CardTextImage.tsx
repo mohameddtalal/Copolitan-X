@@ -7,7 +7,7 @@ export default function CardTextImage({ card }: any) {
     <>
       {card.layoutType === "column" ? (
         // Column layout for card 5: image below title (smaller)
-        <div className={`flex flex-col gap-1 sm:gap-1 md:gap-2 lg:gap-3 xl:gap-4 flex-1`}>
+        <div className={`flex flex-col gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 xl:gap-3 flex-1`}>
           <h2
             className={`lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
           >
@@ -51,7 +51,7 @@ export default function CardTextImage({ card }: any) {
         <p
           className={` font-gtwalsheim whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
         >
-          {card.description}
+          {card.id === 10 ? "" : card.description}
         </p>
         <img
           src="/cards/Buttom Icon.svg"

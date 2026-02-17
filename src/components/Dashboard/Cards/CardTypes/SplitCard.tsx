@@ -8,7 +8,7 @@ export default function SplitCard({ card }: any){
     return(   
         <div className="flex flex-col h-full gap-2 sm:gap-3 lg:gap-4  ">
           {/* Top section - Profile and info in row */}
-          <div className="flex flex-row items-center gap-2 sm:gap-3 p-1.5 sm:p-2 md:p-2.5 lg:p-3 xl:p-4 bg-[#7029CF] rounded-xl sm:rounded-2xl lg:rounded-3xl">
+          <div className="flex flex-row items-center gap-2 sm:gap-3 p-1 sm:p-1 md:p-1.5 lg:p-2 xl:p-2 bg-[#7029CF] rounded-xl sm:rounded-2xl lg:rounded-3xl">
             {/* Profile Image */}
             {card.profileImage && (
               <img
