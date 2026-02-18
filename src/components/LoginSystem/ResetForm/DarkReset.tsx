@@ -23,7 +23,7 @@ export default function Reset() {
       <div className={mainStyles.card}>
             <BrandHeader />
         <div className="flex flex-col items-center">
-          <h2 className={`${styles.welcomeHeading} `}>
+          <h2 className={`${styles.welcomeHeading} `} >
             Forgot Password?
           </h2>
 

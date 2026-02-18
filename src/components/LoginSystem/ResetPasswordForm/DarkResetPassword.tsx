@@ -11,26 +11,41 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [confirmError, setConfirmError] = useState("");
   const router = useRouter();
 
-  const conditions = {
-    uppercaseLowercase: /(?=.*[a-z])(?=.*[A-Z])/.test(newPassword),
-    minLength: newPassword.length >= 8,
-    number: /[0-9]/.test(newPassword),
-    specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(newPassword),
-  };
+const conditions = {
+  minLength: newPassword.length >= 8,
+  uppercase: /[A-Z]/.test(newPassword),
+  lowercase: /[a-z]/.test(newPassword),
+  number: /[0-9]/.test(newPassword),
+  specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(newPassword),
+};
 
   const allValid =
-    conditions.uppercaseLowercase &&
-    conditions.minLength &&
-    conditions.number &&
-    conditions.specialChar &&
-    newPassword === confirmPassword;
+  conditions.minLength &&
+  conditions.uppercase &&
+  conditions.lowercase &&
+  conditions.number &&
+  conditions.specialChar &&
+  newPassword === confirmPassword;
 
-  const handleSave = () => {
-    if (!allValid) return;
-    router.push("/auth/success");
-  };
+const handleSave = () => {
+  setConfirmError("");
+
+  if (newPassword !== confirmPassword) {
+    setConfirmError("Passwords do not match");
+    return;
+  }
+
+  if (!allValid) return;
+
+  router.push("/auth/success");
+};
+
+const passwordsDontMatch =
+  confirmPassword.length > 0 &&
+  newPassword !== confirmPassword;
 
   return (
     <div className={styles.container}>
@@ -50,7 +65,7 @@ export default function ResetPassword() {
                 type={showNewPassword ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Enter new password"
+                placeholder="Password"
                 className={styles.passwordInput}
               />
 
@@ -69,28 +84,31 @@ export default function ResetPassword() {
             </div>
 
             {newPassword.length > 0 && (
-              <div className={mainStyles.conditionsList}>
-                <p>Your password must have:</p>
+              <div className={mainStyles.conditionsList} style={{paddingInline:"15px"}}>
+                <p>Your Password Must Have:</p>
 
                 {[
-                  {
-                    label:
-                      "At least 1 Uppercase & 1 lowercase character",
-                    valid: conditions.uppercaseLowercase,
-                  },
-                  {
-                    label: "At least 8 Characters",
-                    valid: conditions.minLength,
-                  },
-                  {
-                    label: "At least 1 Number",
-                    valid: conditions.number,
-                  },
-                  {
-                    label: "At least 1 Special character",
-                    valid: conditions.specialChar,
-                  },
-                ].map((item, i) => (
+                    {
+                      label: "Min 8 Characters",
+                      valid: conditions.minLength,
+                    },
+                    {
+                      label: " 1Lowercase Character",
+                      valid: conditions.lowercase,
+                    },
+                    {
+                      label: "1Uppercase Character",
+                      valid: conditions.uppercase,
+                    },
+                    {
+                      label: "1 Number",
+                      valid: conditions.number,
+                    },
+                    {
+                      label: "1 Special Character",
+                      valid: conditions.specialChar,
+                    },
+                  ].map((item, i) => (
                   <p
                     key={i}
                     className={
@@ -106,8 +124,8 @@ export default function ResetPassword() {
                           : "/login/wrong.svg"
                       }
                       alt="status"
-                      width={28}
-                      height={28}
+                      width={14}
+                      height={14}
                     />
                     {item.label}
                   </p>
@@ -116,35 +134,55 @@ export default function ResetPassword() {
             )}
           </div>
 
-          {/* Confirm Password */}
-          <div className={styles.formGroupSmall}>
-            <label className={styles.label}>Confirm Password</label>
+              {/* Confirm Password */}
+              <div className={styles.formGroupSmall}>
+                <label className={styles.label}>Confirm Password</label>
 
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter password"
-                className={styles.passwordInput}
-              />
+                <div
+                  className={
+                    passwordsDontMatch
+                      ? styles.passwordWrapperError
+                      : styles.passwordWrapper
+                  }
+                >
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Re-enter password"
+                    className={
+                      passwordsDontMatch
+                        ? styles.passwordInputError
+                        : styles.passwordInput
+                    }
+                  />
 
-              <Image
-                src={
-                  showConfirmPassword
-                    ? "/login/eyeopen.svg"
-                    : "/login/eyeclosed.svg"
-                }
-                alt="toggle password"
-                width={14}
-                height={14}
-                className={styles.eyeIcon}
-                onClick={() =>
-                  setShowConfirmPassword(!showConfirmPassword)
-                }
-              />
-            </div>
-          </div>
+                 <Image
+                      src={
+                        passwordsDontMatch
+                          ? "/login/redeye.svg"
+                          : showConfirmPassword
+                            ? "/login/eyeopen.svg"
+                            : "/login/eyeclosed.svg"
+                      }
+                      alt="toggle password"
+                      width={14}
+                      height={14}
+                      className={styles.eyeIcon}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    />
+
+                </div>
+
+                {passwordsDontMatch && (
+                  <p className={styles.errorMessage}>
+                    Passwords do not match
+                  </p>
+                )}
+              </div>
+
 
           <button
             onClick={handleSave}

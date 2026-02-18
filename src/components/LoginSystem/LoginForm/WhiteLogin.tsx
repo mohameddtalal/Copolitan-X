@@ -83,13 +83,20 @@ export default function Login() {
               placeholder="Password"
             />
             <Image
-              src={showPassword ? "/login/openeyewhite.svg" : "/login/eyeclosedwhite.svg"}
+              src={
+                passwordError
+                  ? "/login/redeye.svg"
+                  : showPassword
+                    ? "/login/eyeopen.svg"
+                    : "/login/eyeclosed.svg"
+              }
               alt="eye"
               width={14}
               height={14}
               className={styles.eyeIcon}
               onClick={() => setShowPassword(!showPassword)}
             />
+
           </div>
           {passwordError && (
             <p className={styles.errorMessage}>{passwordError}</p>

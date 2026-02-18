@@ -1,7 +1,13 @@
-.card{
+/**
+ * Success Reset Styles
+ * Uses CSS variables from globals.css for theming
+ */
+
+/* Card - Dark Theme */
+.card {
   box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
   transform: translateY(-4px);
-  background-color: #242424;
+  background-color: var(--dark-bg);
   border-radius: 32px;
   display: flex;
   flex-direction: column;
@@ -10,15 +16,18 @@
   min-width: 454px;
   min-height: 545px;
 }
-@media(max-height:600px){
-  .card{
+
+@media (max-height: 600px) {
+  .card {
     transform: scale(0.8);
   }
 }
-.whitecard{
+
+/* Card - Light Theme */
+.whitecard {
   box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
   transform: translateY(-4px);
-  background-color: white;
+  background-color: var(--light-bg);
   border-radius: 32px;
   display: flex;
   flex-direction: column;
@@ -27,31 +36,32 @@
   min-width: 454px;
   min-height: 545px;
 }
-@media(max-height:600px){
-  .card{
+
+@media (max-height: 600px) {
+  .whitecard {
     transform: scale(0.8);
   }
 }
+
 .signInButton {
- background-color: #7029CF;
+  background-color: var(--color-primary);
   width: 240px;
   min-height: 56px;
   border-radius: 32px;
-  color: #F7F7F7;
+  color: var(--color-off-white);
   cursor: pointer;
   font-size: 16px;
   border: none;
   transition: background-color 0.2s, transform 0.1s;
-
   align-self: center;
-  margin-bottom: 156PX;
+  margin-bottom: 156px;
   font-family: "GT Walsheim";
   font-weight: 600;
   font-style: normal;
 }
 
 .signInButton:hover {
-  background-color: #6d28d9;
+  background-color: var(--color-primary-hover);
 }
 
 .signInButton:active {
@@ -62,42 +72,34 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  margin-bottom:114px;
+  margin-bottom: 114px;
 }
+
 .welcomeHeading {
   font-size: 32px;
-  color: #ffffff;
+  color: var(--dark-text);
   margin-bottom: 24px;
   text-align: center;
   line-height: 1.2;
-font-family: "Lora";
+  font-family: "Lora";
   font-weight: 600;
   font-style: italic;
- 
 }
+
 .whitewelcomeHeading {
   font-size: 32px;
-  color: #000000;
+  color: var(--light-text);
   margin-bottom: 24px;
   text-align: center;
   line-height: 1.2;
-font-family: "Lora";
+  font-family: "Lora";
   font-weight: 600;
   font-style: italic;
- 
 }
+
 .subtitle {
   font-size: 14px;
-  color: #9E9E9E;
-  text-align: center;
-  margin-bottom: 24px;
-  font-family: "GT Walsheim";
-  font-weight: 400;
-  font-style: normal;
-}
-.whitesubtitle {
-  font-size: 14px;
-  color:#565656 ;
+  color: var(--dark-text-secondary);
   text-align: center;
   margin-bottom: 24px;
   font-family: "GT Walsheim";
@@ -105,3 +107,12 @@ font-family: "Lora";
   font-style: normal;
 }
 
+.whitesubtitle {
+  font-size: 14px;
+  color: var(--light-text-secondary);
+  text-align: center;
+  margin-bottom: 24px;
+  font-family: "GT Walsheim";
+  font-weight: 400;
+  font-style: normal;
+}

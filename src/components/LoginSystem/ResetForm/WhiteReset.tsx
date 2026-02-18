@@ -23,7 +23,7 @@ export default function Reset() {
       <div className={mainStyles.whitecard}>
             <WhiteBrandHeader />
         <div className="flex flex-col items-center">
-          <h2 className={`${styles.whitewelcomeHeading}`} style={{color:"#7029CF"}}>
+          <h2 className={`${styles.whitewelcomeHeading}`} style={{color:"var(--color-primary)"}}>
             Forgot Password?
           </h2>
 

@@ -1,40 +1,47 @@
-.card{
-    box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
+/**
+ * Reset Form Styles
+ * Uses CSS variables from globals.css for theming
+ */
+
+/* Card - Dark Theme */
+.card {
+  box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
   transform: translateY(-4px);
-  background-color: #242424;
+  background-color: var(--dark-bg);
   border-radius: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 48px 48px 126px 48px;
 }
-@media(max-height:600px){
-  .card{
+
+@media (max-height: 600px) {
+  .card {
     transform: scale(0.8);
   }
 }
-.whitecard{
-    box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
+
+/* Card - Light Theme */
+.whitecard {
+  box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
   transform: translateY(-4px);
-  background-color: white;
+  background-color: var(--light-bg);
   border-radius: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 48px 48px 126px 48px;
 }
+
+@media (max-height: 600px) {
+  .whitecard {
+    transform: scale(0.8);
+  }
+}
+
 .subtitle {
   font-size: 14px;
-  color: #FFFFFF;
-  text-align: center;
-  margin-bottom: 48px;
-  font-family: "GT Walsheim";
-  font-weight: 400;
-  font-style: normal;
-}
-.whitesubtitle {
-  font-size: 14px;
-  color:#FFFFFF;
+  color: var(--dark-text);
   text-align: center;
   margin-bottom: 48px;
   font-family: "GT Walsheim";
@@ -42,6 +49,15 @@
   font-style: normal;
 }
 
+.whitesubtitle {
+  font-size: 14px;
+  color: var(--light-text);
+  text-align: center;
+  margin-bottom: 48px;
+  font-family: "GT Walsheim";
+  font-weight: 400;
+  font-style: normal;
+}
 
 .conditionsList {
   margin-top: 8px;
@@ -55,7 +71,7 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: #9E9E9E;
+  color: var(--dark-text-secondary);
 }
 
 .conditionItemValid {
@@ -63,7 +79,5 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: #00B576;
+  color: var(--color-success-alt);
 }
-
-

@@ -6,6 +6,46 @@
   --background: #000000;
   --foreground: #ffffff;
   --green: #00ffa6;
+  
+  /* Design System Colors */
+  --color-peach: #FFB88C;
+  --color-highlight-yellow: #FFD700;
+  --color-mustard-yellow: #FFDB58;
+  --color-watermelon-red: #FF6B6B;
+  --color-blush-pink: #FFB6C1;
+  --color-forest-green: #228B22;
+  --color-gray: #EEEEEE;
+  --color-purple: #F1EAFA;
+  --color-violet: #FCF0FF;
+  --color-border-light: #E9EBF8;
+  
+  /* UI Colors */
+  --color-primary: #7029CF;
+  --color-primary-hover: #6d28d9;
+  --color-error: #FA6E6E;
+  --color-success: #00FF8B;
+  --color-success-light: #00A394;
+  --color-success-alt: #00B576;
+  
+  /* Dark Theme Colors */
+  --dark-bg: #242424;
+  --dark-bg-alt: #2a2a2a;
+  --dark-text: #FFFFFF;
+  --dark-text-secondary: #9E9E9E;
+  --dark-border: #9E9E9E;
+  
+  /* Light Theme Colors */
+  --light-bg: #FFFFFF;
+  --light-text: #000000;
+  --light-text-primary: #555555;
+  --light-text-secondary: #565656;
+  --light-border: #555555;
+  --light-placeholder: #808080;
+  
+  /* Common Colors */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-off-white: #F7F7F7;
 }
 
 
