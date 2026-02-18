@@ -42,10 +42,10 @@ export default function Login() {
       <div className={styles.card}>
           <BrandHeader/>
     {/* Welcome heading */}
-        <h2 className={`${styles.welcomeHeading} lora-semibold-italic`}>
+        <h2 className={`${styles.welcomeHeading} `}>
           Welcome Back!
         </h2>
-        <p className={`${styles.subtitle} font-gtwalsheim-semibold`}>
+        <p className={`${styles.subtitle} `}>
           Login Is Restricted To Authorized Employees Using
           <br />
           Company Email Accounts Only.

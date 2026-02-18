@@ -23,7 +23,7 @@ export default function Reset() {
       <div className={mainStyles.whitecard}>
             <WhiteBrandHeader />
         <div className="flex flex-col items-center">
-          <h2 className={`${styles.whitewelcomeHeading} lora-semibold-italic`} style={{color:"#7029CF"}}>
+          <h2 className={`${styles.whitewelcomeHeading}`} style={{color:"#7029CF"}}>
             Forgot Password?
           </h2>
 
@@ -53,10 +53,10 @@ export default function Reset() {
           </button>
 
           <button
-            className={`${styles.whiteforgotPassword} font-gtwalsheim-regular`}
+            className={`${styles.whiteforgotPassword} `}
             onClick={() => router.push("/auth/login")}
           >
-            Back to Sign In
+            Back To Sign in
           </button>
         </div>
       </div>

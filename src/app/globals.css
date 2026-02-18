@@ -40,9 +40,9 @@
 }
 
 @font-face {
-  font-family: "GT Walsheim";
   src: url("/fonts/GT-Walsheim-Pro-Medium.ttf") format("truetype");
-  font-weight: 500;
+  font-family: "GT Walsheim";
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }

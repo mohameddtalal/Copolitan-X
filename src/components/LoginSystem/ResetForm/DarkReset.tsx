@@ -23,11 +23,11 @@ export default function Reset() {
       <div className={mainStyles.card}>
             <BrandHeader />
         <div className="flex flex-col items-center">
-          <h2 className={`${styles.welcomeHeading} lora-semibold-italic`}>
+          <h2 className={`${styles.welcomeHeading} `}>
             Forgot Password?
           </h2>
 
-          <p className={`${styles.subtitle} font-gtwalsheim-semibold`}>
+          <p className={`${mainStyles.subtitle} `}>
             No worries, enter your CopolitanX or Moca email &
             <br />
             we’ll send you reset instructions.
@@ -53,10 +53,10 @@ export default function Reset() {
           </button>
 
           <button
-            className={`${styles.forgotPassword} font-gtwalsheim-regular`}
+            className={`${styles.forgotPassword} `}
             onClick={() => router.push("/auth/login")}
           >
-            Back to Sign In
+            Back To Sign in
           </button>
         </div>
       </div>

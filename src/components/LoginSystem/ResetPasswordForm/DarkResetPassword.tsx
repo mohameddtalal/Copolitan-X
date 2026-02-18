@@ -37,7 +37,7 @@ export default function ResetPassword() {
       <div className={mainStyles.card}>
            <BrandHeader />
         <div className="flex flex-col items-center w-full">
-          <h2 className={`${styles.welcomeHeading} lora-semibold-italic`}>
+          <h2 className={`${mainStyles.welcomeHeading} `}>
             Reset Your Password
           </h2>
 

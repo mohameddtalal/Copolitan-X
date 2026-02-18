@@ -77,16 +77,20 @@
 .welcomeHeading {
   font-size: 24px;
   color: #ffffff;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   text-align: center;
-  font-family:"lora-semibold-italic";
+  font-family: "Lora";
+  font-weight: 600;
+  font-style: italic;
 }
 .whitewelcomeHeading {
   font-size: 24px;
   color: black;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   text-align: center;
-  font-family:"lora-semibold-italic";
+  font-family: "Lora";
+  font-weight: 600;
+  font-style: italic;
 }
 
 .subtitle {
@@ -94,15 +98,18 @@
   color: #9E9E9E;
   text-align: center;
   margin-bottom: 24px;
- font-family:"GT Walsheim";
+ font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 .whitesubtitle {
   font-size: 14px;
   color:#565656 ;
   text-align: center;
   margin-bottom: 24px;
- font-family:"GT Walsheim";
- font-weight: 400;
+  font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 
 .formGroup {
@@ -123,20 +130,21 @@
   color: #FFFFFF;
   display: block;
   margin-bottom: 8px;
-  font-weight: 200;
- font-family:"GT Walsheim";
+ font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 .whitelabel {
   font-size: 14px;
   color: #555555;
   display: block;
   margin-bottom: 8px;
- font-family:"GT Walsheim";
- font-weight: 400;
+  font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 .input {
   font-size: 12px;
-  font-family:"GT Walsheim";
   border: 1px solid #9E9E9E;
   width: 100%;
   min-height: 48px;
@@ -146,11 +154,12 @@
   outline: none;
   transition: border-color 0.2s;
   color:white;
-  font-weight: 200;
+  font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 .whiteinput {
   font-size: 12px;
-  font-family:"GT Walsheim";
   border: 1px solid #555555;
   width: 100%;
   min-height: 48px;
@@ -160,18 +169,22 @@
   outline: none;
   transition: border-color 0.2s;
   color:#555555;
-  font-weight: 400;
+font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 .whiteinput::placeholder{
   color: #555555!important;
-  font-family: "GT Walsheim"!important;
-  font-weight: 400;
+ font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
   opacity: .6;
 }
 .input::placeholder{
   color: #808080!important;
-  font-family: "GT Walsheim"!important;
-  font-weight: 400;
+  font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
   opacity: .6;
 }
 
@@ -338,6 +351,9 @@ input:autofill{
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-color: #555;
+  font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 .whiteforgotPassword {
   font-size: 13px;
@@ -350,6 +366,9 @@ input:autofill{
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-color: #555;
+   font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 
 .signInButton {
@@ -360,11 +379,12 @@ input:autofill{
   color: #F7F7F7;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 500;
   border: none;
   transition: background-color 0.2s, transform 0.1s;
-  font-family:"GT Walsheim";
   align-self: center;
+   font-family: "GT Walsheim";
+  font-weight: 600;
+  font-style: normal;
 }
 
 .signInButton:hover {

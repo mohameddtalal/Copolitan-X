@@ -24,7 +24,7 @@ export default function SuccessComponent() {
         </div>
 
         {/* Text */}
-        <h2 className={`${mainStyles.whitewelcomeHeading} lora-semibold-italic text-black`}>
+        <h2 className={`${mainStyles.whitewelcomeHeading} text-black`}>
           Password <br/>
           Changed Successfully
         </h2>

@@ -42,7 +42,7 @@ export default function Login() {
       <div className={styles.whitecard}>
           <WhiteBrandHeader/>
     {/* Welcome heading */}
-        <h2 className={`${styles.whitewelcomeHeading} lora-semibold-italic  text-black`}>
+        <h2 className={`${styles.whitewelcomeHeading}  text-black`}>
           Welcome Back!
         </h2>
         <p className={`${styles.whitesubtitle}  text-black`}>

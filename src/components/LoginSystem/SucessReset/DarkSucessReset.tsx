@@ -24,12 +24,12 @@ export default function SuccessComponent() {
         </div>
 
         {/* Text */}
-        <h2 className={`${mainStyles.welcomeHeading} lora-semibold-italic`}>
+        <h2 className={`${mainStyles.welcomeHeading} `}>
           Password <br/>
           Changed Successfully
         </h2>
 
-        <p className={styles.subtitle}>
+        <p className={mainStyles.subtitle}>
           You can now Sign In using your <br />
           new password.
         </p>
