@@ -1,11 +1,13 @@
 "use client"
-import { BrandHeader } from "@/app/Shared/Functions";
-import ResetPassword from "@/components/LoginSystem/ResetPasswordForm/ResetPassword";
+import WhiteResetPassword from "@/components/LoginSystem/ResetPasswordForm/WhiteResetPassword";
+import DarkResetPassword from "@/components/LoginSystem/ResetPasswordForm/DarkResetPassword";
+
 
 export default function ResetPasswordPage() {
     return (
         <>
-         <ResetPassword />
+         {/* <WhiteResetPassword /> */}
+         <DarkResetPassword />
      </>
     )
 }

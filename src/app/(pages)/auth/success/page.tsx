@@ -1,9 +1,16 @@
 "use client";
 
-import SuccessReset from "@/components/LoginSystem/SucessReset/SucessReset";
+import DarkSucessReset from "@/components/LoginSystem/SucessReset/DarkSucessReset";
+import WhiteSucessReset from "@/components/LoginSystem/SucessReset/WhiteSucessReset";
+
 
 const Page = () => {
-  return <SuccessReset />;
+  return (
+    <>
+      {/* <WhiteSucessReset /> */}
+      <DarkSucessReset />
+    </>
+  );
 };
 
 export default Page;

@@ -9,7 +9,7 @@ export default function CardTextImage({ card }: any) {
         // Column layout for card 5: image below title (smaller)
         <div className={`flex flex-col gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 xl:gap-3 flex-1`}>
           <h2
-            className={`lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
+            className={` whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
           >
             {card.title}
           </h2>
@@ -21,7 +21,7 @@ export default function CardTextImage({ card }: any) {
             />
           </div>
           <p
-            className={` font-gtwalsheim whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
+            className={`whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
           >
             {card.description}
           </p>
@@ -33,7 +33,7 @@ export default function CardTextImage({ card }: any) {
             className={`flex flex-col flex-1 gap-0.5 sm:gap-0.5 md:gap-1 lg:gap-1.5 xl:gap-2 ${styles[`card-${card.id}`]}`}
           >
             <h2
-              className={`lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
+              className={` whitespace-pre-line ${getTitleSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
             >
               {card.title}
             </h2>
@@ -49,7 +49,7 @@ export default function CardTextImage({ card }: any) {
       <div className={`${styles[`card-icon-${card.id}`]} flex justify-between items-end`}>
         {/*flex justify-end*/}
         <p
-          className={` font-gtwalsheim whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
+          className={` whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
         >
           {card.id === 10 ? "" : card.description}
         </p>

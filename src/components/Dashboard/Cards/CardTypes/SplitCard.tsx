@@ -20,12 +20,12 @@ export default function SplitCard({ card }: any){
             {/* Title and Description in column */}
             <div className="flex flex-col justify-center flex-1">
               <h2
-                className={`lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)}`}
+                className={` whitespace-pre-line ${getTitleSizeClass(card.id)}`}
               >
                 {card.title}
               </h2>
               <p
-                className={`font-gtwalsheim whitespace-pre-line ${getDescSizeClass(card.id)}`}
+                className={`whitespace-pre-line ${getDescSizeClass(card.id)}`}
               >
                 {card.description}
               </p>

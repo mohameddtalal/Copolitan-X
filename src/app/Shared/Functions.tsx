@@ -1,5 +1,6 @@
  import Image from "next/image";
- import styles from "../login/page.module.css";
+
+
  export const getTitleSizeClass = (id: number) => {
     if ([3, 5, 8, 10, 11, 14].includes(id)) return "title-lg";
      if ([ 4].includes(id)) return "title-md";
@@ -26,6 +27,25 @@
             }}
 
               src="/login/logo.svg"
+              alt="COPOLITAN"
+              width={197}
+              height={13}
+              priority
+          />
+      </div>
+  );
+   export const WhiteBrandHeader = () => (
+      <div >
+          <Image
+         style={{
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: "clamp(2.1875rem, 1.9388rem + 1.1054vw, 3rem)",
+            }}
+
+              src="/login/logoblack.svg"
               alt="COPOLITAN"
               width={197}
               height={13}

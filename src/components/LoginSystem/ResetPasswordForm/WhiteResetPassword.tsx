@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "../LoginForm/Login.module.css";
 import mainStyles from "./ResetPassword.module.css";
-import { BrandHeader } from "@/app/Shared/Functions";
+import { WhiteBrandHeader } from "@/app/Shared/Functions";
+import { style } from "framer-motion/client";
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,31 +35,31 @@ export default function ResetPassword() {
 
   return (
     <div className={styles.container}>
-      <div className={mainStyles.card}>
-           <BrandHeader />
+      <div className={mainStyles.whitecard}>
+           <WhiteBrandHeader />
         <div className="flex flex-col items-center w-full">
-          <h2 className={`${styles.welcomeHeading} lora-semibold-italic`}>
+          <h2 className={`${styles.whitewelcomeHeading} lora-semibold-italic`} style={{color:"#7029CF"}}>
             Reset Your Password
           </h2>
 
           {/* New Password */}
           <div className={styles.formGroupSmall}>
-            <label className={styles.label}>New Password</label>
+            <label className={styles.whitelabel}>New Password</label>
 
-            <div className={styles.passwordWrapper}>
+            <div className={styles.whitepasswordWrapper}>
               <input
                 type={showNewPassword ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password"
-                className={styles.passwordInput}
+                className={styles.whitepasswordInput}
               />
 
               <Image
                 src={
                   showNewPassword
-                    ? "/login/eyeopen.svg"
-                    : "/login/eyeclosed.svg"
+                    ? "/login/openeyewhite.svg"
+                    : "/login/eyeclosedwhite.svg"
                 }
                 alt="toggle password"
                 width={14}
@@ -70,7 +71,7 @@ export default function ResetPassword() {
 
             {newPassword.length > 0 && (
               <div className={mainStyles.conditionsList}>
-                <p>Your password must have:</p>
+                <p style={{color:"#555555"}}>Your password must have:</p>
 
                 {[
                   {
@@ -95,19 +96,19 @@ export default function ResetPassword() {
                     key={i}
                     className={
                       item.valid
-                        ? mainStyles.conditionItemValid
+                        ? mainStyles.whiteconditionItemValid
                         : mainStyles.conditionItem
                     }
                   >
                     <Image
                       src={
                         item.valid
-                          ? "/login/correct.png"
+                          ? "/login/correctwhite.svg"
                           : "/login/wrong.svg"
                       }
                       alt="status"
-                      width={12}
-                      height={12}
+                      width={28}
+                      height={28}
                     />
                     {item.label}
                   </p>
@@ -118,22 +119,22 @@ export default function ResetPassword() {
 
           {/* Confirm Password */}
           <div className={styles.formGroupSmall}>
-            <label className={styles.label}>Confirm Password</label>
+            <label className={styles.whitelabel}>Confirm Password</label>
 
-            <div className={styles.passwordWrapper}>
+            <div className={styles.whitepasswordWrapper}>
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-enter password"
-                className={styles.passwordInput}
+                className={styles.whitepasswordInput}
               />
 
               <Image
                 src={
                   showConfirmPassword
-                    ? "/login/eyeopen.svg"
-                    : "/login/eyeclosed.svg"
+                    ? "/login/openeyewhite.svg"
+                    : "/login/eyeclosedwhite.svg"
                 }
                 alt="toggle password"
                 width={14}

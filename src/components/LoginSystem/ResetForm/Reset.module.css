@@ -1,4 +1,6 @@
 .card{
+    box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
+  transform: translateY(-4px);
   background-color: #242424;
   border-radius: 32px;
   display: flex;
@@ -10,6 +12,16 @@
   .card{
     transform: scale(0.8);
   }
+}
+.whitecard{
+    box-shadow: 0 15px 35px rgba(33, 34, 33, 0.623);
+  transform: translateY(-4px);
+  background-color: white;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 48px 126px 48px;
 }
 
 .conditionsList {

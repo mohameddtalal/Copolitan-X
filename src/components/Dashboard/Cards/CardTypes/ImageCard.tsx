@@ -1,6 +1,6 @@
 import { getDescSizeClass, getTitleSizeClass } from '@/app/Shared/Functions';
 import { motion } from 'framer-motion';
-import React from 'react'
+
 
 export default function ImageCard({card}:any) {
   return (
@@ -36,12 +36,12 @@ export default function ImageCard({card}:any) {
 
           <div className="relative z-10 mt-auto">
             <h2
-              className={`mb-1 md:mb-1.5 lg:mb-2 xl:mb-3 lora-semibold-italic whitespace-pre-line ${getTitleSizeClass(card.id)}`}
+              className={`mb-1 md:mb-1.5 lg:mb-2 xl:mb-3  whitespace-pre-line ${getTitleSizeClass(card.id)}`}
             >
               {card.title}
             </h2>
             <p
-              className={` line-clamp-2 font-gtwalsheim whitespace-pre-line ${getDescSizeClass(card.id)}`}
+              className={`  whitespace-pre-line ${getDescSizeClass(card.id)}`}
             >
               {card.description}
             </p>

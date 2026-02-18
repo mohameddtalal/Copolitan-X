@@ -1,11 +1,14 @@
 "use client";
-import Reset from "@/components/LoginSystem/ResetForm/Reset";
+import DarkReset from "@/components/LoginSystem/ResetForm/DarkReset";
+import WhiteReset from "@/components/LoginSystem/ResetForm/WhiteReset";
+
 
 const Page = () => {
   return (
     <>
-   
-      <Reset />
+  
+      <DarkReset />
+      {/* <WhiteReset /> */}
     </>
   );
 };

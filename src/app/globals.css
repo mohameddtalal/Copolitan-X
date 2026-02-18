@@ -32,8 +32,8 @@
 }
 
 @font-face {
-  font-family: "GT Walsheim";
   src: url("/fonts/GT-Walsheim-Pro-Regular.ttf") format("truetype");
+  font-family: "GT Walsheim";
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -140,30 +140,49 @@ body {
 .title-lg {
   font-size: clamp(1.125rem, 0.8571rem + 1.1905vw, 2rem);
   line-height: 30px;
+  font-family: "Lora";
+  font-weight: 600;
+  font-style: italic;
 }
 
 .desc-lg {
   font-size: clamp(0.75rem, 0.6735rem + 0.3401vw, 1rem);
+  font-family: "GT Walsheim";
+  font-weight: 400;
+  font-style: normal;
 }
 
 .title-md {
   font-size: clamp(1rem, 0.8469rem + 0.6803vw, 1.5rem);
   line-height: clamp(1.375rem, 1.1837rem + 0.8503vw, 2rem);
+  font-family: "Lora";
+  font-weight: 600;
+  font-style: italic;
 }
 
 .desc-md {
   font-size: clamp(0.75rem, 0.7117rem + 0.1701vw, 0.875rem);
   line-height: clamp(0.75rem, 0.7117rem + 0.1701vw, 0.875rem);
+  font-family: "GT Walsheim";
+  font-weight: 400;
+  font-style: normal;
+ 
 }
 
 .title-sm {
   font-size: clamp(1rem, 0.8469rem + 0.6803vw, 1.5rem);
   line-height: clamp(1.375rem, 1.1837rem + 0.8503vw, 2rem);
+  font-family: "Lora";
+  font-weight: 600;
+  font-style: italic;
 }
 
 .desc-sm {
   font-size: clamp(0.625rem, 0.5867rem + 0.1701vw, 0.75rem);
   line-height: clamp(0.75rem, 0.7117rem + 0.1701vw, 0.875rem);
+  font-family: "GT Walsheim";
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* Custom scrollbar  */
