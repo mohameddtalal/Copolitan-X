@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "../LoginForm/Login.module.css";
 import mainStyles from "./ResetPassword.module.css";
-import { WhiteBrandHeader } from "@/app/Shared/Functions";
+import { BrandHeader } from "@/app/Shared/Functions";
 
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
@@ -13,6 +13,7 @@ export default function ResetPassword() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [confirmError, setConfirmError] = useState("");
+  const [mode, setMode] = useState<""|"white">("");
   const router = useRouter();
 
   // Password validation conditions
@@ -50,23 +51,23 @@ export default function ResetPassword() {
 
   return (
     <div className={styles.container}>
-      <div className={mainStyles.whitecard}>
-        <WhiteBrandHeader />
+      <div className={mainStyles[mode+"card"]}>
+        <BrandHeader isBlack={mode==="white"}/>
 
         <div className="flex flex-col items-center w-full">
-          <h2 className={styles.whitewelcomeHeading} style={{ color: "var(--color-primary)" }}>
+          <h2 className={styles[mode+"welcomeHeading"]} style={{ color: mode === "" ? "var(--color-white)" : "var(--color-primary)" }}>
             Reset Your Password
           </h2>
 
           {/* New Password */}
           <div className={styles.formGroupSmall}>
-            <label className={styles.whitelabel}>New Password</label>
+            <label className={styles[mode+"label"]}>New Password</label>
 
             <div
               className={
                 passwordsDontMatch
-                  ? styles.whitepasswordWrapperError
-                  : styles.whitepasswordWrapper
+                  ? styles[mode+"passwordWrapperError"]
+                  : styles[mode+"passwordWrapper"]
               }
             >
               <input
@@ -76,8 +77,8 @@ export default function ResetPassword() {
                 placeholder="Password"
                 className={
                   passwordsDontMatch
-                    ? styles.whitepasswordInputError
-                    : styles.whitepasswordInput
+                    ? styles[mode+"passwordInputError"]
+                    : styles[mode+"passwordInput"]
                 }
               />
               <Image
@@ -106,8 +107,8 @@ export default function ResetPassword() {
                     key={i}
                     className={
                       item.valid
-                        ? mainStyles.whiteconditionItemValid
-                        : mainStyles.conditionItem
+                        ? mainStyles[mode+"conditionItemValid"]
+                        : mainStyles["conditionItem"]
                     }
                   >
                     <Image
@@ -125,13 +126,13 @@ export default function ResetPassword() {
 
           {/* Confirm Password */}
           <div className={styles.formGroupSmall}>
-            <label className={styles.whitelabel}>Confirm Password</label>
+            <label className={styles[mode+"label"]}>Confirm Password</label>
 
             <div
               className={
                 passwordsDontMatch
-                  ? styles.whitepasswordWrapperError
-                  : styles.whitepasswordWrapper
+                  ? styles[mode+"passwordWrapperError"]
+                  : styles[mode+"passwordWrapper"]
               }
             >
               <input
@@ -141,8 +142,8 @@ export default function ResetPassword() {
                 placeholder="Re-enter password"
                 className={
                   passwordsDontMatch
-                    ? styles.whitepasswordInputError
-                    : styles.whitepasswordInput
+                    ? styles[mode+"passwordInputError"]
+                    : styles[mode+"passwordInput"]
                 }
               />
 

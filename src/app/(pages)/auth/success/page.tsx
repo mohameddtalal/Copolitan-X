@@ -1,14 +1,12 @@
 "use client";
 
-import DarkSucessReset from "@/components/LoginSystem/SucessReset/DarkSucessReset";
-import WhiteSucessReset from "@/components/LoginSystem/SucessReset/WhiteSucessReset";
+import SuccessReset from "@/components/LoginSystem/SucessReset/SucessReset";
 
 
 const Page = () => {
   return (
     <>
-      {/* <WhiteSucessReset /> */}
-      <DarkSucessReset />
+      <SuccessReset />
     </>
   );
 };

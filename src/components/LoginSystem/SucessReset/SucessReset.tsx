@@ -3,33 +3,28 @@
 import { useRouter } from "next/navigation";
 import mainStyles from "./SuccessReset.module.css";
 import styles from "../LoginForm/Login.module.css";
-import { WhiteBrandHeader } from "@/app/Shared/Functions";
 import Image from "next/image";
+import { useState } from "react";
+import { BrandHeader } from "@/app/Shared/Functions";
 export default function SuccessComponent() {
   const router = useRouter();
-
+  const [mode, setMode] = useState<"" | "white">(""); //empty or dark
   return (
     <div className={styles.container}>
-      <div className={mainStyles.whitecard}>
+      <div className={mainStyles[mode + "card"]}>
         {/* Brand header */}
-        <div className={mainStyles.brandHeader}>
-          <Image
-            src="/login/logoblack.svg"
-            alt="COPOLITAN"
-            width={197}
-            height={13}
-            className={styles.logo}
-            priority
-          />
-        </div>
+        <BrandHeader
+          isBlack={mode === "white"}
+          className={mainStyles.brandHeader}
+        />
 
         {/* Text */}
-        <h2 className={`${mainStyles.whitewelcomeHeading} text-black`}>
-          Password <br/>
+        <h2 className={`${mainStyles[mode + "welcomeHeading"]} text-black`}>
+          Password <br />
           Changed Successfully
         </h2>
 
-        <p className={`${styles.whitesubtitle} `}>
+        <p className={`${styles[mode + "subtitle"]} `}>
           You can now Sign In using your <br />
           new password.
         </p>
