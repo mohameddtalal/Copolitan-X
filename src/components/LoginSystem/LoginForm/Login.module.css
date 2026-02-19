@@ -194,7 +194,7 @@
 
 .whiteinput {
   font-size: 12px;
-  border: 1px solid var(--light-border);
+  border: 1px solid var(  --dark-text-secondary);
   width: 100%;
   min-height: 48px;
   padding: 0px 24px;
@@ -273,7 +273,7 @@ input:autofill {
 .whitepasswordWrapper {
   display: flex;
   align-items: center;
-  border: 1px solid var(--light-border);
+  border: 1px solid var(--dark-text-secondary);
   border-radius: 1536px;
   padding: 0px 16px;
   min-height: 48px;
