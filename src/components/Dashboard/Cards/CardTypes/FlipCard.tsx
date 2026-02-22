@@ -1,23 +1,54 @@
-import React, { useState } from 'react'
-
+"use client";
+import React, { useState } from "react";
 import styles from "../CardContainer.module.css";
 
+interface FlipCardProps {
+  card: any;
+  children: React.ReactNode; // Front content
+  backContent: React.ReactNode; // Back content
+  parentClass?: string;
+  childrenClassContainer?: string;
+}
 
-export default function FlipCard({card,children, parentClass,childrenClassContainer}:any) {
-const [isFlipped, setIsFlipped] = useState(false);
+export default function FlipCard({
+  card,
+  children,
+  backContent,
+  parentClass,
+  childrenClassContainer,
+}: FlipCardProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+
+  const isVertical = card.id === 8 || card.id === 14;
 
   return (
-    
-     <div className={`${parentClass} group ${styles["perspective-1000"]} relative rounded-xl sm:rounded-2xl lg:rounded-3xl h-full cursor-pointer`}
-           onClick={() => setIsFlipped(!isFlipped)}>
-        <div className={`${styles["flip-wrapper"]} w-full h-full relative preserve-3d transition-transform duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isFlipped ? 'rotate-y-180' : ''}`}>
-           <div className={`${styles["flip-front"]} absolute inset-0 backface-hidden ${childrenClassContainer} z-10`}>
-              {children}
-           </div>
-           <div className={`${styles["flip-back"]} absolute inset-0 backface-hidden ${childrenClassContainer} rotate-y-180`}>
-              {/* Empty back face */}
-           </div>
+    <div
+      className={`${parentClass} ${styles["perspective-1000"]} relative rounded-xl sm:rounded-2xl lg:rounded-3xl h-full cursor-pointer`}
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
+      <div
+        className={`${isVertical ? styles["flip-wrapper-vertical"] : styles["flip-wrapper"]}
+                    ${isFlipped ? (isVertical ? styles["rotate-x-180"] : styles["rotate-y-180"]) : ""}`}
+      >
+        {/* Front */}
+        <div
+          className={`${
+            isVertical ? styles["flip-front-vertical"] : styles["flip-front"]
+          } ${childrenClassContainer}`}
+        >
+          {children}
+        </div>
+
+        {/* Back */}
+        <div
+          className={`${
+            isVertical ? styles["flip-back-vertical"] : styles["flip-back"]
+          } ${childrenClassContainer}`}
+        >
+          {backContent}
         </div>
       </div>
-  )
+    </div>
+  );
 }

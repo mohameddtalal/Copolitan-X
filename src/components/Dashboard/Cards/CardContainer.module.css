@@ -1,87 +1,102 @@
+/* =================================== */
+/*           CARD BASE STYLES          */
+/* =================================== */
 
+.card-1,
 .card-3,
+.card-6,
+.card-7,
+.card-8,
+.card-9,
 .card-10,
-.card-11 {
+.card-11,
+.card-12,
+.card-13,
+.card-14,
+.card-15 {
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 20px;
 }
 
 .card-1,
-.card-15,
-.card-9 {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
+.card-6,
+.card-9,
+.card-12,
+.card-15 {
   padding-bottom: 25px;
 }
 
-.card-13,
-.card-7 {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
+.card-3,
+.card-7,
+.card-11,
+.card-13 {
   padding-bottom: 20px;
-}
-.card-6,
-.card-12 {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 25px;
 }
 
 .card-8,
 .card-10,
 .card-14 {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
   padding-bottom: 10px;
 }
 
-/* .card-icon-8,
-.card-icon-14 {
-  position: absolute;
-  right: 24px;
-  bottom: 24px;
-
-} */
-
-
-
-.card-image-4{
+.card-image-4 {
   height: 100%;
 }
 
-/* Flip Card Styles */
+/* =================================== */
+/*        3D PERSPECTIVE SETUP         */
+/* =================================== */
+
 .perspective-1000 {
-  perspective: 1000px;
+  perspective: 1400px;
+  transform-style: preserve-3d;
 }
-.flip-wrapper {
+
+/* =================================== */
+/*            FLIP WRAPPER             */
+/* =================================== */
+
+.flip-wrapper,
+.flip-wrapper-vertical {
   width: 100%;
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  cursor: pointer;
+  transform-origin: center center;
+  transition: transform 850ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+
 }
+
+/* Rotation States */
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.rotate-x-180 {
+  transform: rotateX(180deg);
+}
+
+/* =================================== */
+/*             FLIP FACES              */
+/* =================================== */
 
 .flip-front,
-.flip-back {
-  backface-visibility: hidden;
+.flip-back,
+.flip-front-vertical,
+.flip-back-vertical {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Horizontal Flip */
 .flip-front {
   z-index: 2;
   transform: rotateY(0deg);
@@ -89,13 +104,158 @@
 
 .flip-back {
   transform: rotateY(180deg);
+  background-color: var(--dark-bg);
+  padding: 0; /* remove inherited padding */
 }
 
+/* Vertical Flip */
+.flip-front-vertical {
+  z-index: 2;
+  transform: rotateX(0deg);
+}
 
+.flip-back-vertical {
+  transform: rotateX(180deg);
+  background-color: var(--dark-bg);
+  padding: 0; /* remove inherited padding */
+}
 
+/* =================================== */
+/*      CARD BACK SCROLL AREA           */
+/* =================================== */
 
 .card-back-scroller {
-  flex: 1;
+  flex: 1;              /* fill flip-back vertically */
+  min-height: 0;        /* key for flex scroll */
+  width: 100%;
   overflow-y: auto;
-  margin-top: auto;
+  overflow-x: hidden;
+  padding-right: 4px;   /* optional spacing for scrollbar */
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* smooth on iOS */
+   
+}
+
+/* Inner container for buttons/content */
+.card-back-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+
+ 
+}
+
+/* =================================== */
+/*        BACK ITEMS / BUTTONS         */
+/* =================================== */
+
+.back-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 32px 32px 0px 32px ;
+  border-radius: 10px;
+  background: transparent;
+  cursor: default;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 200ms ease, transform 200ms ease, opacity 200ms ease;
+  opacity: 0.6;
+  
+}
+
+.back-item-text {
+  cursor: pointer;
+  text-align: left;
+  font-size: clamp(0.625rem, 0.1724rem + 0.8621vw, 1rem);
+  font-weight: 700;
+  line-height: clamp(1rem, 0.3966rem + 1.1494vw, 1.5rem);
+  font-family: "GT Walsheim";
+  letter-spacing: 0.2px;
+  transition: transform 200ms ease, color 200ms ease, opacity 200ms ease;
+}
+
+.back-item-active .back-item-text {
+  transform: translateX(-10px);
+  color: var(--green);
+  opacity: 1;
+}
+.back-item:hover,
+.back-item:focus-visible {
+  color: var(--green);
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.back-item-active {
+  color: var(--green);
+  opacity: 1;
+  
+}
+
+.back-item:last-child {
+  padding-bottom: 32px;
+}
+
+.back-item-dot {
+  width: clamp(0.625rem, 0.1724rem + 0.8621vw, 1rem);
+  height: clamp(0.625rem, 0.1724rem + 0.8621vw, 1rem);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.6);
+  opacity: 0;
+  transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+ 
+}
+
+.back-item-dot-active {
+  opacity: 1;
+  transform: scale(1);
+  background: var(--green);
+  box-shadow: 0 0 0 4px rgba(80, 255, 168, 0.18);
+  animation: back-dot-pop 280ms ease-out;
+}
+
+@keyframes back-dot-pop {
+  0% { transform: scale(0.4); opacity: 0.2; }
+  70% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* =================================== */
+/*      SUBTLE SHADOW ON FLIP           */
+/* =================================== */
+
+.flip-wrapper::after,
+.flip-wrapper-vertical::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
+
+.rotate-y-180::after,
+.rotate-x-180::after {
+  opacity: 0.3;
+}
+
+/* =================================== */
+/*        OPTIONAL SCROLLBAR STYLING   */
+/* =================================== */
+
+.card-back-scroller::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-back-scroller::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 4px;
+}
+
+.card-back-scroller::-webkit-scrollbar-track {
+  background: transparent;
 }
