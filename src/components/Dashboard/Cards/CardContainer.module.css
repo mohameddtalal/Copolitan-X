@@ -179,18 +179,19 @@
 
 .back-item-active .back-item-text {
   transform: translateX(-10px);
-  color: var(--green);
+  color: var(--color-success);
   opacity: 1;
 }
 .back-item:hover,
 .back-item:focus-visible {
-  color: var(--green);
+  color: var(--color-success);
+
   opacity: 1;
   transform: translateX(2px);
 }
 
 .back-item-active {
-  color: var(--green);
+  color: var(--color-success);
   opacity: 1;
   
 }
@@ -202,21 +203,20 @@
 .back-item-dot {
   width: clamp(0.625rem, 0.1724rem + 0.8621vw, 1rem);
   height: clamp(0.625rem, 0.1724rem + 0.8621vw, 1rem);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
-  transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
- 
+  transition: opacity 180ms ease, transform 180ms ease;
 }
-
 .back-item-dot-active {
   opacity: 1;
   transform: scale(1);
-  background: var(--green);
-  box-shadow: 0 0 0 4px rgba(80, 255, 168, 0.18);
   animation: back-dot-pop 280ms ease-out;
+
 }
+
+
 
 @keyframes back-dot-pop {
   0% { transform: scale(0.4); opacity: 0.2; }
