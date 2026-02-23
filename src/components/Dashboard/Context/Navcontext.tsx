@@ -2,7 +2,14 @@
 
 import { createContext, useContext, useState } from "react";
 
-const NavContext = createContext<any>(null);
+type NavContextType = {
+  selectedTitle: string;
+  setSelectedTitle: (value: string) => void;
+  selectedButton: string;
+  setSelectedButton: (value: string) => void;
+};
+
+const NavContext = createContext<NavContextType | null>(null);
 
 export function NavProvider({ children }: { children: React.ReactNode }) {
   const [selectedTitle, setSelectedTitle] = useState("");
@@ -18,5 +25,7 @@ export function NavProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useNav() {
-  return useContext(NavContext);
+  const context = useContext(NavContext);
+  if (!context) throw new Error("useNav must be used inside NavProvider");
+  return context;
 }

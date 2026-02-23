@@ -1,12 +1,23 @@
+"use client";
+
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useNav } from "@/components/Dashboard/Context/Navcontext";
 import styles from "../CardContainer.module.css";
 
 type BackCardProps = {
   items: string[];
+  title: string; // 👈 we need card title
 };
 
-export default function BackCard({ items }: BackCardProps) {
+// Convert text to URL friendly format
+const slugify = (text: string) =>
+  text.toLowerCase().replace(/\s+/g, "-");
+
+export default function BackCard({ items, title }: BackCardProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const router = useRouter();
+  const { setSelectedTitle, setSelectedButton } = useNav();
 
   if (!items?.length) return null;
 
@@ -25,20 +36,28 @@ export default function BackCard({ items }: BackCardProps) {
                 isActive ? styles["back-item-active"] : ""
               }`}
             >
-              {/* Button text */}
               <button
                 type="button"
                 className={styles["back-item-text"]}
                 onClick={(event) => {
                   event.stopPropagation();
-                  // Toggle active: if clicked again, deactivate
+
+                  // 1️⃣ Set active state
                   setActiveIndex(isActive ? null : index);
+
+                  // 2️⃣ Update Navbar
+                  setSelectedTitle(title);
+                  setSelectedButton(item);
+
+                  // 3️⃣ Navigate dynamically
+                  router.push(
+                    `/dashboard/${slugify(title)}/${slugify(item)}`
+                  );
                 }}
               >
                 {item}
               </button>
 
-              {/* Dot SVG */}
               <span
                 className={`${styles["back-item-dot"]} ${
                   isActive ? styles["back-item-dot-active"] : ""
@@ -51,7 +70,13 @@ export default function BackCard({ items }: BackCardProps) {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <circle cx="8.5" cy="8.5" r="8" fill="#006B3A" stroke="#00FF8B" />
+                  <circle
+                    cx="8.5"
+                    cy="8.5"
+                    r="8"
+                    fill="#006B3A"
+                    stroke="#00FF8B"
+                  />
                   <circle cx="8.5" cy="8.5" r="4" fill="#00FF8B" />
                 </svg>
               </span>

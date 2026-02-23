@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
-
-
+/* ===========================
+   Root Theme Colors
+   =========================== */
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --foreground: #000000;
+  --background: #ffffff;      /* default = white for all pages */
   --green: #00ffa6;
   --neon-green:#54FFB1;
-  
+
   /* Design System Colors */
   --color-peach: #FFB88C;
   --color-highlight-yellow: #FFD700;
@@ -19,7 +20,7 @@
   --color-purple: #F1EAFA;
   --color-violet: #FCF0FF;
   --color-border-light: #E9EBF8;
-  
+
   /* UI Colors */
   --color-primary: #7029CF;
   --color-primary-hover: #6d28d9;
@@ -27,14 +28,14 @@
   --color-success: #00FF8B;
   --color-success-light: #00A394;
   --color-success-alt: #00B576;
-  
+
   /* Dark Theme Colors */
   --dark-bg: #242424;
   --dark-bg-alt: #2a2a2a;
   --dark-text: #FFFFFF;
   --dark-text-secondary: #9E9E9E;
   --dark-border: #9E9E9E;
-  
+
   /* Light Theme Colors */
   --light-bg: #FFFFFF;
   --light-text: #000000;
@@ -42,28 +43,56 @@
   --light-text-secondary: #565656;
   --light-border: #555555;
   --light-placeholder: #808080;
-  
+
   /* Common Colors */
   --color-white: #FFFFFF;
   --color-black: #000000;
   --color-off-white: #F7F7F7;
 }
 
+/* ===========================
+   Dashboard Theme — black background
+   =========================== */
+:root.dashboard {
+  --foreground: #ffffff;
+  --background: #000000;
+}
 
-
+/* ===========================
+   Inline Theme Variables
+   =========================== */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }
 
+/* ===========================
+   Override system dark mode — we control theme manually
+   =========================== */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
+    --foreground: #000000;
+    --background: #ffffff;
+  }
+
+  :root.dashboard {
     --foreground: #ffffff;
+    --background: #000000;
   }
 }
 
-/* GT Walsheim */
+/* ===========================
+   Body Defaults
+   =========================== */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "GT Walsheim", "Lora";
+}
+
+/* ===========================
+   Fonts
+   =========================== */
 @font-face {
   font-family: "GT Walsheim";
   src: url("/fonts/GT-Walsheim-Pro-Light.ttf") format("truetype");
@@ -71,23 +100,20 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
-  src: url("/fonts/GT-Walsheim-Pro-Regular.ttf") format("truetype");
   font-family: "GT Walsheim";
+  src: url("/fonts/GT-Walsheim-Pro-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
-  src: url("/fonts/GT-Walsheim-Pro-Medium.ttf") format("truetype");
   font-family: "GT Walsheim";
+  src: url("/fonts/GT-Walsheim-Pro-Medium.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "GT Walsheim";
   src: url("/fonts/GT-Walsheim-Pro-Bold.ttf") format("truetype");
@@ -95,7 +121,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "GT Walsheim";
   src: url("/fonts/GT-Walsheim-Pro-Ultra-Bold.ttf") format("truetype");
@@ -103,7 +128,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "GT Walsheim";
   src: url("/fonts/GT-Walsheim-Pro-Ultra-Bold-Oblique.ttf") format("truetype");
@@ -112,6 +136,7 @@
   font-display: swap;
 }
 
+/* Lora Fonts */
 @font-face {
   font-family: "Lora";
   src: url("/fonts/Lora-Italic.ttf") format("truetype");
@@ -119,65 +144,39 @@
   font-style: italic;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Lora";
   src: url("/fonts/Lora-MediumItalic.ttf") format("truetype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
-
 }
-
 @font-face {
   font-family: "Lora";
   src: url("/fonts/Lora-SemiBoldItalic.ttf") format("truetype");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
-
-
 }
-
 @font-face {
   font-family: "Lora";
   src: url("/fonts/Lora-BoldItalic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
-  
-
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family:
-    "GT Walsheim",
-    "Lora",
-}
+/* ===========================
+   Utility Font Classes
+   =========================== */
+.font-gtwalsheim { font-family: "GT Walsheim"; font-weight: 400; }
+.font-gtwalsheim-semibold { font-family: "GT Walsheim"; font-weight: 600 !important; }
+.font-lora { font-family: "Lora"; }
+.lora-semibold-italic { font-family: "Lora"; font-weight: 600; font-style: italic; }
 
-.font-gtwalsheim {
-  font-family: "GT Walsheim";
-  font-weight: 400;
-}
-
-.font-gtwalsheim-semibold {
-  font-family: "GT Walsheim";
-  font-weight: 600!important;
-}
-.font-lora {
-  font-family: "Lora";
-}
-
-.lora-semibold-italic {
-  font-family: "Lora";
-  font-weight: 600;
-  font-style: italic;
-}
-
-
-
+/* ===========================
+   Title & Description Sizes
+   =========================== */
 .title-lg {
   font-size: clamp(1.125rem, 0.8571rem + 1.1905vw, 2rem);
   line-height: 30px;
@@ -185,14 +184,11 @@ body {
   font-weight: 600;
   font-style: italic;
 }
-
 .desc-lg {
   font-size: clamp(0.75rem, 0.6735rem + 0.3401vw, 1rem);
   font-family: "GT Walsheim";
   font-weight: 400;
-  font-style: normal;
 }
-
 .title-md {
   font-size: clamp(1rem, 0.8469rem + 0.6803vw, 1.5rem);
   line-height: clamp(1.375rem, 1.1837rem + 0.8503vw, 2rem);
@@ -200,16 +196,11 @@ body {
   font-weight: 600;
   font-style: italic;
 }
-
 .desc-md {
   font-size: clamp(0.75rem, 0.7117rem + 0.1701vw, 0.875rem);
-  line-height: clamp(0.75rem, 0.7117rem + 0.1701vw, 0.875rem);
   font-family: "GT Walsheim";
   font-weight: 400;
-  font-style: normal;
- 
 }
-
 .title-sm {
   font-size: clamp(1rem, 0.8469rem + 0.6803vw, 1.5rem);
   line-height: clamp(1.375rem, 1.1837rem + 0.8503vw, 2rem);
@@ -217,49 +208,29 @@ body {
   font-weight: 600;
   font-style: italic;
 }
-
 .desc-sm {
   font-size: clamp(0.625rem, 0.5867rem + 0.1701vw, 0.75rem);
-  line-height: clamp(0.75rem, 0.7117rem + 0.1701vw, 0.875rem);
   font-family: "GT Walsheim";
   font-weight: 400;
-  font-style: normal;
 }
 
-/* Custom scrollbar  */
-@media (min-height: 1400px) {
-body,html{
-height: 100%;
+/* ===========================
+   Scrollbar
+   =========================== */
+@media (min-height: 1400px){
+  body, html { height: 100%; }
 }
-}
-
-
-/* width */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Handle */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background-color: #555;
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
+::-webkit-scrollbar-thumb:hover { background-color: #777; }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background-color: #777;
-}
-
-
-
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
+/* ===========================
+   Utility Transform Classes
+   =========================== */
+.rotate-y-180 { transform: rotateY(180deg); }

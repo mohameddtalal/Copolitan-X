@@ -33,18 +33,16 @@ export default function FlipCard({
       >
         {/* Front */}
         <div
-          className={`${
-            isVertical ? styles["flip-front-vertical"] : styles["flip-front"]
-          } ${childrenClassContainer}`}
+          className={`${isVertical ? styles["flip-front-vertical"] : styles["flip-front"]
+            } ${childrenClassContainer}`}
         >
           {children}
         </div>
 
         {/* Back */}
         <div
-          className={`${
-            isVertical ? styles["flip-back-vertical"] : styles["flip-back"]
-          } ${childrenClassContainer}`}
+          className={`${isVertical ? styles["flip-back-vertical"] : styles["flip-back"]
+            } ${childrenClassContainer}`}
         >
           {backContent}
         </div>

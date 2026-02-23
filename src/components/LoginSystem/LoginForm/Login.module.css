@@ -7,7 +7,7 @@
 /* Container */
 .container {
   background-image: url('/login/background.svg');
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;

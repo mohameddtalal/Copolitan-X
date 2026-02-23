@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Dashboard/Navbars/NavbarDynamic";
 import { NavProvider } from "@/components/Dashboard/Context/Navcontext";
+import ThemeProvider from "./ThemeProvider";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,24 +23,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased  w-full flex flex-col m-0 p-0`}
-      >   
-     
-        <NavProvider>
-          <div className="flex-shrink-0">
-            <Navbar />
-          </div>
-          <div className="flex-1 overflow-auto w-full">
-            {children}
-          </div>
-        </NavProvider>
-     
+        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 p-0`}
+      >
+         <ThemeProvider> {/* 🆕 wrap everything */}
+          <NavProvider>
+            <div className="flex-shrink-0">
+              <Navbar />
+            </div>
+            <div className="flex-1 overflow-auto w-full">
+              {children}
+            </div>
+          </NavProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

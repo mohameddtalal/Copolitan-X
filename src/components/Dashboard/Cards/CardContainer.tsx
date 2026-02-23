@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React from "react";
 import SplitCard from "./CardTypes/SplitCard";
 import ImageCard from "./CardTypes/ImageCard";
 import CardTextImage from "./CardTypes/CardTextImage";
@@ -17,12 +18,15 @@ const LockedImageCard = ({ src, alt }: LockedImageCardProps) => (
   </div>
 );
 
-// Wrapper BackActionList
-const BackActionList = ({ items }: { items: string[] }) => {
-  return <BackCard items={items} />;
+const BackActionList = ({ items, title }: { items: string[]; title: string }) => {
+  return <BackCard items={items} title={title} />;
 };
 
-export default function CardContainer({ card }: any) {
+interface CardContainerProps {
+  card: any;
+}
+
+export default function CardContainer({ card }: CardContainerProps) {
   const positionClasses =
     card.id === 4
       ? "col-start-4 row-start-1 col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl"
@@ -31,9 +35,16 @@ export default function CardContainer({ card }: any) {
   const hasAccess = card.hasAccess !== false;
   const isLocked = !hasAccess && Boolean(card.lockedImage);
 
-  const commonClasses = `${card.color} rounded-xl sm:rounded-2xl lg:rounded-3xl ${
-    !card.isSplit ? "p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-6" : ""
-  } flex flex-col justify-between text-white shadow-xl transition-transform cursor-pointer overflow-hidden h-full`;
+  const commonClasses = `
+    ${card.color}
+    rounded-xl sm:rounded-2xl lg:rounded-3xl
+    ${!card.isSplit ? "p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-6" : ""}
+    flex flex-col justify-between
+    text-white
+    transition-transform cursor-pointer
+    overflow-hidden h-full
+  `;
+
   const lockedClasses = `${commonClasses} cursor-default`;
 
   const renderContent = () => {
@@ -51,21 +62,19 @@ export default function CardContainer({ card }: any) {
     );
   }
 
-  // Flippable card
   if (card.flippable) {
     return (
       <FlipCard
         card={card}
         parentClass={positionClasses}
         childrenClassContainer={commonClasses}
-        backContent={<BackActionList items={card.backItems} />}
+        backContent={<BackActionList items={card.backItems} title={card.title} />}
       >
         {renderContent()}
       </FlipCard>
     );
   }
 
-  // Normal card
   return (
     <div key={card.id} className={`${positionClasses} ${commonClasses} group relative`}>
       {renderContent()}

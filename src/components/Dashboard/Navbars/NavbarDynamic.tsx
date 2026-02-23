@@ -1,26 +1,39 @@
 "use client";
-import { useRouter } from "next/navigation";
+
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useNav } from "@/components/Dashboard/Context/Navcontext";
-import styles from "./Navbar.module.css"
+import styles from "./Navbar.module.css";
 
 const Navbar = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const { selectedTitle, selectedButton } = useNav(); // just read, no set
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const { selectedTitle, selectedButton } = useNav();
-  const router = useRouter();
-  const handleSearch = () => {
-    setIsSearchOpen((prev) => !prev); // toggle input
-  };
+
+  const handleSearch = () => setIsSearchOpen((prev) => !prev);
+
+  // Navbar theme
+  const isWhiteTheme = pathname !== "/dashboard";
+  const navbarClass = `${styles.navbar} ${
+    isWhiteTheme ? styles.lightNavbar : styles.darkNavbar
+  }`;
+
+  const logoSrc = isWhiteTheme ? "/login/logoblack.svg" : "/navbar/Layer_1.svg";
+
   return (
-    <nav className={styles.navbar }>
+    <nav className={navbarClass}>
       <div className={styles.row}>
+        {/* Logo */}
         <Link href="/dashboard">
           <div className="logo">
             <Image
-              src="/navbar/Layer_1.svg"
+              src={logoSrc}
               alt="LogoImage"
               className={styles.logoImg}
               width={301}
@@ -28,20 +41,30 @@ const Navbar = () => {
             />
           </div>
         </Link>
+
+        {/* Title & Button */}
         <div className={styles.navInside}>
-          <div
-            className={styles.title}
-          >
-            <p>{selectedTitle}</p>
-          </div>
-          <div
-            className={styles.selectedBtn}
-         
-          >
-            <p>{selectedButton}</p>
-          </div>
+          {selectedTitle && (
+            <div
+              className={styles.title}
+              style={{ fontFamily: "Lora", fontWeight: 500, fontStyle: "italic",fontSize:"25px" ,color: isWhiteTheme ? "#000" : "#fff" }}
+            >
+              <p>{selectedTitle}</p>
+            </div>
+          )}
+          {selectedButton && (
+            <div
+              className={styles.selectedBtn}
+              style={{ fontFamily: "GT Walsheim", fontWeight: 600 ,fontSize:"clamp(0.875rem, 0.625rem + 0.3906vw, 1rem);", color: isWhiteTheme ? "#000" : "#fff" }}
+            >
+              <p>{selectedButton}</p>
+            </div>
+          )}
         </div>
-        <div className={styles.navItems} >
+
+        {/* Right-side nav items */}
+        <div className={styles.navItems}>
+          {/* Search Input */}
           {isSearchOpen && (
             <input
               type="text"
@@ -52,31 +75,31 @@ const Navbar = () => {
               autoFocus
             />
           )}
+
+          {/* Search Button */}
           <div className={styles.search}>
             <button
-              className={styles.search}
               style={{ zIndex: 10, cursor: "pointer" }}
               onClick={handleSearch}
             >
               <Image
-                className="search-img"
                 src="/navbar/search.svg"
                 alt="search"
                 width={18}
                 height={18}
               />
             </button>
-            {/* Search input (show only if open) */}
           </div>
+
           <div className={styles.line}></div>
+
+          {/* Notifications */}
           <div className={styles.notifications}>
             <button
-              className="notification"
               style={{ cursor: "pointer" }}
               onClick={() => router.push("/notificationPage")}
             >
               <Image
-                className="notification-img"
                 src="/navbar/notification.svg"
                 alt="notification"
                 width={21}
@@ -84,14 +107,16 @@ const Navbar = () => {
               />
             </button>
           </div>
+
           <div className={styles.line}></div>
+
+          {/* Quote Icon */}
           <div className={styles.quote}>
             <Image
               src="/navbar/quote.svg"
               alt="quote"
               width={14}
               height={13}
-              className="quote-img"
             />
           </div>
         </div>
