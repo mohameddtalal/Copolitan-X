@@ -18,6 +18,7 @@
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
+  overflow: visible;
   
 }
 
@@ -27,6 +28,7 @@
 .card-12,
 .card-15 {
   padding-bottom: 25px;
+  overflow: visible;
 }
 
 .card-3,

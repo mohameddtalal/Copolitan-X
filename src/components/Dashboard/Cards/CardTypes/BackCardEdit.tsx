@@ -5,6 +5,7 @@ import styles from "../CardContainer.module.css";
 
 type EditBackCardProps = {
   card: any;
+  onFlip?: () => void;
 };
 
 // Each card gets its own upload info based on its size
@@ -26,7 +27,7 @@ const cardUploadInfo: Record<number, { width: number; height: number }> = {
   15: { width: 334, height: 193.67 },
 };
 
-export default function EditBackCard({ card }: EditBackCardProps) {
+export default function EditBackCard({ card, onFlip }: EditBackCardProps) {
   const info = cardUploadInfo[card.id] ?? { width: 334, height: 193 };
 
   const handleUpload = () => {
@@ -38,7 +39,9 @@ export default function EditBackCard({ card }: EditBackCardProps) {
     <div className="relative flex flex-col items-center justify-center h-full w-full bg-[var(--dark-bg)] rounded-xl px-6 py-4">
       
       {/* Reset icon - top right */}
-     <img src= "/cards/flipwhiteicon.svg"    className="w-5 h-5 absolute top-6 right-3 "/>
+     <img src= "/cards/flipwhiteicon.svg"    className="w-5 h-5 absolute top-6 right-3 cursor-pointer" 
+        onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
+      />
   
       {/* Hidden file input */}
       <input

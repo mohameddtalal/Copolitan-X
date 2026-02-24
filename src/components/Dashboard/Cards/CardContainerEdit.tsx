@@ -1,11 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import SplitCard from "./CardTypes/SplitCard";
 import ImageCard from "./CardTypes/ImageCard";
-import CardTextImage from "./CardTypes/CardTextImage";
 import TextCardEdit from "./CardTypes/TextCardEdit";
-import FlipCard from "./CardTypes/FlipCard";
-import BackCard from "./CardTypes/BackCard";
+import FlipCardEdit from "./CardTypes/FlipCardEdit";
 import CardTextImageEdit from "./CardTypes/CardTextImageEdit";
 import SplitCardEdit from "./CardTypes/SplitCardEdit";
 import BackCardEdit from "./CardTypes/BackCardEdit";
@@ -21,15 +19,13 @@ const LockedImageCard = ({ src, alt }: LockedImageCardProps) => (
   </div>
 );
 
-const BackActionList = ({ card }: { card: any }) => {
-  return <BackCardEdit card={card} />;
-};
-
 interface CardContainerProps {
   card: any;
 }
 
 export default function CardContainer({ card }: CardContainerProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
   const positionClasses =
     card.id === 4
       ? "col-start-4 row-start-1 col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl"
@@ -48,33 +44,32 @@ export default function CardContainer({ card }: CardContainerProps) {
     overflow-hidden h-full
   `;
 
-  const lockedClasses = `${commonClasses} cursor-default`;
-
   const renderContent = () => {
     if (card.isSplit) return <SplitCardEdit card={card} />;
     if (card.image) return <ImageCard card={card} />;
-    if (card.cardTextImage) return <CardTextImageEdit card={card} />;
-    return <TextCardEdit card={card} />;
+    if (card.cardTextImage) return <CardTextImageEdit card={card} onFlip={() => setIsFlipped((p) => !p)} />;
+    return <TextCardEdit card={card} onFlip={() => setIsFlipped((p) => !p)} />;
   };
 
   if (isLocked) {
     return (
-      <div key={card.id} className={`${positionClasses} ${lockedClasses} group relative`}>
+      <div key={card.id} className={`${positionClasses} ${commonClasses} cursor-default group relative`}>
         <LockedImageCard src={card.lockedImage} alt={card.title} />
       </div>
     );
   }
 
-  if (card.flippable) {
+  if(card.flippable === true || card.flippable === false) {
     return (
-      <FlipCard
+      <FlipCardEdit
         card={card}
         parentClass={positionClasses}
         childrenClassContainer={commonClasses}
-        backContent={<BackActionList card={card} />}
+        backContent={<BackCardEdit card={card} onFlip={() => setIsFlipped((p) => !p)} />}
+        isFlipped={isFlipped}
       >
         {renderContent()}
-      </FlipCard>
+      </FlipCardEdit>
     );
   }
 
