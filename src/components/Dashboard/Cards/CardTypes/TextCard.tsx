@@ -2,6 +2,7 @@ import React from 'react'
 import styles from "../CardContainer.module.css";
 import { getDescSizeClass, getTitleSizeClass } from '@/app/Shared/Functions';
 export default function TextCard({card}:any) {
+  
  return (
       <>
         <div className={styles[`card-${card.id}`]}>

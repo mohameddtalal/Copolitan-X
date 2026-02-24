@@ -1,4 +1,4 @@
-import BentoGrid from "@/components/Dashboard/BentoGrid/BentoGrid";
+import BentoGridEdit from "@/components/Dashboard/BentoGrid/BentoGridEdit";
 
 interface PageProps {
   params: {
@@ -13,7 +13,7 @@ export default function DynamicDashboardPage({ params }: PageProps) {
 
   return (
      <div className="bg-white">     
-        <BentoGrid /> 
+        <BentoGridEdit /> 
         </div>
   );
 }
