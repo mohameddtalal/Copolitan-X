@@ -42,22 +42,22 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* Title & Button */}
-        <div className={styles.navInside}>
+        {/* Title & Button (Centered) */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
+          {selectedButton && (
+            <div
+            className={styles.selectedBtn}
+            style={{fontFamily: "Lora", fontWeight: 500, fontStyle: "italic", fontSize: "24px", color: isWhiteTheme ? "#000" : "#fff", lineHeight: "1" }}
+            >
+              <p>{selectedButton}</p>
+            </div>
+          )}
           {selectedTitle && (
             <div
               className={styles.title}
-              style={{ fontFamily: "Lora", fontWeight: 500, fontStyle: "italic",fontSize:"25px" ,color: isWhiteTheme ? "#000" : "#fff" }}
+              style={{ fontFamily: "GT Walsheim", fontWeight: 600, fontSize: "14px", color: isWhiteTheme ? "#000" : "#fff", marginTop: "4px"  }}
             >
               <p>{selectedTitle}</p>
-            </div>
-          )}
-          {selectedButton && (
-            <div
-              className={styles.selectedBtn}
-              style={{ fontFamily: "GT Walsheim", fontWeight: 600 ,fontSize:"clamp(0.875rem, 0.625rem + 0.3906vw, 1rem);", color: isWhiteTheme ? "#000" : "#fff" }}
-            >
-              <p>{selectedButton}</p>
             </div>
           )}
         </div>

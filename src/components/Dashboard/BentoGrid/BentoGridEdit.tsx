@@ -62,6 +62,7 @@ const BentoGrid = () => {
                 totalPages={pages.length}
                 onPrev={prevPage}
                 onNext={nextPage}
+                showToggle={true}
             />
             <div className="flex-1 overflow-hidden w-full min-h-0">
                 <div

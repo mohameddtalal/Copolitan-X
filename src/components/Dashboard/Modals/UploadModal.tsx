@@ -61,10 +61,11 @@ export default function UploadModal({ isOpen, onClose, cardId, onUpload }: Uploa
 
   return createPortal(
     <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div 
-        className="bg-white rounded-[40px] w-full max-w-[600px] p-8 relative shadow-2xl animate-in fade-in zoom-in duration-300"
-        onClick={(e) => e.stopPropagation()}
-      >
+     <div 
+          className="bg-white rounded-[40px] w-full max-w-[600px] p-8 relative shadow-2xl animate-in fade-in zoom-in duration-300
+          scale-75 sm:scale-70 md:scale-80 lg:scale-90 xl:scale-100 origin-center"
+          onClick={(e) => e.stopPropagation()}
+        >
         {/* Header */}
         <div className="flex justify-center items-center mb-6">
           <h2 className="text-[32px] font-semibold italic text-[#7029CF]" style={{ fontFamily: 'Lora, serif' }}>
