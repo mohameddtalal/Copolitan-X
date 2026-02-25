@@ -53,7 +53,7 @@ export default function CardTextImage({ card }: any) {
         <p
           className={` whitespace-pre-line ${getDescSizeClass(card.id)} ${card.id === 8 ? "text-black" : "text-white"}`}
         >
-          {card.id === 10 || card.id === 3  ? "" : card.description}
+          {card.id === 10 || card.id === 3 || card.id ===5 ? "" : card.description}
         </p>
         <img
           src="/cards/Buttom Icon.svg"

@@ -1,11 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "../CardContainer.module.css";
+import {XIcon } from "lucide-react";
 
 type EditBackCardProps = {
   card: any;
   onFlip?: () => void;
+  onUploadOpen?: () => void;
 };
 
 // Each card gets its own upload info based on its size
@@ -27,58 +29,71 @@ const cardUploadInfo: Record<number, { width: number; height: number }> = {
   15: { width: 334, height: 193.67 },
 };
 
-export default function EditBackCard({ card, onFlip }: EditBackCardProps) {
+export default function EditBackCard({ card, onFlip, onUploadOpen }: EditBackCardProps) {
+  const [showInstructions, setShowInstructions] = useState(false);
   const info = cardUploadInfo[card.id] ?? { width: 334, height: 193 };
 
   const handleUpload = () => {
-    // upload logic here — trigger file input
-    document.getElementById(`upload-input-${card.id}`)?.click();
+    onUploadOpen?.();
+    setShowInstructions(false);
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center h-full w-full bg-[var(--dark-bg)] rounded-xl px-6 py-4">
+    <div className="relative flex flex-col items-center justify-center h-full w-full bg-[var(--dark-bg)] rounded-xl sm:rounded-2xl lg:rounded-3xl px-6 py-4 overflow-hidden">
       
-      {/* Reset icon - top right */}
-     <img src= "/cards/flipwhiteicon.svg"    className="w-5 h-5 absolute top-6 right-3 cursor-pointer" 
-        onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
-      />
+      {/* Top icons */}
+      <div className="absolute top-6 right-3 flex gap-3 z-20">
+        {card.lockedImage && !showInstructions && (
+          <button 
+            onClick={(e) => { e.stopPropagation(); setShowInstructions(true); }}
+            className="text-white/70 hover:text-white transition-colors"
+            title="Show Instructions"
+          >
+            <XIcon size={22} />
+          </button>
+        )}
+        <img 
+          src="/cards/flipwhiteicon.svg" 
+          className="w-5 h-5 cursor-pointer" 
+          onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
+          title="Flip to Front"
+        />
+      </div>
   
-      {/* Hidden file input */}
-      <input
-        id={`upload-input-${card.id}`}
-        type="file"
-        accept=".png,.jpg,.jpeg"
-        className="hidden"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) console.log("uploaded file:", file.name);
-        }}
-      />
-
       {/* Upload button */}
       <button
         onClick={handleUpload}
-        className="mb-4 px-6 py-2 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-black transition-colors"
+        className="mb-4 px-6 py-2 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-black transition-colors z-10"
         style={{ fontFamily: "GT Walsheim",  fontWeight:"600"}}
       >
         Upload
       </button>
 
-      {/* Info text */}
-      <p
-        className="text-white text-center leading-relaxed"
-        style={{
-          fontFamily: "GT Walsheim",
-          fontWeight:"600",
-          fontSize: "clamp(0.625rem, 0.4rem + 0.5vw, 0.875rem)",
-        }}
-      >
-        Browse here to start uploading
-        <br />
-        Supports PNG, JPG, JPEG,
-        <br />
-        Max size: {info.width}×{info.height} px
-      </p>
+      {/* Preview or Info text */}
+      {card.lockedImage && !showInstructions ? (
+        <>
+          <div className="absolute inset-0 w-full h-full z-0">
+            <img src={card.lockedImage} alt="Locked Preview" className="w-full h-full object-cover rounded-xl sm:rounded-2xl lg:rounded-3xl" />
+          </div>
+          {/* Subtle overlay to keep buttons readable */}
+          <div className="absolute inset-0 bg-black/20 rounded-xl sm:rounded-2xl lg:rounded-3xl pointer-events-none" />
+        </>
+      ) : (
+        <p
+          className="text-white text-center leading-relaxed z-10"
+          style={{
+            fontFamily: "GT Walsheim",
+            fontWeight:"600",
+            fontSize: "clamp(0.625rem, 0.4rem + 0.5vw, 0.875rem)",
+          }}
+        >
+          Browse here to start uploading
+          <br />
+          Supports PNG, JPG, JPEG,
+          <br />
+          Max size: {info.width}×{info.height} px
+        </p>
+      )}
     </div>
   );
 }

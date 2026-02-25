@@ -7,6 +7,7 @@ import FlipCardEdit from "./CardTypes/FlipCardEdit";
 import CardTextImageEdit from "./CardTypes/CardTextImageEdit";
 import SplitCardEdit from "./CardTypes/SplitCardEdit";
 import BackCardEdit from "./CardTypes/BackCardEdit";
+import UploadModal from "../Modals/UploadModal";
 
 type LockedImageCardProps = {
   src: string;
@@ -25,6 +26,15 @@ interface CardContainerProps {
 
 export default function CardContainer({ card }: CardContainerProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [bgColor, setBgColor] = useState(card.color || "");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [uploadTarget, setUploadTarget] = useState<"cardTextImage" | "characterImage" | "lockedImage" | null>(null);
+
+  // States for dynamic images
+  const [cardTextImage, setCardTextImage] = useState(card.cardTextImage || "");
+  const [characterImage, setCharacterImage] = useState(card.characterImage || "");
+  const [lockedImage, setLockedImage] = useState(""); // Start empty as requested
 
   const positionClasses =
     card.id === 4
@@ -32,50 +42,97 @@ export default function CardContainer({ card }: CardContainerProps) {
       : card.span;
 
   const hasAccess = card.hasAccess !== false;
-  const isLocked = !hasAccess && Boolean(card.lockedImage);
+  // If a locked image is uploaded, we treat it as "Locked" for the front face visualization
+  const isLocked = Boolean(lockedImage);
 
   const commonClasses = `
-    ${card.color}
+    ${bgColor}
     rounded-xl sm:rounded-2xl lg:rounded-3xl
     ${!card.isSplit ? "p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-6" : ""}
     flex flex-col justify-between
-    text-white
-    transition-transform cursor-pointer
-    overflow-hidden h-full
+    text-white 
+    transition-transform cursor-default
+    h-full
   `;
 
-  const renderContent = () => {
-    if (card.isSplit) return <SplitCardEdit card={card} />;
-    if (card.image) return <ImageCard card={card} />;
-    if (card.cardTextImage) return <CardTextImageEdit card={card} onFlip={() => setIsFlipped((p) => !p)} />;
-    return <TextCardEdit card={card} onFlip={() => setIsFlipped((p) => !p)} />;
+  const handleOpenUpload = (target: "cardTextImage" | "characterImage" | "lockedImage") => {
+    setUploadTarget(target);
+    setIsUploadModalOpen(true);
   };
 
-  if (isLocked) {
-    return (
-      <div key={card.id} className={`${positionClasses} ${commonClasses} cursor-default group relative`}>
-        <LockedImageCard src={card.lockedImage} alt={card.title} />
-      </div>
-    );
-  }
+  const handleUploadComplete = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result as string;
+      if (uploadTarget === "cardTextImage") setCardTextImage(result);
+      else if (uploadTarget === "characterImage") setCharacterImage(result);
+      else if (uploadTarget === "lockedImage") setLockedImage(result);
+    };
+    reader.readAsDataURL(file);
+    setIsUploadModalOpen(false);
+    setUploadTarget(null);
+  };
 
-  if(card.flippable === true || card.flippable === false) {
+  const renderContent = () => {
+    // Merge card data with local state
+    const enhancedCard = { ...card, cardTextImage, characterImage, lockedImage };
+
+    if (card.isSplit) return <SplitCardEdit card={enhancedCard} onUploadOpen={() => handleOpenUpload("characterImage")} />;
+    if (card.image) return <ImageCard card={enhancedCard} />;
+    
+    // If it has a cardTextImage (or we just uploaded one), use CardTextImageEdit
+    if (cardTextImage || card.cardTextImage) {
+      return (
+        <CardTextImageEdit 
+          card={enhancedCard} 
+          onFlip={() => setIsFlipped((p) => !p)} 
+          onColorChange={(color) => setBgColor(color)} 
+          onMenuOpenChange={setIsMenuOpen} 
+          onUploadOpen={() => handleOpenUpload("cardTextImage")} 
+        />
+      );
+    }
+    
     return (
-      <FlipCardEdit
-        card={card}
-        parentClass={positionClasses}
-        childrenClassContainer={commonClasses}
-        backContent={<BackCardEdit card={card} onFlip={() => setIsFlipped((p) => !p)} />}
-        isFlipped={isFlipped}
-      >
-        {renderContent()}
-      </FlipCardEdit>
+      <TextCardEdit 
+        card={enhancedCard} 
+        onFlip={() => setIsFlipped((p) => !p)} 
+        onColorChange={(color) => setBgColor(color)} 
+        onMenuOpenChange={setIsMenuOpen} 
+        onUploadOpen={() => handleOpenUpload("cardTextImage")} 
+      />
     );
-  }
+  };
 
   return (
-    <div key={card.id} className={`${positionClasses} ${commonClasses} group relative`}>
-      {renderContent()}
-    </div>
+    <>
+      {card.flippable === true || card.flippable === false ? (
+        <div className={`${positionClasses} relative ${isMenuOpen ? "z-[9999]" : ""}`}>
+          <FlipCardEdit
+            card={card}
+            parentClass="w-full h-full"
+            childrenClassContainer={commonClasses}
+            backContent={<BackCardEdit card={{...card, lockedImage}} onFlip={() => setIsFlipped((p) => !p)} onUploadOpen={() => handleOpenUpload("lockedImage")} />}
+            isFlipped={isFlipped}
+          >
+            {renderContent()}
+          </FlipCardEdit>
+        </div>
+      ) : (
+        <div key={card.id} className={`${positionClasses} ${commonClasses} group relative ${isMenuOpen ? "z-[9999]" : ""}`}>
+          {renderContent()}
+        </div>
+      )}
+
+      <UploadModal 
+        isOpen={isUploadModalOpen} 
+        onClose={() => {
+          setIsUploadModalOpen(false);
+          setUploadTarget(null);
+        }} 
+        cardId={card.id}
+        onUpload={handleUploadComplete}
+      />
+    </>
   );
 }

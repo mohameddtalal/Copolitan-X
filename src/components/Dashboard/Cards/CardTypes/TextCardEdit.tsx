@@ -1,73 +1,191 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from "../CardContainer.module.css";
 import { getDescSizeClass, getTitleSizeClass } from '@/app/Shared/Functions';
 
-export default function TextCard({ card, onFlip }: { card: any; onFlip?: () => void }) {
+export default function TextCard({ 
+  card, 
+  onFlip, 
+  onColorChange,
+  onMenuOpenChange,
+  onUploadOpen
+}: { 
+  card: any; 
+  onFlip?: () => void; 
+  onColorChange?: (color: string) => void;
+  onMenuOpenChange?: (isOpen: boolean) => void;
+  onUploadOpen?: () => void;
+}) {
   const specialCards = [6, 7, 12, 13, 3, 11];
   const isSpecial = specialCards.includes(card.id);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
   const [title, setTitle] = useState(card.title);
   const [description, setDescription] = useState(card.description);
-  const [tempTitle, setTempTitle] = useState(card.title);
-  const [tempDesc, setTempDesc] = useState(card.description);
+  const [hoveredColor, setHoveredColor] = useState<string | null>(null);
+
+  const colorPickerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+  const descRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-resize textareas
+  useEffect(() => {
+    if (isEditing) {
+      if (titleRef.current) {
+        titleRef.current.style.height = 'auto';
+        titleRef.current.style.height = titleRef.current.scrollHeight + 'px';
+      }
+      if (descRef.current) {
+        descRef.current.style.height = 'auto';
+        descRef.current.style.height = descRef.current.scrollHeight + 'px';
+      }
+    }
+  }, [isEditing, title, description]);
+
+  const colors = [
+    { name: "Blush Pink", value: "bg-[#FFB6C1]" },
+    { name: "Purple", value: "bg-[#7029CF]" },
+    { name: "Dark Gray", value: "bg-[#242424]" },
+    { name: "Neon Green", value: "bg-[#00FFA6]" },
+    { name: "White", value: "bg-[#FFFFFF]" },
+  ];
 
   const textColor = card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? "text-black" : "text-white";
   const inputTextColor = card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? "#000" : "#fff";
   const inputBorderColor = card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)";
 
-  const handleEditOpen = () => { setTempTitle(title); setTempDesc(description); setIsEditing(true); };
-  const handleSave = () => { setTitle(tempTitle); setDescription(tempDesc); setIsEditing(false); };
-  const handleCancel = () => setIsEditing(false);
+  // Notify parent when menu opens/closes
+  useEffect(() => {
+    onMenuOpenChange?.(showColorPicker);
+  }, [showColorPicker, onMenuOpenChange]);
+
+  // Close color picker on outside click
+  useEffect(() => {
+    if (!showColorPicker) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (colorPickerRef.current && !colorPickerRef.current.contains(e.target as Node)) {
+        setShowColorPicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showColorPicker]);
+
+  const handleEditToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsEditing((prev) => !prev);
+  };
 
   return (
     <>
       <div className={styles[`card-${card.id}`]}>
 
-        {isEditing && (
-          <div className="absolute inset-0 z-20 flex flex-col justify-center gap-3 px-4 py-4 rounded-xl sm:rounded-2xl lg:rounded-3xl bg-black/60 backdrop-blur-sm">
-            <input
-              value={tempTitle}
-              onChange={(e) => setTempTitle(e.target.value)}
-              placeholder="Title"
-              className="w-full rounded-lg px-3 py-2 text-sm font-semibold bg-transparent border outline-none"
-              style={{ color: inputTextColor, borderColor: inputBorderColor, fontFamily: "GT Walsheim" }}
-            />
-            <textarea
-              value={tempDesc}
-              onChange={(e) => setTempDesc(e.target.value)}
-              placeholder="Description"
-              rows={3}
-              className="w-full rounded-lg px-3 py-2 text-sm bg-transparent border outline-none resize-none"
-              style={{ color: inputTextColor, borderColor: inputBorderColor, fontFamily: "GT Walsheim" }}
-            />
-            <div className="flex gap-2 justify-end">
-              <button onClick={handleCancel} className="px-3 py-1 rounded-lg text-xs border" style={{ color: inputTextColor, borderColor: inputBorderColor, fontFamily: "GT Walsheim" }}>Cancel</button>
-              <button onClick={handleSave} className="px-3 py-1 rounded-lg text-xs bg-[var(--color-primary)] text-white" style={{ fontFamily: "GT Walsheim" }}>Save</button>
-            </div>
-          </div>
-        )}
-
         <div className="flex flex-row items-start justify-between">
-          <h2 className={`mb-0.5 sm:mb-1 md:mb-1.5 lg:mb-2 xl:mb-3 whitespace-pre-line ${getTitleSizeClass(card.id)} ${textColor}`}>
-            {title}
-          </h2>
-          <div className="flex flex-col gap-2 shrink-0 ml-3">
-            <img src={isSpecial ? "/cards/editwhiteicon.svg" : "/cards/editicon.svg"} className="w-5 h-5 cursor-pointer" onClick={(e) => { e.stopPropagation(); handleEditOpen(); }} />
-           {(card.id === 3 || card.id === 11) && (
-                <img src="/cards/uploadwhiteicon.svg" className="w-5 h-5" />
-              )}
+          {/* Title — inline editable */}
+          {isEditing ? (
+            <textarea
+              ref={titleRef}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Title"
+              rows={1}
+              className={`w-full rounded-lg bg-transparent outline-none border-none resize-none overflow-hidden ${getTitleSizeClass(card.id)} ${textColor} font-bold`}
+              style={{ color: inputTextColor, lineHeight: '1.2' }}
+            />
+          ) : (
+            <h2 className={`mb-0.5 sm:mb-1 md:mb-1.5 lg:mb-2 xl:mb-3 whitespace-pre-line ${getTitleSizeClass(card.id)} ${textColor}`}>
+              {title}
+            </h2>
+          )}
+
+          {/* Action icons */}
+          <div className={`flex flex-col gap-2 shrink-0 ml-3 relative ${showColorPicker ? "z-[999]" : ""}`}>
+            {/* Edit / Save icon */}
+            <img
+              src={
+                isEditing
+                  ? (isSpecial ? "/cards/savewhiteicon.svg" : "/cards/saveicon.svg")
+                  : (isSpecial ? "/cards/editwhiteicon.svg" : "/cards/editicon.svg")
+              }
+              className="w-5 h-5 cursor-pointer"
+              onClick={handleEditToggle}
+            />
+
+            {(card.id === 3 || card.id === 11) && (
+              <img 
+                src="/cards/uploadwhiteicon.svg" 
+                className="w-5 h-5 cursor-pointer" 
+                onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
+              />
+            )}
+
             <img
               src={isSpecial ? "/cards/flipwhiteicon.svg" : "/cards/flipicon.svg"}
               className="w-5 h-5 cursor-pointer"
               onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
             />
-            <img src={isSpecial ? "/cards/palettewhiteicon.svg" : "/cards/paletteicon.svg"} className="w-5 h-5" />
+
+            {/* Palette icon + dropdown (opens upward) */}
+            <div className="relative" ref={colorPickerRef}>
+              <img
+                src={isSpecial ? "/cards/palettewhiteicon.svg" : "/cards/paletteicon.svg"}
+                className="w-5 h-5 cursor-pointer"
+                onClick={(e) => { e.stopPropagation(); setShowColorPicker(!showColorPicker); }}
+              />
+              {showColorPicker && (
+                <div
+                  className="absolute z-[9999] bg-[#242424] rounded-2xl p-3 shadow-2xl min-w-[150px]" style={{ right: '0%', transform: 'translateX(20%)' ,top:"-60px" }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex flex-col gap-1">
+                    {colors.map((color) => (
+                      <div
+                        key={color.name}
+                        className="flex items-center gap-3 cursor-pointer rounded-xl px-2 py-1.5 transition-colors"
+                        style={{
+                          backgroundColor: hoveredColor === color.name ? 'rgba(255,255,255,0.08)' : 'transparent',
+                        }}
+                        onMouseEnter={() => setHoveredColor(color.name)}
+                        onMouseLeave={() => setHoveredColor(null)}
+                        onClick={() => {
+                          onColorChange?.(color.value);
+                          setShowColorPicker(false);
+                        }}
+                      >
+                        <div className={`w-6 h-6 rounded-full ${color.value} border border-white/10 flex items-center justify-center`}>
+                          {hoveredColor === color.name && (
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                              <path d="M2 6l3 3 5-5" stroke={color.value === 'bg-[#FFFFFF]' || color.value === 'bg-[#FFB6C1]' || color.value === 'bg-[#00FFA6]' ? '#000' : '#fff'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          )}
+                        </div>
+                        <span className="text-white text-sm font-medium font-gtwalsheim transition-colors" style={{ opacity: hoveredColor === color.name ? 1 : 0.75 }}>
+                          {color.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        <p className={`whitespace-pre-line ${getDescSizeClass(card.id)} ${textColor}`}>{description}</p>
+        {/* Description — inline editable */}
+        {isEditing ? (
+          <textarea
+            ref={descRef}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+            rows={1}
+            className={`w-full bg-transparent outline-none border-none resize-none overflow-hidden ${getDescSizeClass(card.id)} ${textColor}`}
+            style={{ color: inputTextColor, lineHeight: '1.4' }}
+          />
+        ) : (
+          <p className={`whitespace-pre-line ${getDescSizeClass(card.id)} ${textColor}`}>{description}</p>
+        )}
       </div>
 
       <div className={`${styles[`card-icon-${card.id}`]} flex justify-end`}>

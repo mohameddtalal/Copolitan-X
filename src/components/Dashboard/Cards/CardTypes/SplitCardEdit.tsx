@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 
 type SplitCardProps = {
   card: any;
+  onUploadOpen?: () => void;
 };
 
-export default function SplitCard({ card }: SplitCardProps) {
+export default function SplitCard({ card, onUploadOpen }: SplitCardProps) {
   const pathname = usePathname();
   const isWhiteTheme = pathname !== "/dashboard";
 
@@ -16,7 +17,7 @@ export default function SplitCard({ card }: SplitCardProps) {
       className={`
         flex flex-col h-full gap-2 sm:gap-3 lg:gap-4 
         rounded-xl sm:rounded-2xl lg:rounded-3xl
-        ${isWhiteTheme ? "bg-white text-black" : "bg-[var(--background)] text-white"} shadow-xl
+        ${isWhiteTheme ? "bg-white text-black" : "bg-[var(--background)] text-white"} 
       `}
     >
       {/* Top section - Profile and info */}
@@ -53,15 +54,17 @@ export default function SplitCard({ card }: SplitCardProps) {
           <img
             src="/cards/uploadicon.svg"
             alt="upload"
-            className="w-5 h-5"
+            className="w-5 h-5 cursor-pointer"
+            onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
           />
         </div>
 
         {card.characterImage && (
           <img
             src={card.characterImage}
-            alt="character"
-            className="w-full h-full object-cover"
+            alt={card.title}
+            className="w-full h-full object-cover cursor-pointer"
+            onClick={() => onUploadOpen?.()}
           />
         )}
       </div>
