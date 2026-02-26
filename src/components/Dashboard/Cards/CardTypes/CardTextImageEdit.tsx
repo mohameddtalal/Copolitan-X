@@ -8,13 +8,15 @@ export default function CardTextImage({
   onFlip, 
   onColorChange,
   onMenuOpenChange,
-  onUploadOpen
+  onUploadOpen,
+  currentColor
 }: { 
   card: any; 
   onFlip?: () => void; 
   onColorChange?: (color: string) => void;
   onMenuOpenChange?: (isOpen: boolean) => void;
   onUploadOpen?: () => void;
+  currentColor?: string;
 }) {
   const specialCards = [8];
   const isSpecial = specialCards.includes(card.id);
@@ -44,11 +46,11 @@ export default function CardTextImage({
   }, [isEditing, title, description]);
 
   const colors = [
-    { name: "Blush Pink", value: "bg-[#FFB6C1]" },
-    { name: "Purple", value: "bg-[#7029CF]" },
-    { name: "Dark Gray", value: "bg-[#242424]" },
-    { name: "Neon Green", value: "bg-[#00FFA6]" },
-    { name: "White", value: "bg-[#FFFFFF]" },
+    { name: "Blush Pink", value: "bg-[#FFD3D2]" },
+    { name: "Purple", value: "bg-[var(--color-primary)]" },
+    { name: "Dark Gray", value: "bg-[var(--dark-bg)]" },
+    { name: "Neon Green", value: "bg-[var(--green)]" },
+    { name: "White", value: "bg-[white]" },
   ];
 
   const textColor = card.id === 8 ? "text-black" : "text-white";
@@ -108,15 +110,15 @@ export default function CardTextImage({
         />
         {showColorPicker && (
           <div
-            className="absolute z-[9999] bg-[#242424] rounded-2xl p-3 shadow-2xl min-w-[180px]"
-            style={{ right: '0%', transform: 'translateX(20%)', top: '-60px' }}
+            className="absolute z-[9999] bg-[#242424] rounded-2xl p-3 shadow-2xl min-w-[220px]"
+            style={{ right: '0%', transform: 'translateX(10%)', top: '-60px' }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col gap-1">
               {colors.map((color) => (
                 <div
                   key={color.name}
-                  className="flex items-center gap-3 cursor-pointer rounded-xl px-2 py-1.5 transition-colors"
+                  className="flex items-center justify-between gap-3 cursor-pointer rounded-xl px-2 py-1.5 transition-colors group"
                   style={{
                     backgroundColor: hoveredColor === color.name ? 'rgba(255,255,255,0.08)' : 'transparent',
                   }}
@@ -127,22 +129,17 @@ export default function CardTextImage({
                     setShowColorPicker(false);
                   }}
                 >
-                  <div className={`w-6 h-6 rounded-full ${color.value} border border-white/10 flex items-center justify-center`}>
-                    {hoveredColor === color.name && (
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path
-                          d="M2 6l3 3 5-5"
-                          stroke={color.value === 'bg-[#FFFFFF]' || color.value === 'bg-[#FFB6C1]' || color.value === 'bg-[#00FFA6]' ? '#000' : '#fff'}
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    )}
+                  <div className="flex items-center gap-3">
+                    <div className={`w-6 h-6 rounded-full ${color.value} border border-white/10`} />
+                    <span className="text-white text-sm font-medium font-gtwalsheim transition-colors" style={{ opacity: (hoveredColor === color.name || currentColor === color.value) ? 1 : 0.75 }}>
+                      {color.name}
+                    </span>
                   </div>
-                  <span className="text-white text-sm font-medium font-gtwalsheim transition-colors" style={{ opacity: hoveredColor === color.name ? 1 : 0.75 }}>
-                    {color.name}
-                  </span>
+                  {(currentColor === color.value || hoveredColor === color.name) && (
+                    <svg width="14" height="14" viewBox="0 0 12 12" fill="none" className="shrink-0">
+                      <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
                 </div>
               ))}
             </div>

@@ -8,6 +8,7 @@ import CardTextImageEdit from "./CardTypes/CardTextImageEdit";
 import SplitCardEdit from "./CardTypes/SplitCardEdit";
 import BackCardEdit from "./CardTypes/BackCardEdit";
 import UploadModal from "../Modals/UploadModal";
+import styles from "./CardContainer.module.css"
 
 type LockedImageCardProps = {
   src: string;
@@ -38,7 +39,7 @@ export default function CardContainer({ card }: CardContainerProps) {
 
   const positionClasses =
     card.id === 4
-      ? "col-start-4 row-start-1 col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl"
+      ? "col-start-4 row-start-1 col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-y-auto overflow-x-hidden scrollbar-hide"
       : card.span;
 
   const hasAccess = card.hasAccess !== false;
@@ -50,7 +51,7 @@ export default function CardContainer({ card }: CardContainerProps) {
     rounded-xl sm:rounded-2xl lg:rounded-3xl
     ${!card.isSplit ? "p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-6" : ""}
     flex flex-col justify-between
-    text-white 
+    text-white ${card.id !==2 && !isMenuOpen ? "overflow-y-auto overflow-x-hidden scrollbar-hide ":""}
     transition-transform cursor-default
     h-full
   `;
@@ -89,6 +90,7 @@ export default function CardContainer({ card }: CardContainerProps) {
           onColorChange={(color) => setBgColor(color)} 
           onMenuOpenChange={setIsMenuOpen} 
           onUploadOpen={() => handleOpenUpload("cardTextImage")} 
+          currentColor={bgColor}
         />
       );
     }
@@ -100,6 +102,7 @@ export default function CardContainer({ card }: CardContainerProps) {
         onColorChange={(color) => setBgColor(color)} 
         onMenuOpenChange={setIsMenuOpen} 
         onUploadOpen={() => handleOpenUpload("cardTextImage")} 
+        currentColor={bgColor}
       />
     );
   };

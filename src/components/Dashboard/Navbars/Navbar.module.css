@@ -84,7 +84,7 @@
 .lightNavbar {
   background-color: #fff;
   color: #000;
-  padding:24px 32px 24px 32px;
+   padding:24px 32px 8px 32px;
 }
 .notifications,
 .quote,

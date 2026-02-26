@@ -494,3 +494,11 @@ input:autofill {
 .footerIcon {
   filter: invert(1) brightness(0.6);
 }
+
+.previewCardWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+}

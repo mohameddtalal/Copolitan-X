@@ -68,7 +68,7 @@ export default function UploadModal({ isOpen, onClose, cardId, onUpload }: Uploa
         >
         {/* Header */}
         <div className="flex justify-center items-center mb-6">
-          <h2 className="text-[32px] font-semibold italic text-[#7029CF]" style={{ fontFamily: 'Lora, serif' }}>
+          <h2 className="text-[32px] font-semibold italic text-[#7029CF]" style={{ fontFamily: 'Lora' }}>
             Upload Images
           </h2>
           <button 
@@ -100,13 +100,13 @@ export default function UploadModal({ isOpen, onClose, cardId, onUpload }: Uploa
           <div className="bg-[#F1EAFA] p-4 rounded-2xl mb-4 text-[#7029CF]">
             <UploadCloud size={48} />
           </div>
-          <p className="text-xl font-medium text-gray-700 mb-1">
+          <p className="text-xl font-medium text-gray-700 mb-1" style={{ fontFamily: 'Gt walsheim' }}>
             Browse here to start uploading
           </p>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm" style={{ fontFamily: 'Gt walsheim' }}>
             Supports PNG, JPG, JPEG, SVG, Video
           </p>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm" style={{ fontFamily: 'Gt walsheim' }}>
             Max. xxx MB
           </p>
         </div>
