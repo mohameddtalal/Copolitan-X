@@ -17,11 +17,17 @@
   min-height: 545px;
 }
 
-@media (max-height: 600px) {
+@media (max-height: 650px) {
   .card {
     transform: scale(0.8);
   }
 }
+@media (max-height: 500px) {
+  .card {
+    transform: scale(0.7);
+  }
+}
+
 
 /* Card - Light Theme */
 .whitecard {
@@ -37,9 +43,14 @@
   min-height: 545px;
 }
 
-@media (max-height: 600px) {
+@media (max-height: 650px) {
   .whitecard {
     transform: scale(0.8);
+  }
+}
+@media (max-height: 500px) {
+  .whitecard {
+    transform: scale(0.7);
   }
 }
 

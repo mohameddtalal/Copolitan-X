@@ -47,7 +47,7 @@ const Navbar = () => {
           {selectedButton && (
             <div
             className={styles.selectedBtn}
-            style={{fontFamily: "Lora", fontWeight: 500, fontStyle: "italic", fontSize: "24px", color: isWhiteTheme ? "#000" : "#fff", lineHeight: "1" }}
+            style={{fontFamily: "Lora", fontWeight: 500, fontStyle: "italic", fontSize: "clamp(0.9375rem, 0.5725rem + 1.1968vw, 1.5rem)", color: isWhiteTheme ? "#000" : "#fff", lineHeight: "1" }}
             >
               <p>{selectedButton}</p>
             </div>
@@ -55,7 +55,7 @@ const Navbar = () => {
           {selectedTitle && (
             <div
               className={styles.title}
-              style={{ fontFamily: "GT Walsheim", fontWeight: 600, fontSize: "14px", color: isWhiteTheme ? "#000" : "#fff", marginTop: "4px"  }}
+              style={{ fontFamily: "GT Walsheim", fontWeight: 600, fontSize: "clamp(0.625rem, 0.4628rem + 0.5319vw, 0.875rem)", color: isWhiteTheme ? "#000" : "#fff", marginTop: "4px"  }}
             >
               <p>{selectedTitle}</p>
             </div>

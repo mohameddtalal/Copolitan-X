@@ -3,6 +3,8 @@
   
 }
 .logoImg {
+ width: clamp(160px, 25vw, 312px);
+height: auto;
 
 }
 .navInside {

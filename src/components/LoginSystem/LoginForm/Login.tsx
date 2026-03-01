@@ -56,24 +56,23 @@ export default function Login({
     router.push("/dashboard");
   };
 
-  // editorMode: replicates the real layout (flex-end + padding) but without
-  // the background-image and fixed height so it sits inside BentoGrid naturally
   if (editorMode) {
     return (
+      // ✅ transparent + same flex-end positioning as real login — no background-image
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
         paddingRight: "clamp(1rem, 4vw + 1rem, 183px)",
-        width: "100%",
-        height: "100%",
+        height: "100dvh",
+        background: "transparent",
       }}>
         <div className={styles[mode + "card"]} style={{ position: "relative" }}>
 
           {/* Theme Toggle — only in editorMode */}
           <button
             onClick={(e) => { e.stopPropagation(); toggleMode(); }}
-            className="absolute top-6 right-6 w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors z-[100]"
+            className="absolute top-6 right-6 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
             title="Toggle Theme"
           >
             <Image
@@ -81,7 +80,6 @@ export default function Login({
               alt="Theme"
               width={34}
               height={34}
-              
             />
           </button>
 
@@ -116,7 +114,7 @@ export default function Login({
     );
   }
 
-  // Real auth/login page — full container with background
+  // Real auth/login page — full container with background from CSS
   return (
     <div className={styles.container}>
       <div className={styles[mode + "card"]}>
