@@ -49,7 +49,7 @@ export default function CardContainer({ card }: CardContainerProps) {
   const commonClasses = `
     ${bgColor}
     rounded-xl sm:rounded-2xl lg:rounded-3xl
-    ${!card.isSplit ? "p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-6" : ""}
+    ${!card.isSplit ? "p-2 sm:p-2.5 md:p-2 lg:p-3 xl:p-5" : ""}
     flex flex-col justify-between
     text-white ${card.id !==2 && !isMenuOpen ? "overflow-y-auto overflow-x-hidden scrollbar-hide ":""}
     transition-transform cursor-default
