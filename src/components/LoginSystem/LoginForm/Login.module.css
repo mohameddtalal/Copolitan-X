@@ -44,9 +44,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 48px;
+  padding: clamp(2.1875rem, 1.9388rem + 1.1054vw, 3rem);
   width: clamp(21.875rem, 19.8852rem + 8.8435vw, 28.375rem);
-  min-height: 600px;
+  min-height: 583px;
   background-color: var(--dark-bg);
   border-radius: 32px;
    min-width: 454px;
@@ -71,12 +71,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 48px;
+  padding: clamp(2.1875rem, 1.9388rem + 1.1054vw, 3rem);
   width: clamp(21.875rem, 19.8852rem + 8.8435vw, 28.375rem);
-  min-height: 600px;
+  min-height: 583px;
   background-color: var(--light-bg);
   border-radius: 32px;
-   min-width: 454px;
+  min-width: 454px;
 }
 
 @media (max-height: 650px) {
@@ -124,7 +124,7 @@
   font-size:clamp(0.8125rem, 0.6875rem + 0.1953vw, 0.875rem);
   color: var(--dark-text-secondary);
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: clamp(1.125rem, 0.7174rem + 0.8152vw, 1.5rem);
   font-family: "GT Walsheim";
   font-weight: 600;
   font-style: normal;
@@ -134,7 +134,7 @@
   font-size: 14px;
   color: var(--light-text-secondary);
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: clamp(1.125rem, 0.7174rem + 0.8152vw, 1.5rem);
   font-family: "GT Walsheim";
   font-weight: 600;
   font-style: normal;
@@ -179,6 +179,7 @@
   font-size: 12px;
   border: 1px solid var(--dark-border);
   width: 100%;
+  min-width: 358px;
   min-height: 48px;
   padding: 0px 24px;
   background-color: transparent;
@@ -209,6 +210,7 @@
   border: 1px solid var(  --dark-text-secondary);
   width: 100%;
   min-height: 48px;
+  min-width: 358px;
   padding: 0px 24px;
   background-color: transparent;
   border-radius: 1536px;
@@ -240,11 +242,13 @@ input:autofill {
 /* Input Error */
 .inputError {
   font-size: 12px;
+   min-width: 358px;
+   min-height: 48px;
   color: var(--color-error);
   border: 1px solid var(--color-error);
   background-color: var(--dark-bg-alt);
   width: 100%;
-  padding: 10px 16px;
+  padding: 0px 24px;
   border-radius: 9999px;
   outline: none;
   transition: border-color 0.2s;
@@ -254,12 +258,14 @@ input:autofill {
 }
 
 .whiteinputError {
+  min-height: 48px;
   font-size: 12px;
+   min-width: 358px;
   color: var(--color-error);
   border: 1px solid var(--color-error);
   background-color: var(--light-bg);
   width: 100%;
-  padding: 10px 16px;
+  padding: 0px 24px;
   border-radius: 9999px;
   outline: none;
   transition: border-color 0.2s;
@@ -445,7 +451,7 @@ input:autofill {
 /* Sign In Button */
 .signInButton {
   background-color: var(--color-primary);
-  width: 240px;
+  width: clamp(12.5rem, 9.7826rem + 5.4348vw, 15rem);
   min-height: 56px;
   border-radius: 32px;
   color: var(--color-off-white);
@@ -474,7 +480,7 @@ input:autofill {
 
 /* Footer */
 .footer {
-  margin-top: 24px;
+  margin-top: clamp(1.125rem, 0.7174rem + 0.8152vw, 1.5rem);
   text-align: center;
   font-size: 11px;
   line-height: 1.5;
@@ -489,7 +495,7 @@ input:autofill {
 }
 
 .whitefooter {
-  margin-top: 24px;
+  margin-top: clamp(1.125rem, 0.7174rem + 0.8152vw, 1.5rem);
   text-align: center;
   font-size: 11px;
   line-height: 1.5;

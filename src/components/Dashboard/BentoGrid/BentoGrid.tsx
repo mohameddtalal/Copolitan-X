@@ -54,7 +54,7 @@ const BentoGrid = () => {
     };
 
     return (
-        <div className="w-full h-full px-1 sm:px-1 md:px-2 lg:px-3 xl:px-5 flex flex-col overflow-hidden">
+        <div className="w-full h-full px-5 sm:px-5 md:px-7 lg:px-8 xl:px-8  flex flex-col overflow-hidden">
             <Navigation
                 currentPage={currentPage}
                 pages={pages}

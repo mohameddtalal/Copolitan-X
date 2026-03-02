@@ -110,7 +110,7 @@ export default function CardTextImage({
         />
         {showColorPicker && (
           <div
-            className="absolute z-[9999] bg-[#242424] rounded-2xl p-3 shadow-2xl min-w-[220px]"
+            className="absolute z-[9999] bg-[#242424] rounded-2xl p-3 shadow-2xl min-w-[180px]"
             style={{ right: '0%', transform: 'translateX(10%)', top: '-60px' }}
             onClick={(e) => e.stopPropagation()}
           >

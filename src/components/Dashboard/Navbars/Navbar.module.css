@@ -3,7 +3,7 @@
   
 }
 .logoImg {
- width: clamp(160px, 25vw, 312px);
+width: clamp(160px, 25vw, 312px);
 height: auto;
 
 }
@@ -80,13 +80,13 @@ height: auto;
 .darkNavbar {
   background-color: #000;
   color: #fff;
-  padding:24px 32px 24px 32px;
+  padding:24px 46px 24px 46px;
 }
 
 .lightNavbar {
   background-color: #fff;
   color: #000;
-   padding:24px 32px 8px 32px;
+   padding:24px 46px 8px 46px;
 }
 .notifications,
 .quote,

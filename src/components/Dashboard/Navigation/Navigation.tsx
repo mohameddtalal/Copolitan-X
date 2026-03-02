@@ -30,7 +30,7 @@ export default function Navigation({
   const isWhiteTheme = pathname !== "/dashboard"; // ✅ only exact /dashboard is dark
 
   return (
-    <div className="flex items-end justify-between shrink-0 mb-1 mt-2 relative" style={{ paddingInline: 'var(--container-margin)' }}>
+    <div className="flex items-end justify-between shrink-0 mb-1 mt-2 relative " style={{ paddingInline: '10px' }}>
       {/* Prev Button */}
       {!hideNavElements && (
         <button
@@ -65,8 +65,8 @@ export default function Navigation({
                 onClick={() => setCurrentPage(index)}
                 className={`h-4 rounded-full transition-all duration-300 ${
                   currentPage === index
-                    ? `w-12 ${isWhiteTheme ? 'bg-[#777777]' : 'bg-white'}`
-                    : `w-4 ${isWhiteTheme ? 'bg-[#B1B1B1]' : 'bg-white/30'}`
+                    ? `w-9 h-5 ${isWhiteTheme ? 'bg-[#777777]' : 'bg-white'}`
+                    : `w-5 h-5 ${isWhiteTheme ? 'bg-[#B1B1B1]' : 'bg-white/30'}`
                 }`}
               />
             ))}

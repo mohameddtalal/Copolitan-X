@@ -28,7 +28,6 @@ export default function ResetPassword() {
   const passwordsDontMatch =
     confirmPassword.length > 0 && newPassword !== confirmPassword;
 
-  // 🔴 GLOBAL INVALID FLAG (controls both eyes)
   const passwordInvalid =
     newPassword.length > 0 &&
     (!conditions.minLength ||
@@ -46,32 +45,32 @@ export default function ResetPassword() {
     conditions.specialChar &&
     newPassword === confirmPassword;
 
+  // conditions list is visible when user has started typing
+  const showConditions = newPassword.length > 0;
+
   const handleSave = () => {
     setConfirmError("");
-
     if (newPassword !== confirmPassword) {
       setConfirmError("Passwords do not match");
       return;
     }
-
     if (!allValid) return;
-
     router.push("/auth/success");
   };
 
   return (
     <div className={styles.container}>
-      <div className={mainStyles[mode + "card"]}>
+      <div
+        className={mainStyles[mode + "card"]}
+        style={{ minHeight: showConditions ? "604px" : undefined }}
+      >
         <BrandHeader isBlack={mode === "white"} />
 
         <div className="flex flex-col items-center w-full">
           <h2
             className={styles[mode + "welcomeHeading"]}
             style={{
-              color:
-                mode === ""
-                  ? "var(--color-white)"
-                  : "var(--color-primary)",
+              color: mode === "" ? "var(--color-white)" : "var(--color-primary)",
             }}
           >
             Reset Your Password
@@ -79,9 +78,7 @@ export default function ResetPassword() {
 
           {/* New Password */}
           <div className={styles.formGroupSmall}>
-            <label className={styles[mode + "label"]}>
-              New Password
-            </label>
+            <label className={styles[mode + "label"]}>New Password</label>
 
             <div
               className={
@@ -103,56 +100,32 @@ export default function ResetPassword() {
               />
 
               <Image
-               src={
+                src={
                   passwordInvalid
-                    ? showNewPassword
-                      ? "/login/openeyered.svg"
-                      : "/login/redeye.svg"
-                    : showNewPassword
-                    ? "/login/openeyewhite.svg"
-                    : "/login/eyeclosedwhite.svg"
+                    ? showNewPassword ? "/login/openeyered.svg" : "/login/redeye.svg"
+                    : showNewPassword ? "/login/openeyewhite.svg" : "/login/eyeclosedwhite.svg"
                 }
                 alt="toggle password"
                 width={14}
                 height={14}
                 className={styles.eyeIcon}
-                onClick={() =>
-                  setShowNewPassword(!showNewPassword)
-                }
+                onClick={() => setShowNewPassword(!showNewPassword)}
               />
             </div>
 
-            {/* Password Conditions */}
-            {newPassword.length > 0 && (
-              <div
-                className={mainStyles.conditionsList}
-                style={{ paddingInline: "15px" }}
-              >
-                <p style={{ color:
-                      mode === ""
-                        ? "var(--color-white)"
-                        : "var(--light-text-primary)" }}>
+            {/* Password Conditions — triggers card height change */}
+            {showConditions && (
+              <div className={mainStyles.conditionsList} style={{ paddingInline: "15px" }}>
+                <p style={{ color: mode === "" ? "var(--color-white)" : "var(--light-text-primary)" }}>
                   Your password must have:
                 </p>
 
                 {[
-                  {
-                    label: "Min 8 Characters",
-                    valid: conditions.minLength,
-                  },
-                  {
-                    label: "1 Lowercase Character",
-                    valid: conditions.lowercase,
-                  },
-                  {
-                    label: "1 Uppercase Character",
-                    valid: conditions.uppercase,
-                  },
+                  { label: "Min 8 Characters", valid: conditions.minLength },
+                  { label: "1 Lowercase Character", valid: conditions.lowercase },
+                  { label: "1 Uppercase Character", valid: conditions.uppercase },
                   { label: "1 Number", valid: conditions.number },
-                  {
-                    label: "1 Special Character",
-                    valid: conditions.specialChar,
-                  },
+                  { label: "1 Special Character", valid: conditions.specialChar },
                 ].map((item, i) => (
                   <p
                     key={i}
@@ -163,14 +136,10 @@ export default function ResetPassword() {
                     }
                   >
                     <Image
-                      src={
-                        item.valid
-                          ? "/login/correctwhite.svg"
-                          : "/login/wrong.svg"
-                      }
+                      src={item.valid ? "/login/correctwhite.svg" : "/login/wrong.svg"}
                       alt="status"
-                      width={14}
-                      height={14}
+                      width={29}
+                      height={25}
                     />
                     {item.label}
                   </p>
@@ -181,9 +150,7 @@ export default function ResetPassword() {
 
           {/* Confirm Password */}
           <div className={styles.formGroupSmall}>
-            <label className={styles[mode + "label"]}>
-              Confirm Password
-            </label>
+            <label className={styles[mode + "label"]}>Confirm Password</label>
 
             <div
               className={
@@ -193,13 +160,9 @@ export default function ResetPassword() {
               }
             >
               <input
-                type={
-                  showConfirmPassword ? "text" : "password"
-                }
+                type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
-                onChange={(e) =>
-                  setConfirmPassword(e.target.value)
-                }
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-enter password"
                 className={
                   passwordInvalid
@@ -209,32 +172,21 @@ export default function ResetPassword() {
               />
 
               <Image
-               src={
+                src={
                   passwordInvalid
-                    ? showConfirmPassword
-                      ? "/login/openeyered.svg"
-                      : "/login/redeye.svg"
-                    : showConfirmPassword
-                    ? "/login/openeyewhite.svg"
-                    : "/login/eyeclosedwhite.svg"
+                    ? showConfirmPassword ? "/login/openeyered.svg" : "/login/redeye.svg"
+                    : showConfirmPassword ? "/login/openeyewhite.svg" : "/login/eyeclosedwhite.svg"
                 }
-
                 alt="toggle password"
                 width={14}
                 height={14}
                 className={styles.eyeIcon}
-                onClick={() =>
-                  setShowConfirmPassword(
-                    !showConfirmPassword
-                  )
-                }
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               />
             </div>
 
             {passwordsDontMatch && (
-              <p className={styles.errorMessage}>
-                Passwords do not match
-              </p>
+              <p className={styles.errorMessage}>Passwords do not match</p>
             )}
           </div>
 

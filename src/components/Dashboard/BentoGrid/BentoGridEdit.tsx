@@ -20,19 +20,6 @@ const BentoGrid = () => {
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [showPublishModal, setShowPublishModal] = useState(false);
 
-    // Initialize from localStorage
-    // useEffect(() => {
-    //     const savedBg = localStorage.getItem("published-login-bg");
-    //     const savedMode = localStorage.getItem("published-login-mode") as "" | "white";
-    //     if (savedBg) {
-    //         setSavedBackgroundImage(savedBg);
-    //         setBackgroundImage(savedBg);
-    //     }
-    //     if (savedMode) {
-    //         setLoginMode(savedMode);
-    //     }
-    // }, []);
-
     const handlePublish = () => setShowPublishModal(true);
 
     const handleSave = () => {
@@ -108,8 +95,11 @@ const BentoGrid = () => {
     const nextPage = () => { if (currentPage < pages.length - 1) setCurrentPage(currentPage + 1); };
     const prevPage = () => { if (currentPage > 0) setCurrentPage(currentPage - 1); };
 
+    // shared right value — matches the px padding on the outer wrapper
+    const sidebarRight = "-right-5 sm:-right-5 md:-right-7 lg:-right-8 xl:-right-8";
+
     return (
-        <div className="w-full h-full px-1 sm:px-1 md:px-2 lg:px-3 xl:px-5 flex flex-col overflow-hidden">
+        <div className="w-full h-full px-5 sm:px-5 md:px-7 lg:px-8 xl:px-8 flex flex-col overflow-hidden">
             <Navigation
                 currentPage={currentPage}
                 pages={pages}
@@ -123,20 +113,20 @@ const BentoGrid = () => {
                 hideNavElements={activeTab === "signin"}
             />
 
-            <div className="flex-1 overflow-hidden w-full min-h-0">
+            <div className="flex-1 w-full min-h-0">
                 {activeTab === "signin" ? (
-                    <div className="h-full w-full flex flex-col items-center justify-center p-0 m-0 ">
-                        <div className="flex flex-row gap-3 w-full h-full max-h-[99dvh] mb-5">
 
-                            {/* Auth Layout Preview Area */}
-                            <div className="flex-1 relative rounded-[30px] ">
-                                {/* Background */}
+                    /* signin: relative wrapper so sidebar can be absolute */
+                    <div className="relative h-full w-full pr-4">
+                        <div className="h-full w-full max-h-[99dvh] mb-5">
+
+                            {/* Auth Layout Preview Area — full width, sidebar floats outside */}
+                            <div className="h-full relative rounded-[30px] ">
                                 <div
                                     key={backgroundImage}
-                                    className="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+                                    className="absolute inset-0 bg-cover bg-center transition-opacity duration-700 "
                                     style={{ backgroundImage: backgroundImage ? `url('${backgroundImage}')` : "url('/login/background.svg')" }}
                                 />
-                                {/* Login card container */}
                                 <div className="overflow-y-auto scrollbar-hide">
                                     <div className="w-full">
                                         <Login
@@ -148,50 +138,67 @@ const BentoGrid = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            {/* Control Sidebar */}
-                            <div className="flex flex-col gap-2 shrink-0 justify-start pt-12">
-                                <button onClick={() => setIsUploadModalOpen(true)} title="Upload Background">
-                                    <Image src="/cards/uploadedit.svg" alt="Upload" width={32} height={32} />
+                        {/* Control Sidebar — signin, absolute in right padding */}
+                        <div className={`absolute top-3 ${sidebarRight} flex flex-col gap-2 p-2`}>
+                            <button onClick={() => setIsUploadModalOpen(true)} title="Upload Background">
+                                <Image src="/cards/uploadedit.svg" alt="Upload" width={28} height={28} />
+                            </button>
+                            <button onClick={() => setFullscreenPreview(true)} title="Fullscreen Preview">
+                                <Image src="/cards/previewedit.svg" alt="Preview" width={28} height={28} />
+                            </button>
+
+                            {isEditingImage && (
+                                <button onClick={handleBackEdit} title="Back to Main">
+                                    <Image src="/cards/backedit.svg" alt="Back Edit" width={28} height={28} />
                                 </button>
-                                <button onClick={() => setFullscreenPreview(true)} title="Fullscreen Preview">
-                                    <Image src="/cards/previewedit.svg" alt="Preview" width={32} height={32} />
+                            )}
+
+                            {isEditingImage ? (
+                                <button onClick={handleSave} title="Save Changes">
+                                    <Image src="/cards/savedit.svg" alt="Save" width={28} height={28} />
                                 </button>
-
-                                {isEditingImage && (
-                                    <button onClick={handleBackEdit} title="Back to Main">
-                                        <Image src="/cards/backedit.svg" alt="Back Edit" width={32} height={32} />
-                                    </button>
-                                )}
-
-                                {isEditingImage ? (
-                                    <button onClick={handleSave} title="Save Changes">
-                                        <Image src="/cards/savedit.svg" alt="Save" width={32} height={32} />
-                                    </button>
-                                ) : (
-                                    <button onClick={handlePublish} title="Publish Settings">
-                                        <Image src="/cards/publishedit.svg" alt="Publish" width={32} height={32} />
-                                    </button>
-                                )}
-
-                                <button onClick={handleBack} title="Reset Background">
-                                    <Image src="/cards/flipwhiteicon.svg" alt="Reset" width={24} height={24} />
+                            ) : (
+                                <button onClick={handlePublish} title="Publish Settings">
+                                    <Image src="/cards/publishedit.svg" alt="Publish" width={28} height={28} />
                                 </button>
-                            </div>
+                            )}
+
+                            <button onClick={handleBack} title="Reset Background">
+                                <Image src="/cards/flipwhiteicon.svg" alt="Reset" width={24} height={24} />
+                            </button>
                         </div>
                     </div>
+
                 ) : (
-                    <div
-                        className="flex w-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                        style={{ transform: `translateX(-${currentPage * 100}%)` }}
-                    >
-                        {pages.map((page, pageIndex) => (
-                            <PageContainer key={pageIndex}>
-                                {page.map((card) => (
-                                    <CardContainerEdit key={card.id} card={card} />
+
+                    /* homepage: relative outer (no overflow) + overflow-hidden inner for slider */
+                    <div className="relative w-full h-full">
+                        <div className="w-full h-full overflow-hidden">
+                            <div
+                                className="flex w-full h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                                style={{ transform: `translateX(-${currentPage * 100}%)` }}
+                            >
+                                {pages.map((page, pageIndex) => (
+                                    <PageContainer key={pageIndex}>
+                                        {page.map((card) => (
+                                            <CardContainerEdit key={card.id} card={card} />
+                                        ))}
+                                    </PageContainer>
                                 ))}
-                            </PageContainer>
-                        ))}
+                            </div>
+                        </div>
+
+                        {/* Control Sidebar — homepage, absolute in right padding */}
+                        <div className={`absolute top-3 ${sidebarRight} flex flex-col gap-2 p-2`}>
+                            <button onClick={() => setFullscreenPreview(true)} title="Fullscreen Preview">
+                                <Image src="/cards/previewedit.svg" alt="Preview" width={28} height={28} />
+                            </button>
+                            <button onClick={handlePublish} title="Publish">
+                                <Image src="/cards/publishedit.svg" alt="Publish" width={28} height={28} />
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
@@ -201,20 +208,18 @@ const BentoGrid = () => {
                 <div className="fixed inset-0 z-[10000] flex items-center justify-center p-0 m-0">
                     <button
                         onClick={() => setFullscreenPreview(false)}
-                        className="absolute top-8 right-8 p-3 rounded-full transition-colors z-[10001] cursor-pointer "
+                        className="absolute top-8 right-8 p-3 rounded-full transition-colors z-[10001] cursor-pointer"
                     >
                         <Image src="/cards/exitedit.svg" alt="Close" width={48} height={48} className="w-5 h-5 sm:w-4 sm:h-4 md:h-5 md:w-5 lg:w-6 lg:h-6 xl:w-8 xl:h-8" />
                     </button>
                     <div className="w-full h-full relative overflow-hidden">
-                        {/* ✅ FIX: added key={backgroundImage} so it re-renders when image changes */}
                         <div
                             key={backgroundImage}
                             className="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
                             style={{ backgroundImage: backgroundImage ? `url('${backgroundImage}')` : "url('/login/background.svg')" }}
                         />
-                        {/* ✅ FIX: added absolute inset-0 so Login overlays the background */}
                         <div className="absolute inset-0 overflow-hidden">
-                            <Login editorMode={true}  forceMode={loginMode} onModeToggle={setLoginMode} />
+                            <Login editorMode={true} forceMode={loginMode} onModeToggle={setLoginMode} />
                         </div>
                     </div>
                 </div>

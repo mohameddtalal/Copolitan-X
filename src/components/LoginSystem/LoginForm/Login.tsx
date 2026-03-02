@@ -29,6 +29,9 @@ export default function Login({
   const mode = forceMode !== undefined ? forceMode : internalMode;
   const isDisabled = previewMode || editorMode;
 
+  // true when any error is active
+  const hasError = !!emailError || !!passwordError;
+
   const toggleMode = () => {
     const newMode = mode === "white" ? "" : "white";
     if (onModeToggle) {
@@ -58,18 +61,15 @@ export default function Login({
 
   if (editorMode) {
     return (
-      // ✅ transparent + same flex-end positioning as real login — no background-image
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        paddingRight: "clamp(1rem, 4vw + 1rem, 183px)",
+        paddingRight: "clamp(0px, 10vw - 90px, 100px)",
         height: "100dvh",
         background: "transparent",
       }}>
         <div className={styles[mode + "card"]} style={{ position: "relative" }}>
-
-          {/* Theme Toggle — only in editorMode */}
           <button
             onClick={(e) => { e.stopPropagation(); toggleMode(); }}
             className="absolute top-6 right-6 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
@@ -114,11 +114,13 @@ export default function Login({
     );
   }
 
-  // Real auth/login page — full container with background from CSS
+  // Real auth/login page
   return (
     <div className={styles.container}>
-      <div className={styles[mode + "card"]}>
-
+      <div
+        className={styles[mode + "card"]}
+        style={{ minHeight: hasError ? "634px" : undefined }}
+      >
         <BrandHeader isBlack={mode === "white"} />
         <h2 className={styles[mode + "welcomeHeading"]}>Welcome Back!</h2>
         <p className={styles[mode + "subtitle"]}>
