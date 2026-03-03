@@ -85,10 +85,10 @@ const BentoGrid = () => {
             { id: 2, title: "", description: "", color: "bg-[var(--background)]", span: "col-span-1 row-span-1", image: "/cards/CIRCULAR TEXT.svg" },
             { id: 10, title: "Security \nControl", description: "Serves as the central command center of the platform, giving administrators full oversight and configuration power across the entire system.", color: "invisible pointer-events-none", span: "col-span-1 row-span-2", cardTextImage: "/cards/card11.svg", layoutType: "column", backItems: ["Manage Access Control", "Space Access Logs", "Entry / Exit Permits", "Visitor Management", "Emergency Protocols & Alerts", "Security Audit Logs"], lockedImage: "/cards/locked-Security-Control.svg", hasAccess: true },
             { id: 4, title: "fatma Ashraf", description: "Co-founder", color: "bg-[var(--background)]", span: "col-span-1 row-span-2", isSplit: true, profileImage: "/cards/profile.svg", characterImage: "/cards/character.svg" },
-            { id: 11, title: "Finance Center", description: "A control panel for streamlined financial records and insights collaborations.", color: "invisible pointer-events-none", span: "col-span-1 row-span-2", backItems: ["Revenue Streams", "Expense Ledger", "Payouts", "Tax & Compliance", "Forecasting"] },
-            { id: 12, title: "Experience& \nEngagement Lab", description: "A tools lab that drives engagement and growth where experience is refined and elevated.", color: "invisible pointer-events-none", span: "col-span-1 row-span-1", backItems: ["Member Feedback", "NPS Tracking", "Community Events", "Promotions", "Retention Insights"] },
-            { id: 13, title: "Data Hub", description: "A streamlined repository for all data collect, analyze, and access key metrics to drive informed decisions.", color: "invisible pointer-events-none", span: "col-span-1 row-span-1", backItems: ["Data Sources", "Dashboards", "Exports", "Data Quality", "Access Requests"] },
-            { id: 14, title: "Facility \nManagement ", description: "Central hub linking key operational tasks for seamless tracking, reporting, and workflow management.", color: "invisible pointer-events-none", span: "col-span-2 row-span-1", cardTextImage: "/cards/card15.svg", layoutType: "row", backItems: ["Workorders", "Maintenance Schedule", "Vendor Management", "Asset Inventory", "Space Utilization"] },
+            // { id: 11, title: "Finance Center", description: "A control panel for streamlined financial records and insights collaborations.", color: "invisible pointer-events-none", span: "col-span-1 row-span-2", backItems: ["Revenue Streams", "Expense Ledger", "Payouts", "Tax & Compliance", "Forecasting"] },
+            // { id: 12, title: "Experience& \nEngagement Lab", description: "A tools lab that drives engagement and growth where experience is refined and elevated.", color: "invisible pointer-events-none", span: "col-span-1 row-span-1", backItems: ["Member Feedback", "NPS Tracking", "Community Events", "Promotions", "Retention Insights"] },
+            // { id: 13, title: "Data Hub", description: "A streamlined repository for all data collect, analyze, and access key metrics to drive informed decisions.", color: "invisible pointer-events-none", span: "col-span-1 row-span-1", backItems: ["Data Sources", "Dashboards", "Exports", "Data Quality", "Access Requests"] },
+            // { id: 14, title: "Facility \nManagement ", description: "Central hub linking key operational tasks for seamless tracking, reporting, and workflow management.", color: "invisible pointer-events-none", span: "col-span-2 row-span-1", cardTextImage: "/cards/card15.svg", layoutType: "row", backItems: ["Workorders", "Maintenance Schedule", "Vendor Management", "Asset Inventory", "Space Utilization"] },
         ],
     ];
 
@@ -99,7 +99,7 @@ const BentoGrid = () => {
     const sidebarRight = "-right-5 sm:-right-5 md:-right-7 lg:-right-8 xl:-right-8";
 
     return (
-        <div className="w-full h-full px-5 sm:px-5 md:px-7 lg:px-8 xl:px-8 flex flex-col overflow-hidden">
+        <div className="main-container w-full h-full flex flex-col overflow-hidden">
             <Navigation
                 currentPage={currentPage}
                 pages={pages}
@@ -181,9 +181,9 @@ const BentoGrid = () => {
                                 style={{ transform: `translateX(-${currentPage * 100}%)` }}
                             >
                                 {pages.map((page, pageIndex) => (
-                                    <PageContainer key={pageIndex}>
+                                    <PageContainer key={pageIndex} pageIndex={pageIndex}>
                                         {page.map((card) => (
-                                            <CardContainerEdit key={card.id} card={card} />
+                                            <CardContainerEdit key={card.id} card={card} pageIndex={pageIndex} />
                                         ))}
                                     </PageContainer>
                                 ))}

@@ -1,9 +1,9 @@
-export default function PageContainer({ children }: { children: React.ReactNode }) {
+export default function PageContainer({ children,pageIndex }: { children: React.ReactNode,pageIndex:number }) {
 
 
     return (
-        <div className="min-w-full  flex items-center justify-center mb-3 p-3 ">
-            <div className="grid grid-cols-4 grid-rows-3 gap-2 sm:gap-2 lg:gap-3 w-full h-full auto-rows-fr relative">
+        <div className="min-w-full  flex items-center justify-center   ">
+            <div className={`w-full  ${pageIndex==2?"grid-system-sm":"grid-system"} relative`}>
                 {children}
             </div>
         </div>

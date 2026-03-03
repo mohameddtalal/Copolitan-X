@@ -24,13 +24,14 @@ const BackActionList = ({ items, title }: { items: string[]; title: string }) =>
 
 interface CardContainerProps {
   card: any;
+  pageIndex:any
 }
 
-export default function CardContainer({ card }: CardContainerProps) {
+export default function CardContainer({ card,pageIndex }: CardContainerProps) {
   const positionClasses =
     card.id === 4
-      ? "col-start-4 row-start-1 col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl"
-      : card.span;
+      ? `card-grid-${card.id}  col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl grid-padding `
+      : card.span +` card-grid-${card.id} ${card.id==10&&pageIndex==2?"order-card-3":""}`;
 
   const hasAccess = card.hasAccess !== false;
   const isLocked = !hasAccess && Boolean(card.lockedImage);
@@ -42,7 +43,7 @@ export default function CardContainer({ card }: CardContainerProps) {
     flex flex-col justify-between
     text-white
     transition-transform cursor-pointer
-    overflow-hidden h-full
+    overflow-hidden h-full grid-padding card-grid-${card.id} 
   `;
 
   const lockedClasses = `${commonClasses} cursor-default`;
@@ -76,7 +77,7 @@ export default function CardContainer({ card }: CardContainerProps) {
   }
 
   return (
-    <div key={card.id} className={`${positionClasses} ${commonClasses} group relative`}>
+    <div key={card.id} className={`${positionClasses} ${commonClasses}  group relative`}>
       {renderContent()}
     </div>
   );

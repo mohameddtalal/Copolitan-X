@@ -23,9 +23,10 @@ const LockedImageCard = ({ src, alt }: LockedImageCardProps) => (
 
 interface CardContainerProps {
   card: any;
+  pageIndex:number
 }
 
-export default function CardContainer({ card }: CardContainerProps) {
+export default function CardContainer({ card,pageIndex }: CardContainerProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [bgColor, setBgColor] = useState(card.color || "");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,8 +40,8 @@ export default function CardContainer({ card }: CardContainerProps) {
 
   const positionClasses =
     card.id === 4
-      ? "col-start-4 row-start-1 col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-y-auto overflow-x-hidden scrollbar-hide"
-      : card.span;
+      ? `card-grid-${card.id} col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-y-auto overflow-x-hidden scrollbar-hide`
+      : card.span +` card-grid-${card.id} ${card.id==10&&pageIndex==2?"order-card-3":""}`;
 
   const hasAccess = card.hasAccess !== false;
   // If a locked image is uploaded, we treat it as "Locked" for the front face visualization
@@ -53,7 +54,7 @@ export default function CardContainer({ card }: CardContainerProps) {
     flex flex-col justify-between
     text-white ${card.id !==2 && !isMenuOpen ? "overflow-y-auto overflow-x-hidden scrollbar-hide ":""}
     transition-transform cursor-default
-    h-full
+    h-full grid-padding card-grid-${card.id}
   `;
 
   const handleOpenUpload = (target: "cardTextImage" | "characterImage" | "lockedImage") => {

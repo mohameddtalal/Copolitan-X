@@ -80,13 +80,15 @@ height: auto;
 .darkNavbar {
   background-color: #000;
   color: #fff;
-  padding:24px 46px 24px 46px;
+  padding-block: 24px;
 }
 
 .lightNavbar {
   background-color: #fff;
   color: #000;
-   padding:24px 46px 8px 46px;
+  padding-block: 24px;
+
+   /* padding:24px 46px 8px 46px; */
 }
 .notifications,
 .quote,

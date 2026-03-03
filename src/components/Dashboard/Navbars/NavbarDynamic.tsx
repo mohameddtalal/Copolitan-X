@@ -27,7 +27,7 @@ const Navbar = () => {
   const logoSrc = isWhiteTheme ? "/login/logoblack.svg" : "/navbar/Layer_1.svg";
 
   return (
-    <nav className={navbarClass}>
+    <nav className={`${navbarClass} main-container`}>
       <div className={styles.row}>
         {/* Logo */}
         <Link href="/dashboard">
