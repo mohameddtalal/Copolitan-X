@@ -83,7 +83,7 @@ export default function TextCard({
     <>
       <div className={styles[`card-${card.id}`]}>
 
-        <div className="flex flex-row items-start justify-between">
+        <div className="flex flex-row items-start justify-between relative">
           {/* Title — inline editable */}
           {isEditing ? (
             <textarea
@@ -102,7 +102,7 @@ export default function TextCard({
           )}
 
           {/* Action icons */}
-          <div className={`flex flex-col gap-2 shrink-0 ml-3 relative ${showColorPicker ? "z-[999]" : ""}`}>
+          <div className={`flex flex-col gap-2 shrink-0 ml-3 absolute right-edit-icons ${showColorPicker ? "z-[999]" : ""}`}>
             {/* Edit / Save icon */}
             <img
               src={

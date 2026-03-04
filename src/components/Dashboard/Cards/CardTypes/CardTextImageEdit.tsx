@@ -80,7 +80,7 @@ export default function CardTextImage({
   };
 
   const icons = (
-    <div className={`flex flex-col gap-2 shrink-0 ml-3 relative ${showColorPicker ? "z-[999]" : ""}`}>
+    <div className={`flex flex-col gap-2 shrink-0 ml-3 absolute right-edit-icons ${showColorPicker ? "z-[999]" : ""}`}>
       {/* Edit / Save icon */}
       <img
         src={
@@ -153,7 +153,7 @@ export default function CardTextImage({
     <>
       {card.layoutType === "column" ? (
         <div className="relative flex flex-col gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 xl:gap-3 flex-1">
-          <div className="flex flex-row items-start justify-between">
+          <div className="flex flex-row items-start justify-between relative">
             {/* Title inline editable */}
             {isEditing ? (
               <textarea
@@ -211,7 +211,7 @@ export default function CardTextImage({
         </div>
       )}
 
-      <div className={`${styles[`card-icon-${card.id}`]} flex justify-between items-end`}>
+      <div className={`${styles[`card-icon-${card.id}`]} flex justify-between items-end relative`}>
         {isEditing && card.id!=5 ? (
           <textarea
             ref={descRef}
@@ -225,7 +225,7 @@ export default function CardTextImage({
         ) : (
           <p className={`whitespace-pre-line ${getDescSizeClass(card.id)} ${textColor}`}>{card.id === 10 || card.id==5 ? "" : description}</p>
         )}
-        <img src="/cards/Buttom Icon.svg" alt="icon" className="w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+        <img src="/cards/Buttom Icon.svg" alt="icon" className="w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6 absolute right-0" />
       </div>
     </>
   );

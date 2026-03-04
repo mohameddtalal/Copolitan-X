@@ -445,3 +445,6 @@ body {
     font-weight: 400;
   }
 }
+.right-edit-icons{
+  right: -10px;
+}

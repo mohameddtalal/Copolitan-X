@@ -96,7 +96,7 @@ const BentoGrid = () => {
     const prevPage = () => { if (currentPage > 0) setCurrentPage(currentPage - 1); };
 
     // shared right value — matches the px padding on the outer wrapper
-    const sidebarRight = "-right-5 sm:-right-5 md:-right-7 lg:-right-8 xl:-right-8";
+    const sidebarRight = " -right-11";
 
     return (
         <div className="main-container w-full h-full flex flex-col overflow-hidden">
