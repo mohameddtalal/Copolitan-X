@@ -13,7 +13,7 @@ export default function ImageCard({ card }: ImageCardProps) {
 
   return (
     <>
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-[#F7F7F7]">
         {card.id === 2 ? (
           <>
             <motion.img

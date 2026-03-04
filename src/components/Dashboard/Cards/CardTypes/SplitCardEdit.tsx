@@ -17,7 +17,7 @@ export default function SplitCard({ card, onUploadOpen }: SplitCardProps) {
       className={`
         flex flex-col h-full gap-2 sm:gap-3 lg:gap-4 
         rounded-xl sm:rounded-2xl lg:rounded-3xl
-        ${isWhiteTheme ? "bg-white text-black" : "bg-[var(--background)] text-white"} 
+        ${isWhiteTheme ? "bg-[#F7F7F7] text-black" : "bg-[var(--background)] text-white"} 
       `}
     >
       {/* Top section - Profile and info */}
