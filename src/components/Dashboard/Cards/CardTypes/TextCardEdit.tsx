@@ -110,21 +110,21 @@ export default function TextCard({
                   ? (isSpecial ? "/cards/savewhiteicon.svg" : "/cards/saveicon.svg")
                   : (isSpecial ? "/cards/editwhiteicon.svg" : "/cards/editicon.svg")
               }
-              className="w-5 h-5 cursor-pointer"
+              className="w-5 h-5  cursor-pointer"
               onClick={handleEditToggle}
             />
 
             {(card.id === 3 || card.id === 11) && (
               <img 
                 src="/cards/uploadwhiteicon.svg" 
-                className="w-5 h-5 cursor-pointer" 
+                className="w-5 h-5  cursor-pointer" 
                 onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
               />
             )}
 
             <img
               src={isSpecial ? "/cards/flipwhiteicon.svg" : "/cards/flipicon.svg"}
-              className="w-5 h-5 cursor-pointer"
+              className="w-5 h-5  cursor-pointer"
               onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
             />
 

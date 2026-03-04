@@ -189,42 +189,7 @@ body {
 /* ===========================
    Title & Description Sizes
    =========================== */
-.title-lg {
-  font-size: clamp(1.125rem, 0.8571rem + 1.1905vw, 2rem);
-  line-height: 30px;
-  font-family: "Lora";
-  font-weight: 600;
-  font-style: italic;
-}
-.desc-lg {
-  font-size: clamp(0.75rem, 0.6735rem + 0.3401vw, 1rem);
-  font-family: "GT Walsheim";
-  font-weight: 400;
-}
-.title-md {
-  font-size: clamp(1rem, 0.8469rem + 0.6803vw, 1.5rem);
-  line-height: clamp(1.375rem, 1.1837rem + 0.8503vw, 2rem);
-  font-family: "Lora";
-  font-weight: 600;
-  font-style: italic;
-}
-.desc-md {
-  font-size: clamp(0.75rem, 0.7117rem + 0.1701vw, 0.875rem);
-  font-family: "GT Walsheim";
-  font-weight: 400;
-}
-.title-sm {
-  font-size: clamp(1rem, 0.8469rem + 0.6803vw, 1.5rem);
-  line-height: clamp(1.375rem, 1.1837rem + 0.8503vw, 2rem);
-  font-family: "Lora";
-  font-weight: 600;
-  font-style: italic;
-}
-.desc-sm {
-  font-size: clamp(0.625rem, 0.5867rem + 0.1701vw, 0.75rem);
-  font-family: "GT Walsheim";
-  font-weight: 400;
-}
+
 
 /* ===========================
    Scrollbar
@@ -267,10 +232,10 @@ body {
 .grid-system-sm {
   display: grid;
   margin-top: 16px;
+  margin-bottom: 16px;
 }
-
 /* Desktop Large */
-@media (min-width: 1280px) and (max-width: 1536px) {
+@media (min-width: 1280px) and (max-width: 3000px) {
   .main-container {
     padding-inline: clamp(56px, 4vw, 64px) !important;
   }
@@ -283,10 +248,48 @@ body {
   .grid-padding {
     padding: 24px !important;
   }
+  .title-lg {
+    font-size: clamp(28px, 2vw, 32px);
+    line-height: clamp(28px, 2vw, 32px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-lg {
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: clamp(16px, 1.5vw, 24px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
+  .title-md {
+    font-size: clamp(20px, 1.5vw, 24px);
+    line-height: clamp(20px, 1.5vw, 24px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-md {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(14px, 1.2vw, 16px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
+  .title-sm {
+    font-size: clamp(20px, 1.5vw, 24px);
+    line-height: clamp(20px, 1.5vw, 24px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-sm {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(14px, 1.2vw, 16px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
 }
 
 /* Desktop / Tablet Landscape */
-
 @media (min-width: 1024px) and (max-width: 1279px) {
   .main-container {
     padding-inline: clamp(48px, 4vw, 56px) !important;
@@ -295,14 +298,54 @@ body {
   .grid-system-sm {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 16px;
+    gap: 12px;
   }
   .grid-padding {
     padding: 16px !important;
   }
+  .title-lg {
+    font-size: clamp(24px, 2vw, 28px);
+    line-height: clamp(24px, 2vw, 28px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-lg {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(14px, 1.2vw, 16px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
+  .title-md {
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: clamp(16px, 1.5vw, 20px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-md {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(14px, 1.2vw, 16px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
+  .title-sm {
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: clamp(16px, 1.5vw, 20px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-sm {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(14px, 1.2vw, 16px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
 }
+
 /* Tablet Portrait */
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 320px) and (max-width: 1023px) {
   .main-container {
     padding-inline: clamp(40px, 5vw, 48px) !important;
   }
@@ -362,7 +405,43 @@ body {
   .card-grid-14 {
     order: 8;
   }
-  /* .card-grid-15{
-    order: 2;
-  } */
+  .title-lg {
+    font-size: clamp(28px, 4vw, 32px);
+    line-height: clamp(28px, 4vw, 32px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-lg {
+    font-size: clamp(14px, 3vw, 16px);
+    line-height: clamp(16px, 3.5vw, 24px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
+  .title-md {
+    font-size: clamp(20px, 3vw, 24px);
+    line-height: clamp(20px, 3vw, 24px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-md {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(14px, 1.2vw, 16px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
+  .title-sm {
+    font-size: clamp(20px, 3vw, 24px);
+    line-height: clamp(20px, 3vw, 24px);
+    font-family: "Lora";
+    font-weight: 600;
+    font-style: italic;
+  }
+  .desc-sm {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(14px, 1.2vw, 16px);
+    font-family: "GT Walsheim";
+    font-weight: 400;
+  }
 }

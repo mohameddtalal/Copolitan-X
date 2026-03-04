@@ -39,10 +39,10 @@ export default function EditBackCard({ card, onFlip, onUploadOpen }: EditBackCar
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center h-full w-full bg-[var(--dark-bg)] rounded-xl sm:rounded-2xl lg:rounded-3xl px-6 py-4 overflow-hidden">
+    <div className="relative flex flex-col items-center justify-center h-full w-full bg-[var(--dark-bg)] rounded-xl sm:rounded-2xl lg:rounded-3xl  overflow-hidden">
       
       {/* Top icons */}
-      <div className="absolute top-6 right-3 flex gap-3 z-20">
+      <div className="absolute top-1 right-1 flex gap-3 z-20">
         {card.lockedImage && !showInstructions && (
           <button 
             onClick={(e) => { e.stopPropagation(); setShowInstructions(true); }}
@@ -54,7 +54,7 @@ export default function EditBackCard({ card, onFlip, onUploadOpen }: EditBackCar
         )}
         <img 
           src="/cards/flipwhiteicon.svg" 
-          className="w-5 h-5 cursor-pointer" 
+          className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 cursor-pointer"
           onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
           title="Flip to Front"
         />
@@ -63,7 +63,7 @@ export default function EditBackCard({ card, onFlip, onUploadOpen }: EditBackCar
       {/* Upload button */}
       <button
         onClick={handleUpload}
-        className="mb-4 px-6 py-2 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-black transition-colors z-10"
+        className="mb-3 px-5 py-2 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-black transition-colors z-10"
         style={{ fontFamily: "GT Walsheim",  fontWeight:"600"}}
       >
         Upload

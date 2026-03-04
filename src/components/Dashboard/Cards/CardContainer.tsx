@@ -30,21 +30,21 @@ interface CardContainerProps {
 export default function CardContainer({ card,pageIndex }: CardContainerProps) {
   const positionClasses =
     card.id === 4
-      ? `card-grid-${card.id}  col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl grid-padding `
+       ? `card-grid-${card.id} col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl  overflow-x-hidden scrollbar-hide`
       : card.span +` card-grid-${card.id} ${card.id==10&&pageIndex==2?"order-card-3":""}`;
 
   const hasAccess = card.hasAccess !== false;
   const isLocked = !hasAccess && Boolean(card.lockedImage);
 
-  const commonClasses = `
-    ${card.color}
-    rounded-xl sm:rounded-2xl lg:rounded-3xl
-    ${!card.isSplit ? "p-2 sm:p-2.5 md:p-2 lg:p-3 xl:p-5" : ""}
-    flex flex-col justify-between
-    text-white
-    transition-transform cursor-pointer
-    overflow-hidden h-full grid-padding card-grid-${card.id} 
-  `;
+ const commonClasses = `
+  ${card.color}
+  rounded-xl sm:rounded-2xl lg:rounded-3xl
+  ${!card.isSplit ? `grid-padding card-grid-${card.id}` : ""}
+  flex flex-col justify-between
+  text-white
+  transition-transform cursor-pointer
+  overflow-hidden h-full
+`;
 
   const lockedClasses = `${commonClasses} cursor-default`;
 

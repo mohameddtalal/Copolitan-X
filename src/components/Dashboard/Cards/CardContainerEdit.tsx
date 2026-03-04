@@ -50,11 +50,11 @@ export default function CardContainer({ card,pageIndex }: CardContainerProps) {
   const commonClasses = `
     ${bgColor}
     rounded-xl sm:rounded-2xl lg:rounded-3xl
-    ${!card.isSplit ? "p-2 sm:p-2.5 md:p-2 lg:p-3 xl:p-5" : ""}
+      ${!card.isSplit ? `grid-padding card-grid-${card.id}` : ""}
     flex flex-col justify-between
     text-white ${card.id !==2 && !isMenuOpen ? "overflow-y-auto overflow-x-hidden scrollbar-hide ":""}
     transition-transform cursor-default
-    h-full grid-padding card-grid-${card.id}
+    h-full 
   `;
 
   const handleOpenUpload = (target: "cardTextImage" | "characterImage" | "lockedImage") => {

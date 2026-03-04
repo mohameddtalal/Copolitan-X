@@ -12,7 +12,7 @@ export default function DynamicDashboardPage({ params }: PageProps) {
   const buttonName = params?.buttonName ?? "";
 
   return (
-     <div className="bg-white">     
+     <div className="bg-[#F7F7F7]">     
         <BentoGridEdit /> 
         </div>
   );

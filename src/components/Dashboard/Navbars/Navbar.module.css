@@ -84,9 +84,10 @@ height: auto;
 }
 
 .lightNavbar {
-  background-color: #fff;
+  background-color: #F7F7F7;
   color: #000;
   padding-block: 24px;
+  
 
    /* padding:24px 46px 8px 46px; */
 }
@@ -106,6 +107,7 @@ height: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 .title{
   margin-bottom: 0;

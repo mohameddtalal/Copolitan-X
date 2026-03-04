@@ -88,24 +88,24 @@ export default function CardTextImage({
             ? (isSpecial ? "/cards/saveicon.svg" : "/cards/savewhiteicon.svg")
             : (isSpecial ? "/cards/editicon.svg" : "/cards/editwhiteicon.svg")
         }
-        className="w-5 h-5 cursor-pointer"
+        className="w-5 h-5  cursor-pointer"
         onClick={handleEditToggle}
       />
       <img 
         src={isSpecial ? "/cards/uploadicon.svg" : "/cards/uploadwhiteicon.svg"} 
-        className="w-5 h-5 cursor-pointer" 
+        className="w-5 h-5  cursor-pointer" 
         onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
       />
       <img
         src={isSpecial ? "/cards/flipicon.svg" : "/cards/flipwhiteicon.svg"}
-        className="w-5 h-5 cursor-pointer"
+        className="w-5 h-5  cursor-pointer"
         onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
       />
       {/* Palette icon + dropdown (opens upward, centered) */}
       <div className="relative" ref={colorPickerRef}>
         <img
           src={isSpecial ? "/cards/paletteicon.svg" : "/cards/palettewhiteicon.svg"}
-          className="w-5 h-5 cursor-pointer"
+          className="w-5 h-5  cursor-pointer"
           onClick={(e) => { e.stopPropagation(); setShowColorPicker(!showColorPicker); }}
         />
         {showColorPicker && (
@@ -171,7 +171,7 @@ export default function CardTextImage({
             {icons}
           </div>
           <div className="flex justify-center items-center flex-1 h-full">
-            {card.cardTextImage && <img src={card.cardTextImage} alt={title} className="max-w-full max-h-full object-contain shrink-0 " />}
+            {card.cardTextImage && <img src={card.cardTextImage} alt={title} className="  w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-26 lg:h-26 xl:w-32 xl:h-32 object-contain shrink-0 " />}
           </div>
           {/* Description inline editable */}
           {isEditing ? (
@@ -189,8 +189,8 @@ export default function CardTextImage({
           )}
         </div>
       ) : (
-        <div className="relative flex flex-row gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 xl:gap-3 items-start h-full">
-          <div className={`flex flex-col flex-1 gap-0.5 sm:gap-0.5 md:gap-1 lg:gap-1.5 xl:gap-2 ${styles[`card-${card.id}`]}`}>
+        <div className="relative flex flex-row  items-start h-full">
+          <div className={`flex flex-col flex-1  ${styles[`card-${card.id}`]}`}>
             {/* Title inline editable */}
             {isEditing ? (
               <textarea
@@ -206,7 +206,7 @@ export default function CardTextImage({
               <h2 className={`whitespace-pre-line ${getTitleSizeClass(card.id)} ${textColor}`}>{title}</h2>
             )}
           </div>
-          <img src={card.cardTextImage} alt={title} className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 xl:w-20 object-contain shrink-0" />
+          <img src={card.cardTextImage} alt={title} className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-13 lg:h-15 xl:w-18 object-contain shrink-0" />
           {icons}
         </div>
       )}

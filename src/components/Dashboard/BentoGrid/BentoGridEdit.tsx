@@ -165,9 +165,6 @@ const BentoGrid = () => {
                                 </button>
                             )}
 
-                            <button onClick={handleBack} title="Reset Background">
-                                <Image src="/cards/flipwhiteicon.svg" alt="Reset" width={24} height={24} />
-                            </button>
                         </div>
                     </div>
 

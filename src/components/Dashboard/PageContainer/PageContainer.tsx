@@ -2,7 +2,7 @@ export default function PageContainer({ children,pageIndex }: { children: React.
 
 
     return (
-        <div className="min-w-full  flex items-center justify-center   ">
+        <div className="min-w-full  ">
             <div className={`w-full  ${pageIndex==2?"grid-system-sm":"grid-system"} relative`}>
                 {children}
             </div>

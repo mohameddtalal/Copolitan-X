@@ -19,11 +19,11 @@
 @media (min-width: 600px) {
   .container {
     justify-content: flex-end !important;
-    padding-right: clamp(1rem, 4vw + 1rem, 183px);
+    padding-right:  clamp(0px, 10vw - 90px, 100px);
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 500px) {
   .container {
     justify-content: center !important;
     padding: 0;
