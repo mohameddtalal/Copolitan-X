@@ -13,7 +13,9 @@ export default function ImageCard({ card }: ImageCardProps) {
 
   return (
     <>
-      <div className="absolute inset-0 bg-[#F7F7F7]">
+      <div   className={`absolute inset-0 ${
+    isWhiteTheme ? "bg-[#f7f7f7]" : ""
+  }`}>
         {card.id === 2 ? (
           <>
             <motion.img

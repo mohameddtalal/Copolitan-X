@@ -99,7 +99,7 @@ const BentoGrid = () => {
     const sidebarRight = " -right-11";
 
     return (
-        <div className="main-container w-full h-full flex flex-col overflow-hidden">
+        <div className="main-container w-full h-full flex flex-col bg-[#F7F7F7]">
             <Navigation
                 currentPage={currentPage}
                 pages={pages}
@@ -188,11 +188,11 @@ const BentoGrid = () => {
                         </div>
 
                         {/* Control Sidebar — homepage, absolute in right padding */}
-                        <div className={`absolute top-3 ${sidebarRight} flex flex-col gap-2 p-2`}>
-                            <button onClick={() => setFullscreenPreview(true)} title="Fullscreen Preview">
+                        <div className={`absolute top-3 ${sidebarRight} flex flex-col gap-2 p-2 `}>
+                            <button onClick={(handleSave)} title="Fullscreen Preview" className="cursor-pointer">
                                 <Image src="/cards/previewedit.svg" alt="Preview" width={28} height={28} />
                             </button>
-                            <button onClick={handlePublish} title="Publish">
+                            <button onClick={handlePublish} title="Publish" className="cursor-pointer">
                                 <Image src="/cards/publishedit.svg" alt="Publish" width={28} height={28} />
                             </button>
                         </div>

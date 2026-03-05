@@ -35,7 +35,7 @@ export default function SplitCard({ card }: SplitCardProps) {
             className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full shrink-0 object-cover"
           />
         )}
-        <div className="flex flex-col justify-center flex-1">
+        <div className="flex flex-col justify-center flex-1 ">
           <h2 className={`whitespace-pre-line text-white ${getTitleSizeClass(card.id)}`}>
             {card.title}
           </h2>

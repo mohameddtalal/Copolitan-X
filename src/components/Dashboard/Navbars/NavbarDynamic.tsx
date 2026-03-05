@@ -28,7 +28,11 @@ const Navbar = () => {
 
   return (
     <nav className={`${navbarClass} main-container`}>
-      <div className={styles.row} >
+      <div
+          className={`${styles.row} ${
+            isWhiteTheme ? styles.rowWhite : ""
+          }`}
+        >
         {/* Logo */}
         <Link href="/dashboard">
           <div className="logo">

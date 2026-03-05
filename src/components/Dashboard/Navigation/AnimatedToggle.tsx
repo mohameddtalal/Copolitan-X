@@ -34,7 +34,7 @@ export default function AnimatedToggle({
   };
 
   return (
-    <div className="flex items-center justify-center translate-x-[-12px]">
+    <div className="flex items-center justify-center translate-x-[-12px] ">
       <div className="flex items-center relative">
         {/* Logo Part */}
         <motion.div

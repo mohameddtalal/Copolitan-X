@@ -30,7 +30,7 @@ interface CardContainerProps {
 export default function CardContainer({ card,pageIndex }: CardContainerProps) {
   const positionClasses =
     card.id === 4
-       ? `card-grid-${card.id} col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl  overflow-x-hidden scrollbar-hide`
+       ? `card-grid-${card.id} col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl  overflow-x-hidden scrollbar-hide `
       : card.span +` card-grid-${card.id} ${card.id==10&&pageIndex==2?"order-card-3":""}`;
 
   const hasAccess = card.hasAccess !== false;

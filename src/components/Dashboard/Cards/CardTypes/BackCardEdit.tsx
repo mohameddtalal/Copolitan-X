@@ -54,7 +54,7 @@ export default function EditBackCard({ card, onFlip, onUploadOpen }: EditBackCar
         )}
         <img 
           src="/cards/flipwhiteicon.svg" 
-          className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 cursor-pointer"
+          className="w-4.5 h-4.5 cursor-pointer"
           onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
           title="Flip to Front"
         />

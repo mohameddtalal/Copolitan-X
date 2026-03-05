@@ -102,7 +102,7 @@ export default function TextCard({
           )}
 
           {/* Action icons */}
-          <div className={`flex flex-col gap-2 shrink-0 ml-3 absolute right-edit-icons ${showColorPicker ? "z-[999]" : ""}`}>
+          <div className={`flex flex-col gap-1 shrink-0 ml-3 absolute right-edit-icons ${showColorPicker ? "z-[999]" : ""}`}>
             {/* Edit / Save icon */}
             <img
               src={
@@ -110,21 +110,21 @@ export default function TextCard({
                   ? (isSpecial ? "/cards/savewhiteicon.svg" : "/cards/saveicon.svg")
                   : (isSpecial ? "/cards/editwhiteicon.svg" : "/cards/editicon.svg")
               }
-              className="w-5 h-5  cursor-pointer"
+              className="w-4.5 h-4.5  cursor-pointer"
               onClick={handleEditToggle}
             />
 
             {(card.id === 3 || card.id === 11) && (
               <img 
                 src="/cards/uploadwhiteicon.svg" 
-                className="w-5 h-5  cursor-pointer" 
+                className="w-4.5 h-4.5  cursor-pointer" 
                 onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
               />
             )}
 
             <img
               src={isSpecial ? "/cards/flipwhiteicon.svg" : "/cards/flipicon.svg"}
-              className="w-5 h-5  cursor-pointer"
+              className="w-4.5 h-4.5  cursor-pointer"
               onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
             />
 
@@ -132,13 +132,13 @@ export default function TextCard({
             <div className="relative" ref={colorPickerRef}>
               <img
                 src={isSpecial ? "/cards/palettewhiteicon.svg" : "/cards/paletteicon.svg"}
-                className="w-5 h-5 cursor-pointer"
+                className="w-4.5 h-4.5 cursor-pointer"
                 onClick={(e) => { e.stopPropagation(); setShowColorPicker(!showColorPicker); }}
               />
               {showColorPicker && (
                 <div
                   className="absolute z-[9999] bg-[#242424] rounded-2xl p-3 shadow-2xl min-w-[180px]"
-                  style={{ right: '0%', transform: 'translateX(10%)', top: '-60px' }}
+                  style={{ right: '0%',  top: '-90px' ,transform: "scale(0.7) translateX(40%)" }}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex flex-col gap-1">
@@ -193,7 +193,7 @@ export default function TextCard({
       </div>
 
       <div className={`${styles[`card-icon-${card.id}`]} flex justify-end`}>
-        <img src="/cards/Buttom Icon.svg" alt="icon" className="w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
+        <img src="/cards/Buttom Icon.svg" alt="icon" className="w-5 h-5 sm:w-5 " />
       </div>
     </>
   );

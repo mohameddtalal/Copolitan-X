@@ -86,11 +86,10 @@ height: auto;
 .lightNavbar {
   background-color: #F7F7F7;
   color: #000;
-  padding-block: 24px;
-  
+  padding-block: 16px;
 
-   /* padding:24px 46px 8px 46px; */
 }
+
 .notifications,
 .quote,
 .search {
@@ -107,7 +106,14 @@ height: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 1536px;
+  padding:5px
+ 
+}
+.rowWhite{
+  background-color: #fff;
+  padding: 15px 15px 15px 35px;
 }
 .title{
   margin-bottom: 0;

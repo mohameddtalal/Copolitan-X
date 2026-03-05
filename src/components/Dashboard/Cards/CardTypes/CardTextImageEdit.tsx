@@ -80,7 +80,7 @@ export default function CardTextImage({
   };
 
   const icons = (
-    <div className={`flex flex-col gap-2 shrink-0 ml-3 absolute right-edit-icons ${showColorPicker ? "z-[999]" : ""}`}>
+    <div className={`flex flex-col gap-1 shrink-0 ml-3 absolute right-edit-icons ${showColorPicker ? "z-[999]" : ""}`}>
       {/* Edit / Save icon */}
       <img
         src={
@@ -88,30 +88,30 @@ export default function CardTextImage({
             ? (isSpecial ? "/cards/saveicon.svg" : "/cards/savewhiteicon.svg")
             : (isSpecial ? "/cards/editicon.svg" : "/cards/editwhiteicon.svg")
         }
-        className="w-5 h-5  cursor-pointer"
+        className="w-4.5 h-4.5  cursor-pointer"
         onClick={handleEditToggle}
       />
       <img 
         src={isSpecial ? "/cards/uploadicon.svg" : "/cards/uploadwhiteicon.svg"} 
-        className="w-5 h-5  cursor-pointer" 
+        className="w-4.5 h-4.5   cursor-pointer" 
         onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
       />
       <img
         src={isSpecial ? "/cards/flipicon.svg" : "/cards/flipwhiteicon.svg"}
-        className="w-5 h-5  cursor-pointer"
+        className="w-4.5 h-4.5  cursor-pointer"
         onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
       />
       {/* Palette icon + dropdown (opens upward, centered) */}
       <div className="relative" ref={colorPickerRef}>
         <img
           src={isSpecial ? "/cards/paletteicon.svg" : "/cards/palettewhiteicon.svg"}
-          className="w-5 h-5  cursor-pointer"
+          className="w-4.5 h-4.5  cursor-pointer"
           onClick={(e) => { e.stopPropagation(); setShowColorPicker(!showColorPicker); }}
         />
         {showColorPicker && (
           <div
             className="absolute z-[9999] bg-[#242424] rounded-2xl p-3 shadow-2xl min-w-[180px]"
-            style={{ right: '0%', transform: 'translateX(10%)', top: '-60px' }}
+            style={{ right: '0%',  top: '-120px' ,transform: "scale(0.7) translateX(20%)" }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col gap-1">
@@ -152,7 +152,7 @@ export default function CardTextImage({
   return (
     <>
       {card.layoutType === "column" ? (
-        <div className="relative flex flex-col gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 xl:gap-3 flex-1">
+        <div className={`relative flex flex-col gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 xl:gap-3 flex-1 ${showColorPicker ? "overflow-visible" : ""}`}>
           <div className="flex flex-row items-start justify-between relative">
             {/* Title inline editable */}
             {isEditing ? (
@@ -171,7 +171,7 @@ export default function CardTextImage({
             {icons}
           </div>
           <div className="flex justify-center items-center flex-1 h-full">
-            {card.cardTextImage && <img src={card.cardTextImage} alt={title} className="  w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-26 lg:h-26 xl:w-32 xl:h-32 object-contain shrink-0 " />}
+            {card.cardTextImage && <img src={card.cardTextImage} alt={title} className="  object-contain shrink-0 " />}
           </div>
           {/* Description inline editable */}
           {isEditing ? (
@@ -189,7 +189,7 @@ export default function CardTextImage({
           )}
         </div>
       ) : (
-        <div className="relative flex flex-row  items-start h-full">
+        <div className={`relative flex flex-row items-start flex-1 ${showColorPicker ? "overflow-visible" : ""}`}>
           <div className={`flex flex-col flex-1  ${styles[`card-${card.id}`]}`}>
             {/* Title inline editable */}
             {isEditing ? (
@@ -206,7 +206,7 @@ export default function CardTextImage({
               <h2 className={`whitespace-pre-line ${getTitleSizeClass(card.id)} ${textColor}`}>{title}</h2>
             )}
           </div>
-          <img src={card.cardTextImage} alt={title} className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-13 lg:h-15 xl:w-18 object-contain shrink-0" />
+          <img src={card.cardTextImage} alt={title} className="object-contain shrink-0 mr-8"  />
           {icons}
         </div>
       )}
@@ -225,7 +225,7 @@ export default function CardTextImage({
         ) : (
           <p className={`whitespace-pre-line ${getDescSizeClass(card.id)} ${textColor}`}>{card.id === 10 || card.id==5 ? "" : description}</p>
         )}
-        <img src="/cards/Buttom Icon.svg" alt="icon" className="w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6 absolute right-0" />
+        <img src="/cards/Buttom Icon.svg" alt="icon" className="w-5 h-5 absolute right-0 bottom-[-7]" />
       </div>
     </>
   );

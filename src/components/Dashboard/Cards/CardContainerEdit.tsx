@@ -40,7 +40,7 @@ export default function CardContainer({ card,pageIndex }: CardContainerProps) {
 
   const positionClasses =
     card.id === 4
-      ? `card-grid-${card.id} col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-y-auto overflow-x-hidden scrollbar-hide`
+      ? `card-grid-${card.id} col-span-1 row-span-2 rounded-xl sm:rounded-2xl lg:rounded-3xl  scrollbar-hide `
       : card.span +` card-grid-${card.id} ${card.id==10&&pageIndex==2?"order-card-3":""}`;
 
   const hasAccess = card.hasAccess !== false;
@@ -50,10 +50,11 @@ export default function CardContainer({ card,pageIndex }: CardContainerProps) {
   const commonClasses = `
     ${bgColor}
     rounded-xl sm:rounded-2xl lg:rounded-3xl
-      ${!card.isSplit ? `grid-padding card-grid-${card.id}` : ""}
+      ${!card.isSplit ? `grid-padding card-grid-${card.id} ` : ""}
     flex flex-col justify-between
-    text-white ${card.id !==2 && !isMenuOpen ? "overflow-y-auto overflow-x-hidden scrollbar-hide ":""}
+    text-white ${card.id !==2 && !isMenuOpen ? " scrollbar-hide ":""}
     transition-transform cursor-default
+    ${isMenuOpen ? "overflow-visible" : "overflow-hidden"}
     h-full 
   `;
 
@@ -111,19 +112,20 @@ export default function CardContainer({ card,pageIndex }: CardContainerProps) {
   return (
     <>
       {card.flippable === true || card.flippable === false ? (
-        <div className={`${positionClasses} relative ${isMenuOpen ? "z-[9999]" : ""}`}>
+        <div className={`${positionClasses} relative ${isMenuOpen ? "z-[9999] !overflow-visible" : ""}`}>
           <FlipCardEdit
             card={card}
             parentClass="w-full h-full"
             childrenClassContainer={commonClasses}
             backContent={<BackCardEdit card={{...card, lockedImage}} onFlip={() => setIsFlipped((p) => !p)} onUploadOpen={() => handleOpenUpload("lockedImage")} />}
             isFlipped={isFlipped}
+            isMenuOpen={isMenuOpen}
           >
             {renderContent()}
           </FlipCardEdit>
         </div>
       ) : (
-        <div key={card.id} className={`${positionClasses} ${commonClasses} group relative ${isMenuOpen ? "z-[9999]" : ""}`}>
+        <div key={card.id} className={`${positionClasses} ${commonClasses} group relative ${isMenuOpen ? "z-[9999] !overflow-visible" : ""}`}>
           {renderContent()}
         </div>
       )}
