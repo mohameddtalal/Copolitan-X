@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import styles from "./Navigation.module.css";
+import Link from "next/link";
 
 interface AnimatedToggleProps {
   onToggle?: (state: "signin" | "homepage") => void;
@@ -43,34 +44,37 @@ export default function AnimatedToggle({
           } flex items-center justify-center border border-white/10 shadow-lg relative overflow-hidden z-20`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={handleLogoClick}
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={isMLogo ? "m-logo" : "x-logo"}
-              initial={{ y: 20, opacity: 0, rotate: -45 }}
-              animate={{ y: 0, opacity: 1, rotate: 0 }}
-              exit={{ y: -20, opacity: 0, rotate: 45 }}
-              transition={{ duration: 0.3, ease: "backOut" }}
-              className="flex items-center justify-center"
-            >
-              <Image
-                src={
-                  isMLogo
-                    ? "/cards/mlogo.svg"
-                    : "/cards/logogreen.svg"
-                }
-                alt="Logo"
-                width={20}
-                height={20}
-                className={
-                  isMLogo
-                    ? "saturate-[10000%] hue-rotate-[10deg]"
-                    : ""
-                }
-              />
-            </motion.div>
-          </AnimatePresence>
+          <Link href="http://localhost:3001">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isMLogo ? "m-logo" : "x-logo"}
+                initial={{ y: 20, opacity: 0, rotate: -45 }}
+                animate={{ y: 0, opacity: 1, rotate: 0 }}
+                exit={{ y: -20, opacity: 0, rotate: 45 }}
+                transition={{ duration: 0.3, ease: "backOut" }}
+                className="flex items-center justify-center"
+                onClick={handleLogoClick}
+              >
+                <Image
+                
+                  src={
+                    isMLogo
+                      ? "/cards/mlogo.svg"
+                      : "/cards/logogreen.svg"
+                  }
+                  alt="Logo"
+                  width={20}
+                  height={20}
+                  className={
+                    isMLogo
+                      ? "saturate-[10000%] hue-rotate-[10deg]"
+                      : ""
+                  }
+                />
+              </motion.div>
+            </AnimatePresence>
+          </Link>
         </motion.div>
 
         {/* Connecting Line */}

@@ -31,7 +31,7 @@ export default function SuccessComponent() {
 
         {/* Sign In button */}
         <button
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/auth/login")}
           className={styles.signInButton}
         >
           Sign In
