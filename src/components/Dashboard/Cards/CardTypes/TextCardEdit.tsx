@@ -18,9 +18,6 @@ export default function TextCard({
   onUploadOpen?: () => void;
   currentColor?: string;
 }) {
-  const specialCards = [6, 7, 12, 13, 3, 11];
-  const isSpecial = specialCards.includes(card.id);
-
   const [isEditing, setIsEditing] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [title, setTitle] = useState(card.title);
@@ -53,9 +50,10 @@ export default function TextCard({
     { name: "White", value: "bg-[white]" },
   ];
 
-  const textColor = card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? "text-black" : "text-white";
-  const inputTextColor = card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? "#000" : "#fff";
-  const inputBorderColor = card.id === 8 || card.id === 1 || card.id === 9 || card.id === 15 ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)";
+  const isBlackText = currentColor === "bg-[#FFD3D2]" || currentColor === "bg-[var(--green)]" || currentColor === "bg-[white]";
+  const textColor = isBlackText ? "text-black" : "text-white";
+  const inputTextColor = isBlackText ? "#000" : "#fff";
+  const inputBorderColor = isBlackText ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)";
 
   // Notify parent when menu opens/closes
   useEffect(() => {
@@ -107,8 +105,8 @@ export default function TextCard({
             <img
               src={
                 isEditing
-                  ? (isSpecial ? "/cards/savewhiteicon.svg" : "/cards/saveicon.svg")
-                  : (isSpecial ? "/cards/editwhiteicon.svg" : "/cards/editicon.svg")
+                  ? (isBlackText ? "/cards/saveicon.svg" : "/cards/savewhiteicon.svg")
+                  : (isBlackText ? "/cards/editicon.svg" : "/cards/editwhiteicon.svg")
               }
               className="w-4.5 h-4.5  cursor-pointer"
               onClick={handleEditToggle}
@@ -116,14 +114,14 @@ export default function TextCard({
 
             {(card.id === 3 || card.id === 11) && (
               <img 
-                src="/cards/uploadwhiteicon.svg" 
+                src={isBlackText ? "/cards/uploadicon.svg" : "/cards/uploadwhiteicon.svg"} 
                 className="w-4.5 h-4.5  cursor-pointer" 
                 onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
               />
             )}
 
             <img
-              src={isSpecial ? "/cards/flipwhiteicon.svg" : "/cards/flipicon.svg"}
+              src={isBlackText ? "/cards/flipicon.svg" : "/cards/flipwhiteicon.svg"}
               className="w-4.5 h-4.5  cursor-pointer"
               onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
             />
@@ -131,7 +129,7 @@ export default function TextCard({
             {/* Palette icon + dropdown (opens upward) */}
             <div className="relative" ref={colorPickerRef}>
               <img
-                src={isSpecial ? "/cards/palettewhiteicon.svg" : "/cards/paletteicon.svg"}
+                src={isBlackText ? "/cards/paletteicon.svg" : "/cards/palettewhiteicon.svg"}
                 className="w-4.5 h-4.5 cursor-pointer"
                 onClick={(e) => { e.stopPropagation(); setShowColorPicker(!showColorPicker); }}
               />

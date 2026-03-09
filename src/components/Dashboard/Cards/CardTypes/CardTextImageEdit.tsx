@@ -18,9 +18,6 @@ export default function CardTextImage({
   onUploadOpen?: () => void;
   currentColor?: string;
 }) {
-  const specialCards = [8];
-  const isSpecial = specialCards.includes(card.id);
-
   const [isEditing, setIsEditing] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [title, setTitle] = useState(card.title);
@@ -53,9 +50,10 @@ export default function CardTextImage({
     { name: "White", value: "bg-[white]" },
   ];
 
-  const textColor = card.id === 8 ? "text-black" : "text-white";
-  const inputTextColor = card.id === 8 ? "#000" : "#fff";
-  const inputBorderColor = card.id === 8 ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)";
+  const isBlackText = currentColor === "bg-[#FFD3D2]" || currentColor === "bg-[var(--green)]" || currentColor === "bg-[white]";
+  const textColor = isBlackText ? "text-black" : "text-white";
+  const inputTextColor = isBlackText ? "#000" : "#fff";
+  const inputBorderColor = isBlackText ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)";
 
   // Notify parent when menu opens/closes
   useEffect(() => {
@@ -85,26 +83,26 @@ export default function CardTextImage({
       <img
         src={
           isEditing
-            ? (isSpecial ? "/cards/saveicon.svg" : "/cards/savewhiteicon.svg")
-            : (isSpecial ? "/cards/editicon.svg" : "/cards/editwhiteicon.svg")
+            ? (isBlackText ? "/cards/saveicon.svg" : "/cards/savewhiteicon.svg")
+            : (isBlackText ? "/cards/editicon.svg" : "/cards/editwhiteicon.svg")
         }
         className="w-4.5 h-4.5  cursor-pointer"
         onClick={handleEditToggle}
       />
       <img 
-        src={isSpecial ? "/cards/uploadicon.svg" : "/cards/uploadwhiteicon.svg"} 
+        src={isBlackText ? "/cards/uploadicon.svg" : "/cards/uploadwhiteicon.svg"} 
         className="w-4.5 h-4.5   cursor-pointer" 
         onClick={(e) => { e.stopPropagation(); onUploadOpen?.(); }}
       />
       <img
-        src={isSpecial ? "/cards/flipicon.svg" : "/cards/flipwhiteicon.svg"}
+        src={isBlackText ? "/cards/flipicon.svg" : "/cards/flipwhiteicon.svg"}
         className="w-4.5 h-4.5  cursor-pointer"
         onClick={(e) => { e.stopPropagation(); onFlip?.(); }}
       />
       {/* Palette icon + dropdown (opens upward, centered) */}
       <div className="relative" ref={colorPickerRef}>
         <img
-          src={isSpecial ? "/cards/paletteicon.svg" : "/cards/palettewhiteicon.svg"}
+          src={isBlackText ? "/cards/paletteicon.svg" : "/cards/palettewhiteicon.svg"}
           className="w-4.5 h-4.5  cursor-pointer"
           onClick={(e) => { e.stopPropagation(); setShowColorPicker(!showColorPicker); }}
         />

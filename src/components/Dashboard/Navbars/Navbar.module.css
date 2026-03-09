@@ -10,7 +10,7 @@
 /* Tablet */
 @media (max-width: 1050px) {
   .logoImg {
-    width: 250;
+    width: 230;
   }
 }
 
@@ -133,7 +133,7 @@
 }
 .rowWhite{
   background-color: #fff;
-  padding: 15px 15px 15px 35px;
+  padding: 15px 35px 15px 35px;
 }
 .title{
   margin-bottom: 0;
