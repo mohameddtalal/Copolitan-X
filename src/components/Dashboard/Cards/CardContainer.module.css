@@ -125,7 +125,6 @@
 .card-back-inner {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 100%;
 
  
@@ -139,7 +138,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0px 24px 32px 0px;
+  padding: 0px 0px clamp(1.5625rem, 1.087rem + 0.9511vw, 2rem) 2px;
   border-radius: 10px;
   background: transparent;
   cursor: default;

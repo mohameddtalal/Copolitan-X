@@ -136,7 +136,7 @@ export default function ResetPassword() {
                     }
                   >
                     <Image
-                      src={item.valid ? "/login/correctwhite.svg" : "/login/wrong.svg"}
+                      src={item.valid ? (mode === 'white' ? '/login/correctwhite.svg' : '/login/correct.svg') : '/login/wrong.svg'}
                       alt="status"
                       width={29}
                       height={25}

@@ -58,6 +58,16 @@ export default function CardContainer({ card,pageIndex }: CardContainerProps) {
     h-full 
   `;
 
+  const backCommonClasses = `
+  ${bgColor}
+  rounded-xl sm:rounded-2xl lg:rounded-3xl
+  flex flex-col justify-between
+  text-white ${card.id !==2 && !isMenuOpen ? " scrollbar-hide ":""}
+  transition-transform cursor-default
+  ${isMenuOpen ? "overflow-visible" : "overflow-hidden"}
+  h-full 
+`;
+
   const handleOpenUpload = (target: "cardTextImage" | "characterImage" | "lockedImage") => {
     setUploadTarget(target);
     setIsUploadModalOpen(true);
@@ -117,7 +127,8 @@ export default function CardContainer({ card,pageIndex }: CardContainerProps) {
             card={card}
             parentClass="w-full h-full"
             childrenClassContainer={commonClasses}
-            backContent={<BackCardEdit card={{...card, lockedImage}} onFlip={() => setIsFlipped((p) => !p)} onUploadOpen={() => handleOpenUpload("lockedImage")} />}
+            backChildrenClassContainer={backCommonClasses}
+            backContent={<BackCardEdit card={{...card, lockedImage}} onFlip={() => setIsFlipped((p) => !p)} onUploadOpen={() => handleOpenUpload("lockedImage")} onRemoveImage={() => setLockedImage("")} />}
             isFlipped={isFlipped}
             isMenuOpen={isMenuOpen}
           >

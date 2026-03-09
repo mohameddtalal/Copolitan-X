@@ -8,6 +8,7 @@ interface FlipCardProps {
   backContent: React.ReactNode;
   parentClass?: string;
   childrenClassContainer?: string;
+  backChildrenClassContainer?: string;
   isFlipped: boolean;
   isMenuOpen?: boolean;
 }
@@ -18,6 +19,7 @@ export default function FlipCard({
   backContent,
   parentClass,
   childrenClassContainer,
+  backChildrenClassContainer,
   isFlipped,
   isMenuOpen,
 }: FlipCardProps) {
@@ -43,7 +45,7 @@ export default function FlipCard({
 
         {/* Back */}
         <div 
-          className={`${isVertical ? styles["flip-back-vertical"] : styles["flip-back"]} ${childrenClassContainer}`}
+          className={`${isVertical ? styles["flip-back-vertical"] : styles["flip-back"]} ${backChildrenClassContainer || childrenClassContainer}`}
           style={isMenuOpen ? { backfaceVisibility: 'visible', overflow: 'visible' } : {}}
         >
           {backContent}

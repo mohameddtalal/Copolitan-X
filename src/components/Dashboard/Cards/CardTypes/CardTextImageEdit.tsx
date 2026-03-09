@@ -223,7 +223,7 @@ export default function CardTextImage({
             style={{ color: inputTextColor, lineHeight: '1.4' }}
           />
         ) : (
-          <p className={`whitespace-pre-line ${getDescSizeClass(card.id)} ${textColor}`}>{card.id === 10 || card.id==5 ? "" : description}</p>
+          <p className={`whitespace-pre-line ${getDescSizeClass(card.id)} ${textColor}`}>{card.id === 10 || card.id==5 || card.id==3? "" : description}</p>
         )}
         <img src="/cards/Buttom Icon.svg" alt="icon" className="w-5 h-5 absolute right-0 bottom-[-7]" />
       </div>

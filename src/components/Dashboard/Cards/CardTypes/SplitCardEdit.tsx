@@ -37,7 +37,7 @@ export default function SplitCard({ card, onUploadOpen }: SplitCardProps) {
           />
         )}
         <div className="flex flex-col justify-center flex-1 ">
-          <h2 className={`whitespace-pre-line text-white  ${getTitleSizeClass(card.id)}`} style={{lineHeight:"20px"}}>
+          <h2 className={`whitespace-pre-line text-white  ${getTitleSizeClass(card.id)}`} style={{lineHeight:"30px"}}>
             {card.title}
           </h2>
           <p className={`whitespace-pre-line text-white ${getDescSizeClass(card.id)}`}>

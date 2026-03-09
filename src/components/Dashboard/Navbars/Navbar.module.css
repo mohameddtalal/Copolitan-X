@@ -3,9 +3,29 @@
   
 }
 .logoImg {
-width: clamp(160px, 25vw, 312px);
-height: auto;
+  width: 300;
+  height: auto;
+}
 
+/* Tablet */
+@media (max-width: 1050px) {
+  .logoImg {
+    width: 250;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .logoImg {
+    width: 250;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .logoImg {
+    width: 250;
+  }
 }
 .navInside {
   display: flex;
@@ -93,8 +113,8 @@ height: auto;
 .notifications,
 .quote,
 .search {
-  width: 36.5px;
-  height: 36;
+  width: 32px;
+  height: 32;
   display: flex;
   align-items: center;
   justify-content: center;

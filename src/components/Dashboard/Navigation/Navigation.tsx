@@ -47,7 +47,7 @@ export default function Navigation({
                 : isWhiteTheme ? "/cards/Left-white.svg" : "/cards/Left.svg"
             }
             alt="Previous"
-            className="w-7 h-7 sm:w-7 sm:h-7 lg:w-9 lg:h-9"
+            className="w-6 h-6 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
           />
         </button>
       )}
@@ -90,7 +90,7 @@ export default function Navigation({
                 : isWhiteTheme ? "/cards/Right-white.svg" : "/cards/Right.svg"
             }
             alt="Next"
-            className="w-7 h-7 sm:w-7 sm:h-7 lg:w-9 lg:h-9"
+            className="w-6 h-6 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
           />
         </button>
       )}
