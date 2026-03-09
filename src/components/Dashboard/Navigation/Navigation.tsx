@@ -65,8 +65,8 @@ export default function Navigation({
                 onClick={() => setCurrentPage(index)}
                 className={`h-4 rounded-full transition-all duration-300 ${
                   currentPage === index
-                    ? `w-9 h-5 ${isWhiteTheme ? 'bg-[#777777]' : 'bg-white'}`
-                    : `w-5 h-5 ${isWhiteTheme ? 'bg-[#B1B1B1]' : 'bg-white/30'}`
+                    ? `w-8 h-4 ${isWhiteTheme ? 'bg-[#777777]' : 'bg-white'}`
+                    : `w-4 h-4 ${isWhiteTheme ? 'bg-[#B1B1B1]' : 'bg-white/30'}`
                 }`}
               />
             ))}

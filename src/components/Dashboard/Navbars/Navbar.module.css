@@ -3,14 +3,14 @@
   
 }
 .logoImg {
-  width: 300;
+  width: 280;
   height: auto;
 }
 
 /* Tablet */
 @media (max-width: 1050px) {
   .logoImg {
-    width: 230;
+    width: 190;
   }
 }
 
