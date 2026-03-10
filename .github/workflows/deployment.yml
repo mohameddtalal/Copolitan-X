@@ -1,0 +1,20 @@
+name : deployement
+on: 
+    push:
+        branches: [master]
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: ssh-setup
+              run: |
+                mkdir -p ~/.ssh
+                cd ~/.ssh
+                echo "${{ secrets.SSHKey }}" >> ~/.ssh/id_rsa
+                chmod 600 ~/.ssh/id_rsa
+                ssh-keyscan contact.getmoca.co >> known_hosts
+            - name: deploy-files
+              run: |
+                ssh -i ~/.ssh/id_rsa root@contact.getmoca.co "cd /var/www/Copolitan-X&&git pull&&npm i&&npm run build&&systemctl restart copolitanx.service"
+
+
