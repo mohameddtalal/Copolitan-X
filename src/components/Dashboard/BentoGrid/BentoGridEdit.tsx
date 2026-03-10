@@ -205,7 +205,7 @@ const BentoGrid = () => {
                 <div className="fixed inset-0 z-[10000] flex items-center justify-center p-0 m-0">
                     <button
                         onClick={() => setFullscreenPreview(false)}
-                        className="absolute top-8 right-8 p-3 rounded-full transition-colors z-[10001] cursor-pointer"
+                        className="absolute top-6 right-6  p-4 rounded-full transition-colors z-[10001] cursor-pointer"
                     >
                         <Image src="/cards/exitedit.svg" alt="Close" width={48} height={48} className="w-5 h-5 sm:w-4 sm:h-4 md:h-5 md:w-5 lg:w-6 lg:h-6 xl:w-8 xl:h-8" />
                     </button>
