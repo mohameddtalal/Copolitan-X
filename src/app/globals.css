@@ -405,6 +405,7 @@ body {
   .card-grid-14 {
     order: 8;
   }
+  
   .title-lg {
     font-size: clamp(28px, 4vw, 32px);
     line-height: clamp(28px, 4vw, 32px);

@@ -145,6 +145,7 @@
   color: rgba(255, 255, 255, 0.6);
   transition: color 200ms ease, transform 200ms ease, opacity 200ms ease;
   opacity: 0.6;
+  justify-content: space-between;
   
 }
 
@@ -190,6 +191,8 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 180ms ease, transform 180ms ease;
+  margin-right: 15px;
+
 }
 .back-item-dot-active {
   opacity: 1;
