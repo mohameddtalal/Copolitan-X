@@ -32,6 +32,28 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 p-0`}
       >
          <ThemeProvider> {/* 🆕 wrap everything */}
+            <svg width="0" height="0">
+          <clipPath id="notifClip" clipPathUnits="objectBoundingBox">
+              <path
+                d="
+                  M0.93 0.10
+                  L0.60 0.10
+                  A0.06 0.05 0 0 1 0.54 0.05
+                  L0.54 0.05
+                  A0.06 0.05 0 0 0 0.46 0.00
+                  L0.07 0.00
+                  A0.06 0.05 0 0 0 0.00 0.05
+                  L0.00 0.95
+                  A0.06 0.05 0 0 0 0.07 1.00
+                  L0.93 1.00
+                  A0.06 0.05 0 0 0 1.00 0.95
+                  L1.00 0.15
+                  A0.06 0.05 0 0 0 0.93 0.10
+                  Z
+                "
+              />
+            </clipPath>
+        </svg>
           <NavProvider>
             <div className="flex-shrink-0">
               <Navbar />
