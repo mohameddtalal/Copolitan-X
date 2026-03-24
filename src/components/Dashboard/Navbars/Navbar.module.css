@@ -3,28 +3,28 @@
   
 }
 .logoImg {
-  width: 280;
+  width: 240;
   height: auto;
 }
 
 /* Tablet */
 @media (max-width: 1050px) {
   .logoImg {
-    width: 190;
+    width: 160;
   }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
   .logoImg {
-    width: 250;
+    width: 230;
   }
 }
 
 /* Small Mobile */
 @media (max-width: 480px) {
   .logoImg {
-    width: 250;
+    width: 230;
   }
 }
 .navInside {
