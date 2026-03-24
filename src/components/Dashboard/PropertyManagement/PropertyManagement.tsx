@@ -4,17 +4,25 @@ import Image from "next/image";
 import styles from "./PropertyManagement.module.css"
 import Link from "next/link";
 
+const ROWS_PER_PAGE = 7;
+
 const PropertyManagement = () => {
   const [activeTab, setActiveTab] = useState("Property Directory");
   const [statusFilter, setStatusFilter] = useState("Active");
   const [isLogoToggled, setIsLogoToggled] = useState(false);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+    const [showAddModal, setShowAddModal] = useState(false);
+   const [addForm, setAddForm] = useState({ id: "", lob: "", location: "", country: "", city: "", area: "", gross: "", net: "", duration: "", end: "", launch: "" });
+  const [addError, setAddError] = useState("");
+  const [dynamicRows, setDynamicRows] = useState<{id:string;lob:string;location:string;country:string;city:string;area:string;gross:string;net:string;duration:string;end:string;launch:string}[]>([]);
 
-  const properties = [
+  // ── Full dataset (70 rows generated from the original 10, repeated) ──────────
+  const baseProperties = [
     { id: "24CX009", lob: "Copolitan X", location: "Swanlake", country: "KSA", city: "Jeddah", area: "Bab Makkah", gross: "10,000", net: "7,890", duration: "3 mos.", end: "28 Aug 2026", launch: "14 Aug 2025" },
     { id: "24CX008", lob: "Copolitan X", location: "Palm Hills Club", country: "Oman", city: "Muskat", area: "Muttrah", gross: "10,000", net: "7,890", duration: "1 yr.", end: "20 Sep 2029", launch: "14 Aug 2025" },
     { id: "24CX007", lob: "Copolitan X", location: "Mivida", country: "Egypt", city: "Giza", area: "October", gross: "8,0450", net: "7,456", duration: "5 yr.", end: "14 Aug 2026", launch: "14 Aug 2025" },
-    { id: "24CX005", lob: "Moca X Lounge", location: "Mivida", country: "Egypt", city: "Giza", area: "October", gross: "800", net: "7,890", duration: "5 yr.", end: "14 Aug 2026", launch: "14 Aug 2025" },
+    { id: "24CX006b", lob: "Moca X Lounge", location: "Mivida", country: "Egypt", city: "Giza", area: "October", gross: "800", net: "7,890", duration: "5 yr.", end: "14 Aug 2026", launch: "14 Aug 2025" },
     { id: "24CX006", lob: "Copolitan X", location: "Swanlake", country: "Egypt", city: "Giza", area: "October", gross: "10,000", net: "7,890", duration: "10 yr.", end: "15 Feb 2025", launch: "14 Aug 2025" },
     { id: "24CX005", lob: "Copolitan X", location: "Hassan Allam", country: "Egypt", city: "Giza", area: "October", gross: "15,000", net: "7,890", duration: "10 yr.", end: "22 Jan 2027", launch: "14 Aug 2025" },
     { id: "24CX004", lob: "Copolitan X", location: "Seven Fortunes - Marassi Bay", country: "Oman", city: "Muskat", area: "Muttrah", gross: "9,000", net: "7,890", duration: "1 yr.", end: "28 Sep 2026", launch: "14 Aug 2025" },
@@ -23,7 +31,41 @@ const PropertyManagement = () => {
     { id: "24CX001", lob: "Copolitan X", location: "Copolitan X Swanlake", country: "Egypt", city: "Giza", area: "October", gross: "9,000", net: "7,890", duration: "8 yr.", end: "1 Jul 2026", launch: "14 Aug 2025" },
   ];
 
-  // Sub-row data — one child per parent row (keyed by parent index)
+  // Generate 70 rows by repeating base data, prepend any dynamically added rows
+  const generatedProperties = Array.from({ length: 70 }, (_, i) => ({
+    ...baseProperties[i % baseProperties.length],
+    id: baseProperties[i % baseProperties.length].id + (i >= baseProperties.length ? `-${Math.floor(i / baseProperties.length)}` : ""),
+  }));
+  const allProperties = [...dynamicRows, ...generatedProperties];
+ 
+  const totalPages = Math.ceil(allProperties.length / ROWS_PER_PAGE);
+ 
+  // Slice rows for current page
+  const pageStart = (currentPage - 1) * ROWS_PER_PAGE;
+  const pageEnd = pageStart + ROWS_PER_PAGE;
+  const properties = allProperties.slice(pageStart, pageEnd);
+ 
+  const handlePageChange = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
+    setExpandedRow(null); // collapse any expanded row on page change
+  };
+ 
+  // Build visible page numbers (show 7 around current)
+  const getPageNumbers = () => {
+    const pages: (number | "...")[] = [];
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    pages.push(1);
+    if (currentPage > 3) pages.push("...");
+    for (let p = Math.max(2, currentPage - 1); p <= Math.min(totalPages - 1, currentPage + 1); p++) {
+      pages.push(p);
+    }
+    if (currentPage < totalPages - 2) pages.push("...");
+    pages.push(totalPages);
+    return pages;
+  };
 
   const sideIcons = [
     <svg key="add" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,6 +152,15 @@ const PropertyManagement = () => {
     </div>
   );
 
+  // ── Dashed separator row ─────────────────────────────────────────────────────
+  const DashSeparator = ({ colCount }: { colCount: number }) => (
+    <tr aria-hidden="true" style={{ height: 12 }}>
+      <td colSpan={colCount + 1} style={{ padding: "6px 0", height: 12 }}>
+        <div style={{ borderTop: "1.5px dashed #808080" }} />
+      </td>
+    </tr>
+  );
+
   return (
     <>
       <svg width="0" height="0" style={{ position: "absolute" }}>
@@ -127,6 +178,7 @@ const PropertyManagement = () => {
         <div style={{ position: "absolute", right: "16px", top: "28%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", zIndex: 30 }}>
           {sideIcons.map((icon, i) => (
             <button key={i}
+              onClick={i === 0 ? () => { setAddForm({ id: "", lob: "", location: "", country: "", city: "", area: "", gross: "", net: "", duration: "", end: "", launch: "" }); setAddError(""); setShowAddModal(true); } : undefined}
               style={{ width: 40, height: 40, borderRadius: "50%", backgroundColor: "transparent", display: "flex", alignItems: "center", justifyContent: "center", border: "none", cursor: "pointer", transition: "transform 0.2s", padding: 0 }}
               onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.12)")}
               onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
@@ -136,9 +188,9 @@ const PropertyManagement = () => {
           ))}
         </div>
 
-        {/* Tabs — outside clipped card so they are never cut off */}
-        <div style={{ position: "absolute", top: "4%",right:"8%", zIndex: 40 }}>
-          <div className="flex bg-[#FFFFFF] rounded-full py-4 px-10 shadow-inner">
+        {/* Tabs */}
+          <div className="absolute top-[3%]  right-[5%] md:right-[6%] lg:right-[6%] xl:right-[14%] z-40">
+          <div className="flex bg-[#FFFFFF] rounded-full py-4 px-5 shadow-inner">
             {["Property Directory", "Settings", "Custom Lists"].map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-6 py-2 rounded-full text-xs transition-all duration-300 ${activeTab === tab ? "bg-[#7029CF8F] text-[#242424] shadow-md" : "text-[#7029CF] hover:bg-[#E0CCFF]"}`}
@@ -150,11 +202,11 @@ const PropertyManagement = () => {
         </div>
 
         {/* Main White Card */}
-        <div className="flex flex-col" style={{ position: "relative", flex: 1, width: "100%", height: "100%", padding: "30px 50px 30px 30px", backgroundColor: "white", clipPath: "url(#notifClip)", WebkitClipPath: "url(#notifClip)", overflow: "hidden", boxShadow: "0 2px 24px rgba(0,0,0,0.07)" }}>
+        <div className="flex flex-col" style={{ position: "relative", flex: 1, width: "100%", height: "100%", padding: "25px 50px 25px 25px", backgroundColor: "white", clipPath: "url(#notifClip)", WebkitClipPath: "url(#notifClip)", overflow: "hidden", boxShadow: "0 2px 24px rgba(0,0,0,0.07)" }}>
 
           {/* Top Bar */}
           <div className="flex items-center mb-10" style={{ gap: 1, paddingRight: 40 }}>
-            <h2 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: "500", fontSize: "24px", color: "#7029CF", marginRight: "180px" }}>
+            <h2 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: "500", fontSize: "clamp(1.375rem, 1.125rem + 0.3906vw, 1.5rem);", color: "#7029CF", marginRight: "clamp(0.5625rem, -20.8125rem + 33.3984vw, 11.25rem);" }}>
               {activeTab}
             </h2>
 
@@ -167,8 +219,8 @@ const PropertyManagement = () => {
                 <Image src="/cards/logogreen.svg" alt="Xlogo" width={14} height={14} />
               </button>
               <div className={styles.line} />
-              <div style={{ position: "relative", borderRadius: 9999, background: isLogoToggled ? "#7029CF" : "rgba(255,255,255,0.2)", zIndex: 20, marginLeft: -3, transition: "background 0.3s" }}>
-                <div style={{ position: "relative", borderRadius: 9999, padding: "8px 14px", display: "flex", alignItems: "center", gap: 16, fontSize: 12, fontWeight: 600, backgroundColor: isLogoToggled ? "#7029CF" : "#000", transition: "background-color 0.3s" }}>
+              <div style={{ position: "relative", borderRadius: 9999, background: isLogoToggled ? "#7029CF" : "rgba(255,255,255,0.2)", zIndex: 20, marginLeft: -4, transition: "background 0.3s" }}>
+                <div style={{ position: "relative", borderRadius: 9999, padding: "8px 10px", display: "flex", alignItems: "center", gap: 16, fontSize: 12, fontWeight: 600, backgroundColor: isLogoToggled ? "#7029CF" : "#000", transition: "background-color 0.3s" }}>
                   <div style={{ position: "absolute", inset: 2, borderRadius: 9999, border: "1px solid #808080", pointerEvents: "none" }} />
                   <span onClick={() => setStatusFilter("Active")} style={{ cursor: "pointer", position: "relative", zIndex: 10, color: statusFilter === "Active" ? accentColor : "#808080", transition: "color 0.3s" }}>
                     Active
@@ -184,23 +236,24 @@ const PropertyManagement = () => {
             </div>
 
             {/* Archived */}
-            <button className="flex items-center gap-1 bg-[#555555] rounded-full px-4 py-2 text-[#B1B1B1] hover:bg-[#555] transition-colors" style={{ flexShrink: 0, fontFamily: "GT Walsheim", fontWeight: "600", fontSize: "12px", position: "relative" }}>
+            <button className="flex items-center gap-1 bg-[#555555] rounded-full px-2 py-2 text-[#B1B1B1] hover:bg-[#555] transition-colors" style={{ flexShrink: 0, fontFamily: "GT Walsheim", fontWeight: "600", fontSize: "12px", position: "relative" }}>
               <div style={{ position: "absolute", inset: 2, borderRadius: 9999, border: "1px solid #808080", pointerEvents: "none" }} />
               Archived
               <Image src="/cards/archive.svg" alt="archive" width={14} height={14} />
             </button>
-
           </div>
 
-          {/* Table */}
-          <div className="flex-1 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-            <table style={{ width: "100%", textAlign: "left", borderCollapse: "separate", borderSpacing: "0 16px", tableLayout: "fixed" }}>
+          {/* Table — no overflow-y scroll; rows are paginated instead */}
+          <div className="flex-1 overflow-x-auto" style={{ scrollbarWidth: "none", overflowY: "hidden" }}>
+            <table style={{ width: "100%", textAlign: "left", borderCollapse: "collapse", tableLayout: "fixed" }}>
               <colgroup>
                 <col style={{ width: 36 }} />
                 {colDefs.map((c, i) => (
                   <col key={i} style={{ width: c.thW, minWidth: c.thW }} />
                 ))}
               </colgroup>
+
+              {/* ── Header ── */}
               <thead>
                 <tr style={{ color: "#7029CF", fontSize: 16, fontWeight: 600, fontFamily: "GT Walsheim", textAlign: "center" }}>
                   <th style={{ width: 36, paddingBottom: 16 }} />
@@ -208,7 +261,15 @@ const PropertyManagement = () => {
                     <th key={i} style={thStyle(c.thW)}>{c.label}</th>
                   ))}
                 </tr>
+                {/* solid line after header */}
+                <tr aria-hidden="true">
+                  <td colSpan={colDefs.length + 1} style={{ padding: 0, height: 0 }}>
+                    <div style={{ borderTop: "1.5px solid #808080", margin: "0 4px 8px" }} />
+                  </td>
+                </tr>
               </thead>
+
+              {/* ── Body ── */}
               <tbody>
                 {properties.map((prop, idx) => {
                   const isExpanded = expandedRow === idx;
@@ -217,64 +278,65 @@ const PropertyManagement = () => {
                   const today = new Date();
                   today.setHours(0, 0, 0, 0);
                   const isEndRed = isEndMissing || (endDate !== null && endDate < today);
-                  const sub = prop;
+                  const isLast = idx === properties.length - 1;
 
                   return (
-                    <React.Fragment key={idx}>
-                      {/* Main row */}
+                    <React.Fragment key={`${prop.id}-${idx}`}>
+                      {/* ── Main row ── */}
                       <tr
                         style={{ backgroundColor: "transparent", cursor: "pointer" }}
                         onClick={() => setExpandedRow(isExpanded ? null : idx)}
                         onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#F9F7FF"; }}
                         onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent"; }}
                       >
-                        {/* Chevron — rotates when expanded */}
-                        <td style={{ padding: "16px 0 16px 16px", borderRadius: "16px 0 0 16px", width: 36 }}>
+                        <td style={{ padding: "10px 0 10px 8px", width: 36 }}>
                           <div style={{ width: 20, height: 20, backgroundColor: "#7029CF", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", transition: "transform 0.25s", transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)" }}>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                           </div>
                         </td>
-                        <td style={{ ...tdStyle(130, false, false), padding: "16px 8px", fontSize: 12, fontWeight: 500, textAlign: "center" }}>{prop.id}</td>
-                        <td style={{ ...tdStyle(110, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.lob}</td>
-                        <td style={{ ...tdStyle(110, true, false), padding: "16px 8px", textAlign: "center" }}>
+                        <td style={{ ...tdStyle(130, false, false), padding: "10px 8px", fontSize: 12, fontWeight: 500, textAlign: "center" }}>{prop.id}</td>
+                        <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.lob}</td>
+                        <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", textAlign: "center" }}>
                           <span style={{ fontSize: 12, fontWeight: 400, color: "#7029CF", textDecoration: "underline", textUnderlineOffset: 4, cursor: "pointer", wordBreak: "break-word" }}>{prop.location}</span>
                         </td>
-                        <td style={{ ...tdStyle(100, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.country}</td>
-                        <td style={{ ...tdStyle(100, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.city}</td>
-                        <td style={{ ...tdStyle(110, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.area}</td>
-                        <td style={{ ...tdStyle(100, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.gross}</td>
-                        <td style={{ ...tdStyle(100, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.net}</td>
-                        <td style={{ ...tdStyle(180, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.duration}</td>
-                        <td style={{ ...tdStyle(130, true, isEndRed), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{isEndMissing ? "Missing Date" : prop.end}</td>
-                        <td style={{ ...tdStyle(110, true, false), padding: "16px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.launch}</td>
-                        <td style={{ padding: "16px 8px", borderRadius: "0 16px 16px 0", width: 110 }} onClick={e => e.stopPropagation()}>
+                        <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.country}</td>
+                        <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.city}</td>
+                        <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.area}</td>
+                        <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.gross}</td>
+                        <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.net}</td>
+                        <td style={{ ...tdStyle(180, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.duration}</td>
+                        <td style={{ ...tdStyle(130, true, isEndRed), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{isEndMissing ? "Missing Date" : prop.end}</td>
+                        <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{prop.launch}</td>
+                        <td style={{ padding: "10px 8px", width: 110 }} onClick={e => e.stopPropagation()}>
                           <ActionButtons />
                         </td>
                       </tr>
 
-                      {/* Sub-row — shown when expanded */}
+                      {/* ── Expanded sub-row ── */}
                       {isExpanded && (
                         <tr style={{ backgroundColor: "#F0E6FF" }}>
-                          {/* indent spacer */}
-                          <td style={{ padding: "12px 0 12px 32px", borderRadius: "16px 0 0 16px", width: 36 }} />
-                          <td style={{ ...tdStyle(130, false, false), padding: "12px 8px", fontSize: 12, fontWeight: 500, textAlign: "center", color: "#888" }} />
-                          <td style={{ ...tdStyle(110, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.lob}</td>
-                          <td style={{ ...tdStyle(110, true, false), padding: "12px 8px", textAlign: "center" }}>
-                            <span style={{ fontSize: 12, fontWeight: 400, color: "#7029CF", textDecoration: "underline", textUnderlineOffset: 4, cursor: "pointer", wordBreak: "break-word" }}>{sub.location}</span>
+                          <td style={{ padding: "10px 0 10px 32px", width: 36 }} />
+                          <td style={{ ...tdStyle(130, false, false), padding: "10px 8px", fontSize: 12, fontWeight: 500, textAlign: "center", color: "#888" }} />
+                          <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.lob}</td>
+                          <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", textAlign: "center" }}>
+                            <span style={{ fontSize: 12, fontWeight: 400, color: "#7029CF", textDecoration: "underline", textUnderlineOffset: 4, cursor: "pointer", wordBreak: "break-word" }}>{prop.location}</span>
                           </td>
-                          <td style={{ ...tdStyle(100, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.country}</td>
-                          <td style={{ ...tdStyle(100, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.city}</td>
-                          <td style={{ ...tdStyle(110, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.area}</td>
-                          <td style={{ ...tdStyle(100, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.gross}</td>
-                          <td style={{ ...tdStyle(100, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.net}</td>
-                          <td style={{ ...tdStyle(180, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.duration}</td>
-                          <td style={{ ...tdStyle(130, true, !sub.end || sub.end.trim() === ""), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", ...( !sub.end || sub.end.trim() === "" ? {} : { color: "#888" }) }}>{!sub.end || sub.end.trim() === "" ? "Missing Date" : sub.end}</td>
-                          <td style={{ ...tdStyle(110, true, false), padding: "12px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{sub.launch}</td>
-                          <td style={{ padding: "12px 8px", borderRadius: "0 16px 16px 0", width: 110 }}>
+                          <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.country}</td>
+                          <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.city}</td>
+                          <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.area}</td>
+                          <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.gross}</td>
+                          <td style={{ ...tdStyle(100, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.net}</td>
+                          <td style={{ ...tdStyle(180, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.duration}</td>
+                          <td style={{ ...tdStyle(130, true, isEndRed), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center" }}>{isEndMissing ? "Missing Date" : prop.end}</td>
+                          <td style={{ ...tdStyle(110, true, false), padding: "10px 8px", fontSize: 12, fontWeight: 400, textAlign: "center", color: "#888" }}>{prop.launch}</td>
+                          <td style={{ padding: "10px 8px", width: 110 }}>
                             <ActionButtons />
                           </td>
                         </tr>
                       )}
+
+                      {/* ── Dashed separator (skip after last row) ── */}
+                      {!isLast && <DashSeparator colCount={colDefs.length} />}
                     </React.Fragment>
                   );
                 })}
@@ -282,33 +344,166 @@ const PropertyManagement = () => {
             </table>
           </div>
 
-          {/* Pagination */}
-          <div className="mt-8 flex justify-between items-center">
+         {/* ── Pagination ── */}
+          <div className="mt-6 flex justify-between items-center">
             <div className="flex items-center gap-2">
-              {[0, 1].map(i => (
-                <button key={i} className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#999] hover:bg-[#D5D5D5] transition-colors">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
-                </button>
-              ))}
-              <button className="w-8 h-8 rounded-full bg-[#7029CF] text-white flex items-center justify-center text-xs font-bold shadow-md">1</button>
-              {[2, 3, 4, 5, 6, 7].map(num => (
-                <button key={num} className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium text-[#666] hover:bg-[#F0E6FF] hover:text-[#7029CF] transition-all">{num}</button>
-              ))}
-              {[0, 1].map(i => (
-                <button key={i} className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors">
-                  <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
-                </button>
+              {/* First page */}
+              <button
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+                className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M15.707 5.293a1 1 0 010 1.414L12.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
+                  <path d="M9.707 5.293a1 1 0 010 1.414L6.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
+                </svg>
+              </button>
+              {/* Prev page */}
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
+              </button>
+ 
+              {/* Page numbers */}
+              {getPageNumbers().map((p, i) =>
+                p === "..." ? (
+                  <span key={`dots-${i}`} className="w-8 h-8 flex items-center justify-center text-xs text-[#999]">…</span>
+                ) : (
+                  <button
+                    key={p}
+                    onClick={() => handlePageChange(p as number)}
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                      currentPage === p
+                        ? "bg-[#7029CF] text-white shadow-md"
+                        : "text-[#666] hover:bg-[#F0E6FF] hover:text-[#7029CF]"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                )
+              )}
+ 
+              {/* Next page */}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40"
+              >
+                <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
+              </button>
+              {/* Last page */}
+              <button
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
+                className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40"
+              >
+                <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M15.707 5.293a1 1 0 010 1.414L12.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
+                  <path d="M9.707 5.293a1 1 0 010 1.414L6.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
+                </svg>
+              </button>
+            </div>
+ 
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-[#999] font-medium">
+                Displaying {pageStart + 1} – {Math.min(pageEnd, allProperties.length)} of {allProperties.length} records
+              </span>
+              <button
+                onClick={() => { setCurrentPage(1); }}
+                className="bg-[#E5E5E5] px-6 py-2 rounded-full text-xs font-bold text-[#666] hover:bg-[#D5D5D5] transition-colors"
+              >
+                All
+              </button>
+            </div>
+          </div>
+ 
+        </div>
+      </div>
+ 
+      {/* ── Add Property Modal ── */}
+      {showAddModal && (
+        <div
+          style={{ position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.45)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center" }}
+          onClick={() => setShowAddModal(false)}
+        >
+          <div
+            style={{ backgroundColor: "#fff", borderRadius: 24, padding: "36px 40px", width: "min(680px, 92vw)", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 8px 48px rgba(112,41,207,0.18)", position: "relative" }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 28 }}>
+              <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 22, color: "#7029CF", margin: 0 }}>Add New Property</h3>
+              <button onClick={() => setShowAddModal(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#aaa", fontSize: 22, lineHeight: 1, padding: 4 }}>✕</button>
+            </div>
+ 
+            {/* Grid of inputs */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px 24px" }}>
+              {([
+                { key: "id",       label: "ID",                placeholder: "e.g. 24CX010" },
+                { key: "lob",      label: "LOB",               placeholder: "e.g. Copolitan X" },
+                { key: "location", label: "Location",          placeholder: "e.g. Swanlake" },
+                { key: "country",  label: "Country",           placeholder: "e.g. Egypt" },
+                { key: "city",     label: "City",              placeholder: "e.g. Giza" },
+                { key: "area",     label: "Area",              placeholder: "e.g. October" },
+                { key: "gross",    label: "Gross",             placeholder: "e.g. 10,000" },
+                { key: "net",      label: "Net",               placeholder: "e.g. 7,890" },
+                { key: "duration", label: "Contract Duration", placeholder: "e.g. 5 yr." },
+                { key: "end",      label: "Contract End",      placeholder: "e.g. 14 Aug 2026" },
+                { key: "launch",   label: "Launch Date",       placeholder: "e.g. 14 Aug 2025" },
+              ] as { key: keyof typeof addForm; label: string; placeholder: string }[]).map(({ key, label, placeholder }) => (
+                <div key={key} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <label style={{ fontSize: 11, fontWeight: 600, color: "#7029CF", textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+                  <input
+                    value={addForm[key]}
+                    onChange={e => setAddForm(prev => ({ ...prev, [key]: e.target.value }))}
+                    placeholder={placeholder}
+                    style={{ border: "1.5px solid #E0D4F5", borderRadius: 10, padding: "9px 14px", fontSize: 13, color: "#333", outline: "none", fontFamily: "GT Walsheim", transition: "border-color 0.2s" }}
+                    onFocus={e => (e.currentTarget.style.borderColor = "#7029CF")}
+                    onBlur={e => (e.currentTarget.style.borderColor = "#E0D4F5")}
+                  />
+                </div>
               ))}
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-[#999] font-medium">Displaying 1 - 7 of 70 records</span>
-              <button className="bg-[#E5E5E5] px-6 py-2 rounded-full text-xs font-bold text-[#666] hover:bg-[#D5D5D5] transition-colors">All</button>
+ 
+            {/* Error */}
+            {addError && (
+              <p style={{ color: "#FA6E6E", fontSize: 12, marginTop: 14, marginBottom: 0 }}>{addError}</p>
+            )}
+ 
+            {/* Actions */}
+            <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", marginTop: 28 }}>
+              <button
+                onClick={() => setShowAddModal(false)}
+                style={{ padding: "10px 28px", borderRadius: 999, border: "1.5px solid #E0D4F5", background: "none", color: "#888", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim", transition: "background 0.2s" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#F7F3FF")}
+                onMouseLeave={e => (e.currentTarget.style.background = "none")}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  if (!addForm.id.trim() || !addForm.lob.trim() || !addForm.location.trim()) {
+                    setAddError("ID, LOB and Location are required.");
+                    return;
+                  }
+                  setDynamicRows(prev => [{ ...addForm }, ...prev]);
+                  setCurrentPage(1);
+                  setShowAddModal(false);
+                }}
+                style={{ padding: "10px 28px", borderRadius: 999, border: "none", background: "#7029CF", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim", boxShadow: "0 2px 12px rgba(112,41,207,0.25)", transition: "opacity 0.2s" }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "0.88")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+              >
+                Add Property
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
-
 export default PropertyManagement;
