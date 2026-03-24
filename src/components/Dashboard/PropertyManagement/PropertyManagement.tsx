@@ -172,8 +172,8 @@ const PropertyManagement = () => {
           H0.5348
           H0.9638
           C0.985 1 1 0.98 1 0.90
-          V0.35
-          C1 0.18 0.985 0.14 0.9638 0.14
+          V0.24
+          C1 0.24 1 0.14 0.9638 0.14
           H0.5701
           C0.548 0.14 0.5348 0.10 0.5348 0.06
           C0.5348 0.03 0.52 0 0.5 0
@@ -191,7 +191,7 @@ const PropertyManagement = () => {
         style={{ padding: "30px 64px", position: "relative", fontFamily: "GT Walsheim", fontWeight: "600" }}
       >
         {/* Floating Icons RIGHT */}
-        <div style={{ position: "absolute", right: "16px", top: "34%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", zIndex: 30 }}>
+        <div style={{ position: "absolute", right: "16px", top: "38%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", zIndex: 30 }}>
           {sideIcons.map((icon, i) => (
             <button key={i}
               onClick={i === 0 ? () => { setAddForm({ id: "", lob: "", location: "", country: "", city: "", area: "", gross: "", net: "", duration: "", end: "", launch: "" }); setAddError(""); setShowAddModal(true); } : undefined}
@@ -205,8 +205,8 @@ const PropertyManagement = () => {
         </div>
 
         {/* Tabs */}
-          <div className="absolute top-[4%]  right-[5%] md:right-[6%] lg:right-[6%] xl:right-[14%] z-40">
-          <div className="flex bg-[#FFFFFF] rounded-full py-4 px-10 shadow-inner">
+          <div className="absolute top-[4%]  right-[4%] md:right-[4%] lg:right-[6%] xl:right-[14%] z-40">
+          <div className="flex bg-[#FFFFFF] rounded-full py-4 px-4 md:px-6 lg:px-7 xl:px-10 shadow-inner">
             {["Property Directory", "Settings", "Custom Lists"].map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-6 py-2 rounded-full text-xs transition-all duration-300 ${activeTab === tab ? "bg-[#7029CF8F] text-[#242424] shadow-md" : "text-[#7029CF] hover:bg-[#E0CCFF]"}`}
@@ -220,44 +220,56 @@ const PropertyManagement = () => {
         {/* Main White Card */}
         <div className="flex flex-col" style={{ position: "relative", flex: 1, width: "100%", height: "100%", padding: "30px 50px 25px 30px", backgroundColor: "white", clipPath: "url(#notifClip)", WebkitClipPath: "url(#notifClip)", overflow: "hidden", boxShadow: "0 2px 24px rgba(0,0,0,0.07)" }}>
 
-          {/* Top Bar */}
-          <div className="flex items-center mb-10" style={{ gap: 1, paddingRight: 40 }}>
-            <h2 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: "500", fontSize: "24px", color: "#7029CF", marginRight: "clamp(0.5625rem, -20.8125rem + 33.3984vw, 11.25rem);" }}>
-              {activeTab}
-            </h2>
+         {/* Top Bar */}
+<div className="flex items-center justify-between mb-10" style={{ 
+  width: "calc(100% - 48%)",  
+  paddingRight: 0 
+}}>
+  <h2 style={{ 
+    fontFamily: "Lora", 
+    fontStyle: "italic", 
+    fontWeight: "500", 
+    fontSize: "24px", 
+    color: "#7029CF",
+    flexShrink: 0
+  }}>
+    {activeTab}
+  </h2>
 
-            {/* Toggle */}
-            <div className="flex items-center" style={{ position: "relative" }}>
-              <button
-                onClick={() => setIsLogoToggled(prev => !prev)}
-                style={{ width: 36, height: 36, borderRadius: "50%", backgroundColor: isLogoToggled ? "#7029CF" : "#000", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 12px rgba(0,0,0,0.3)", cursor: "pointer", zIndex: 20, position: "relative", transition: "background-color 0.3s", flexShrink: 0 }}
-              >
-                <Image src="/cards/logogreen.svg" alt="Xlogo" width={14} height={14} />
-              </button>
-              <div className={styles.line} />
-              <div style={{ position: "relative", borderRadius: 9999, background: isLogoToggled ? "#7029CF" : "rgba(255,255,255,0.2)", zIndex: 20, marginLeft: -4, transition: "background 0.3s" }}>
-                <div style={{ position: "relative", borderRadius: 9999, padding: "8px 10px", display: "flex", alignItems: "center", gap: 16, fontSize: 12, fontWeight: 600, backgroundColor: isLogoToggled ? "#7029CF" : "#000", transition: "background-color 0.3s" }}>
-                  <div style={{ position: "absolute", inset: 2, borderRadius: 9999, border: "1px solid #808080", pointerEvents: "none" }} />
-                  <span onClick={() => setStatusFilter("Active")} style={{ cursor: "pointer", position: "relative", zIndex: 10, color: statusFilter === "Active" ? accentColor : "#808080", transition: "color 0.3s" }}>
-                    Active
-                    {statusFilter === "Active" && <span style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: 1.5, backgroundColor: accentColor, borderRadius: 2, display: "block", transition: "background-color 0.3s" }} />}
-                  </span>
-                  <span style={{ color: "#808080", fontWeight: 300, zIndex: 10 }}>|</span>
-                  <span onClick={() => setStatusFilter("Inactive")} style={{ cursor: "pointer", position: "relative", zIndex: 10, color: statusFilter === "Inactive" ? accentColor : "#808080", transition: "color 0.3s" }}>
-                    Inactive
-                    {statusFilter === "Inactive" && <span style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: 1.5, backgroundColor: accentColor, borderRadius: 2, display: "block", transition: "background-color 0.3s" }} />}
-                  </span>
-                </div>
-              </div>
-            </div>
+  <div className="flex items-center " style={{ flexShrink: 0 }}>
+    {/* Toggle */}
+    <div className="flex items-center" style={{ position: "relative" }}>
+      <button
+        onClick={() => setIsLogoToggled(prev => !prev)}
+        style={{ width: 36, height: 36, borderRadius: "50%", backgroundColor: isLogoToggled ? "#7029CF" : "#000", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 4px 12px rgba(0,0,0,0.3)", cursor: "pointer", zIndex: 20, position: "relative", transition: "background-color 0.3s", flexShrink: 0 }}
+      >
+        <Image src="/cards/logogreen.svg" alt="Xlogo" width={14} height={14} />
+      </button>
+      <div className={styles.line} />
+      <div style={{ position: "relative", borderRadius: 9999, background: isLogoToggled ? "#7029CF" : "rgba(255,255,255,0.2)", zIndex: 20, marginLeft: -4, transition: "background 0.3s" }}>
+        <div style={{ position: "relative", borderRadius: 9999, padding: "8px 10px", display: "flex", alignItems: "center", gap: 16, fontSize: 12, fontWeight: 600, backgroundColor: isLogoToggled ? "#7029CF" : "#000", transition: "background-color 0.3s" }}>
+          <div style={{ position: "absolute", inset: 2, borderRadius: 9999, border: "1px solid #808080", pointerEvents: "none" }} />
+          <span onClick={() => setStatusFilter("Active")} style={{ cursor: "pointer", position: "relative", zIndex: 10, color: statusFilter === "Active" ? accentColor : "#808080", transition: "color 0.3s" }}>
+            Active
+            {statusFilter === "Active" && <span style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: 1.5, backgroundColor: accentColor, borderRadius: 2, display: "block", transition: "background-color 0.3s" }} />}
+          </span>
+          <span style={{ color: "#808080", fontWeight: 300, zIndex: 10 }}>|</span>
+          <span onClick={() => setStatusFilter("Inactive")} style={{ cursor: "pointer", position: "relative", zIndex: 10, color: statusFilter === "Inactive" ? accentColor : "#808080", transition: "color 0.3s" }}>
+            Inactive
+            {statusFilter === "Inactive" && <span style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: 1.5, backgroundColor: accentColor, borderRadius: 2, display: "block", transition: "background-color 0.3s" }} />}
+          </span>
+        </div>
+      </div>
+    </div>
 
-            {/* Archived */}
-            <button className="flex items-center gap-1 bg-[#555555] rounded-full px-2 py-2 text-[#B1B1B1] hover:bg-[#555] transition-colors" style={{ flexShrink: 0, fontFamily: "GT Walsheim", fontWeight: "600", fontSize: "12px", position: "relative" }}>
-              <div style={{ position: "absolute", inset: 2, borderRadius: 9999, border: "1px solid #808080", pointerEvents: "none" }} />
-              Archived
-              <Image src="/cards/archive.svg" alt="archive" width={14} height={14} />
-            </button>
-          </div>
+    {/* Archived */}
+    <button className="flex items-center gap-1 bg-[#555555] rounded-full px-1 py-2 text-[#B1B1B1] hover:bg-[#555] transition-colors" style={{ flexShrink: 0, fontFamily: "GT Walsheim", fontWeight: "600", fontSize: "12px", position: "relative" }}>
+      <div style={{ position: "absolute", inset: 2, borderRadius: 9999, border: "1px solid #808080", pointerEvents: "none" }} />
+      Archived
+      <Image src="/cards/archive.svg" alt="archive" width={14} height={14} />
+    </button>
+  </div>
+</div>
 
           {/* Table — no overflow-y scroll; rows are paginated instead */}
           <div className="flex-1 overflow-x-auto" style={{ scrollbarWidth: "none", overflowY: "hidden" }}>
