@@ -30,7 +30,7 @@ const SearchDropdown = ({ options, selected, onChange, placeholder }: {
       {open && (
         <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 9999, background: "#fff", borderRadius: 14, boxShadow: "0 4px 20px rgba(0,0,0,0.14)", minWidth: 160, maxWidth: 220, width: "max-content", overflow: "hidden" }}>
           <div style={{ padding: "8px 10px" }}>
-            <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search" style={{ width: 100, height: 32, borderRadius: 999, border: "1.5px solid #D0D0D0", padding: "0 10px", fontSize: 12, outline: "none", fontFamily: "GT Walsheim", boxSizing: "border-box" }} />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search" style={{ width: "100%", height: 32, borderRadius: 999, border: "1.5px solid #D0D0D0", padding: "0 10px", fontSize: 12, outline: "none", fontFamily: "GT Walsheim", boxSizing: "border-box" }} />
           </div>
           <div style={{ maxHeight: 180, overflowY: "auto" }}>
             {filtered.map((opt, idx) => (
