@@ -5,7 +5,7 @@ import * as XLSX from "xlsx";
 import styles from "./PropertyManagement.module.css"
 import Link from "next/link";
 
-const ROWS_PER_PAGE = 7;
+const ROWS_PER_PAGE = 5;
 
 type PropertyRow = { id: string; lob: string; location: string; country: string; city: string; area: string; gross: string; net: string; duration: string; end: string; launch: string };
 
@@ -382,7 +382,7 @@ const PropertyManagement = () => {
         </div>
 
         {/* Tabs */}
-        <div className="absolute top-[4%] right-[4%] md:right-[4%] lg:right-[6%] xl:right-[14%] z-40">
+        <div className="absolute top-[4%] right-[calc(45%-400px)] z-40">
           <div className="flex bg-[#FFFFFF] rounded-full py-4 px-7 md:px-8 lg:px-9 xl:px-10 shadow-inner">
             {["Property Directory", "Settings", "Custom Lists"].map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
@@ -395,7 +395,7 @@ const PropertyManagement = () => {
         </div>
 
         {/* Main White Card */}
-        <div className="flex flex-col" style={{ position: "relative", flex: 1, width: "100%", height: "100%", minHeight: 720, padding: "40px 27px 62px 28px", backgroundColor: "white", clipPath: "url(#notifClip)", WebkitClipPath: "url(#notifClip)", overflow: "hidden", boxShadow: "0 2px 24px rgba(0,0,0,0.07)" }}>
+        <div className="flex flex-col" style={{ position: "relative", flex: 1, width: "100%", height: "100%", minHeight: 600, padding: "40px 27px 62px 28px", backgroundColor: "white", clipPath: "url(#notifClip)", WebkitClipPath: "url(#notifClip)", overflow: "hidden", boxShadow: "0 2px 24px rgba(0,0,0,0.07)" }}>
 
           {/* Top Bar */}
           <div className="flex items-center justify-between mb-10" style={{ width: "calc(100% - 48%)", paddingRight: 0 }}>
