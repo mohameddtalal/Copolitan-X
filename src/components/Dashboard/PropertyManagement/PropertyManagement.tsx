@@ -5,7 +5,7 @@ import * as XLSX from "xlsx";
 import styles from "./PropertyManagement.module.css"
 import Link from "next/link";
 
-const ROWS_PER_PAGE = 5;
+const ROWS_PER_PAGE = 6;
 
 type PropertyRow = { id: string; lob: string; location: string; country: string; city: string; area: string; gross: string; net: string; duration: string; end: string; launch: string };
 
@@ -355,7 +355,7 @@ const PropertyManagement = () => {
       </svg>
 
       <div className="flex w-full h-full bg-[#F7F7F7]"
-        style={{ padding: "30px 64px", position: "relative", fontFamily: "GT Walsheim", fontWeight: "600" }}
+        style={{ padding: "22px 64px", position: "relative", fontFamily: "GT Walsheim", fontWeight: "600" }}
       >
         {/* Floating Icons RIGHT */}
         <div style={{ position: "absolute", right: "16px", top: "38%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", zIndex: 30 }}>
@@ -382,7 +382,7 @@ const PropertyManagement = () => {
         </div>
 
         {/* Tabs */}
-        <div className="absolute top-[4%] right-[calc(45%-400px)] z-40">
+        <div className="absolute top-[3%] right-[calc(45%-400px)] z-40">
           <div className="flex bg-[#FFFFFF] rounded-full py-4 px-7 md:px-8 lg:px-9 xl:px-10 shadow-inner">
             {["Property Directory", "Settings", "Custom Lists"].map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
@@ -395,7 +395,7 @@ const PropertyManagement = () => {
         </div>
 
         {/* Main White Card */}
-        <div className="flex flex-col" style={{ position: "relative", flex: 1, width: "100%", height: "100%", minHeight: 600, padding: "40px 27px 62px 28px", backgroundColor: "white", clipPath: "url(#notifClip)", WebkitClipPath: "url(#notifClip)", overflow: "hidden", boxShadow: "0 2px 24px rgba(0,0,0,0.07)" }}>
+        <div className="flex flex-col" style={{ position: "relative", flex: 1, width: "100%", height: "100%", minHeight: 600, padding: "40px 27px  40px 28px", backgroundColor: "white", clipPath: "url(#notifClip)", WebkitClipPath: "url(#notifClip)", overflow: "hidden", boxShadow: "0 2px 24px rgba(0,0,0,0.07)" }}>
 
           {/* Top Bar */}
           <div className="flex items-center justify-between mb-10" style={{ width: "calc(100% - 48%)", paddingRight: 0 }}>
@@ -712,7 +712,7 @@ const PropertyManagement = () => {
           </div>
 
           {/* Pagination */}
-          <div className="mt-6 flex justify-between items-center">
+          <div className=" mt-2 flex justify-between items-center">
             <div className="flex items-center gap-2">
               <button onClick={() => handlePageChange(1)} disabled={currentPage === 1} className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M15.707 5.293a1 1 0 010 1.414L12.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /><path d="M9.707 5.293a1 1 0 010 1.414L6.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
