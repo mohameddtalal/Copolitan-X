@@ -128,7 +128,14 @@ const PropertyManagement = () => {
     setDeleteModalRow(null);
     setCurrentPage(1);
   };
+  {/**safe date */}
+const safeDate = (val: any) => {
+  if (!val) return null;
 
+  const date = new Date(val);
+
+  return isNaN(date.getTime()) ? null : date;
+};
   // Export current table as .xls
   const handleExport = () => {
     const rows = statusFilter === "Active" ? allActiveProperties : allInactiveProperties;
@@ -136,7 +143,8 @@ const PropertyManagement = () => {
       ID: r.id, LOB: r.lob, Location: r.location, Country: r.country, City: r.city,
       Area: r.area, Gross: Number(r.gross.replace(/,/g, "")),
     Net: Number(r.net.replace(/,/g, "")), "Contract Duration": r.duration,
-      "Contract End": r.end, "Launch Date": r.launch
+     "Contract End": safeDate(r.end),   // ✅
+  "Launch Date": safeDate(r.launch)  // ✅
     }));
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
