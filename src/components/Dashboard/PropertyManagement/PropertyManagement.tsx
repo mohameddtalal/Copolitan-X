@@ -134,7 +134,8 @@ const PropertyManagement = () => {
     const rows = statusFilter === "Active" ? allActiveProperties : allInactiveProperties;
     const data = rows.map(r => ({
       ID: r.id, LOB: r.lob, Location: r.location, Country: r.country, City: r.city,
-      Area: r.area, Gross: r.gross, Net: r.net, "Contract Duration": r.duration,
+      Area: r.area, Gross: Number(r.gross.replace(/,/g, "")),
+    Net: Number(r.net.replace(/,/g, "")), "Contract Duration": r.duration,
       "Contract End": r.end, "Launch Date": r.launch
     }));
     const ws = XLSX.utils.json_to_sheet(data);
