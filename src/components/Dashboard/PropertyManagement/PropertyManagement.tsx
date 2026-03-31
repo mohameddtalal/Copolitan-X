@@ -4,6 +4,7 @@ import Image from "next/image";
 import * as XLSX from "xlsx";
 import styles from "./PropertyManagement.module.css"
 import Link from "next/link";
+import DateInput from "@/components/DateInput";
 
 const ROWS_PER_PAGE = 6;
 
@@ -184,7 +185,25 @@ const safeDate = (val: any) => {
   const uniqueCountries = [...new Set(allProperties.map(p => p.country))].filter(Boolean).sort();
   const uniqueCities = [...new Set(allProperties.map(p => p.city))].filter(Boolean).sort();
   const uniqueAreas = [...new Set(allProperties.map(p => p.area))].filter(Boolean).sort();
-
+// helper to parse dd/mm/yyyy → Date
+const parseDMY = (s: string) => {
+  const m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null;
+};
+// Add this helper alongside parseDMY — parses "28 Aug 2026" format
+const parseRowDate = (s: string): Date | null => {
+  if (!s) return null;
+  // Try "28 Aug 2026" format
+  const months: Record<string, number> = {
+    Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+  };
+  const m = s.trim().match(/^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/);
+  if (m) return new Date(+m[3], months[m[2]], +m[1]);
+  // Fallback to native parse
+  const d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
+};
   // Accumulative filtering
   const pNum = (s: string) => parseFloat(s.replace(/,/g, "")) || 0;
   const filteredProperties = allProperties.filter(p => {
@@ -200,10 +219,11 @@ const safeDate = (val: any) => {
     if (searchNetTo && pNum(p.net) > pNum(searchNetTo)) return false;
     if (searchDurationFrom && !p.duration.toLowerCase().includes(searchDurationFrom.toLowerCase())) return false;
     if (searchDurationTo && !p.duration.toLowerCase().includes(searchDurationTo.toLowerCase())) return false;
-    if (searchEndFrom && p.end && new Date(p.end) < new Date(searchEndFrom)) return false;
-    if (searchEndTo && p.end && new Date(p.end) > new Date(searchEndTo)) return false;
-    if (searchLaunchFrom && p.launch && new Date(p.launch) < new Date(searchLaunchFrom)) return false;
-    if (searchLaunchTo && p.launch && new Date(p.launch) > new Date(searchLaunchTo)) return false;
+  // with:
+if (searchEndFrom)    { const f = parseDMY(searchEndFrom);    const d = parseRowDate(p.end);    if (f && d && d < f) return false; }
+if (searchEndTo)      { const t = parseDMY(searchEndTo);      const d = parseRowDate(p.end);    if (t && d && d > t) return false; }
+if (searchLaunchFrom) { const f = parseDMY(searchLaunchFrom); const d = parseRowDate(p.launch); if (f && d && d < f) return false; }
+if (searchLaunchTo)   { const t = parseDMY(searchLaunchTo);   const d = parseRowDate(p.launch); if (t && d && d > t) return false; }
     return true;
   });
 
@@ -462,84 +482,24 @@ const safeDate = (val: any) => {
                 </tr>
               </thead>
               <tbody>
- {showSearchBar && (() => {
-  const si: React.CSSProperties = {
-    width: 100,
-    height: 32,
-    borderRadius: 999,
-    border: "1.5px solid #D0D0D0",
-    padding: "0 10px",
-    fontSize: 11,
-    outline: "none",
-    fontFamily: "GT Walsheim",
-    background: "#fff",
-    display: "block",
-    boxSizing: "border-box" as const,
-  };
+      {showSearchBar && (() => {
+        const si: React.CSSProperties = {
+          width: 100,
+          height: 32,
+          borderRadius: 999,
+          border: "1.5px solid #D0D0D0",
+          padding: "0 10px",
+          fontSize: 11,
+          outline: "none",
+          fontFamily: "GT Walsheim",
+          background: "#fff",
+          display: "block",
+          boxSizing: "border-box" as const,
+        };
 
   const sp = (set: (v: string) => void) =>
     (e: React.ChangeEvent<HTMLInputElement>) => { set(e.target.value); setCurrentPage(1); };
 
-  // Custom date input with calendar icon
-  const DateInput = ({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder: string }) => {
-    const inputRef = React.useRef<HTMLInputElement>(null);
-    return (
-      <div style={{ position: "relative", width: 100, height: 32, display: "inline-flex", alignItems: "center" }}>
-        <input
-          ref={inputRef}
-          type="date"
-          value={value}
-          onChange={e => { onChange(e.target.value); setCurrentPage(1); }}
-           className={styles.dateInput}
-          style={{
-            ...si,
-            width: 100,
-            color: value ? "#333" : "transparent",
-            paddingRight: 28,
-          }}
-        />
-        {!value && (
-          <span style={{
-            position: "absolute",
-            left: 10,
-            top: "50%",
-            transform: "translateY(-50%)",
-            fontSize: 11,
-            color: "#aaa",
-            pointerEvents: "none",
-            whiteSpace: "nowrap",
-            fontFamily: "GT Walsheim",
-          }}>
-            {placeholder}
-          </span>
-        )}
-        <button
-          type="button"
-          onClick={() => inputRef.current?.showPicker?.()}
-          style={{
-            position: "absolute",
-            right: 8,
-            top: "50%",
-            transform: "translateY(-50%)",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 0,
-            lineHeight: 0,
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 4.66659V3.33325M12 4.66659V5.99992M12 4.66659H9M4 8.66659V14.6666C4 15.403 4.59695 15.9999 5.33333 15.9999H14.6667C15.4031 15.9999 16 15.403 16 14.6666V8.66659H4Z" stroke="#777777" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M4 8.66675V6.00008C4 5.2637 4.59695 4.66675 5.33333 4.66675H6.66667" stroke="#777777" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M6.66675 3.33325V5.99992" stroke="#777777" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M15.9999 8.66675V6.00008C15.9999 5.2637 15.403 4.66675 14.6666 4.66675H14.3333" stroke="#777777" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-      </div>
-    );
-  };
 
   const cellStyle = (w: number): React.CSSProperties => ({
     padding: "24px 4px",
@@ -625,25 +585,34 @@ const safeDate = (val: any) => {
         </td>
       )}
 
-      {/* Contract End */}
-      {visibleFields.has("end") && (
-        <td style={cellStyle(100)}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
-            <DateInput value={searchEndFrom} onChange={setSearchEndFrom} placeholder="From Date" />
-            <DateInput value={searchEndTo} onChange={setSearchEndTo} placeholder="To Date" />
-          </div>
-        </td>
-      )}
+     {/* Contract End */}
+{visibleFields.has("end") && (
+  <td style={cellStyle(100)}>
+    <DateInput
+      fromValue={searchEndFrom}
+      toValue={searchEndTo}
+      onFromChange={(v) => { setSearchEndFrom(v); setCurrentPage(1); }}
+      onToChange={(v) => { setSearchEndTo(v); setCurrentPage(1); }}
+      placeholderFrom="From Date"
+      placeholderTo="To Date"
+    />
+  </td>
+)}
 
-      {/* Launch Date */}
-      {visibleFields.has("launch") && (
-        <td style={cellStyle(100)}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
-            <DateInput value={searchLaunchFrom} onChange={setSearchLaunchFrom} placeholder="From Date" />
-            <DateInput value={searchLaunchTo} onChange={setSearchLaunchTo} placeholder="To Date" />
-          </div>
-        </td>
-      )}
+{/* Launch Date */}
+{visibleFields.has("launch") && (
+  <td style={cellStyle(100)}>
+    <DateInput
+      fromValue={searchLaunchFrom}
+      toValue={searchLaunchTo}
+      onFromChange={(v) => { setSearchLaunchFrom(v); setCurrentPage(1); }}
+      onToChange={(v) => { setSearchLaunchTo(v); setCurrentPage(1); }}
+      placeholderFrom="From Date"
+      placeholderTo="To Date"
+    />
+  </td>
+)}
+
 
       <td style={{ padding: "24px 8px", width: 100, backgroundColor: "#E4E4E4", borderTopRightRadius: 24, borderBottomRightRadius: 24 }} />
     </tr>
