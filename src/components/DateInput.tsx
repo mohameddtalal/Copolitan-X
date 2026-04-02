@@ -10,6 +10,11 @@ interface DateRangeInputProps {
   onToChange: (v: string) => void;
   placeholderFrom?: string;
   placeholderTo?: string;
+  layout?: "row" | "column";
+  pillWidth?: number | string;
+  pillHeight?: number;
+  pillBorderRadius?: number;
+  showLabels?: boolean;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -52,6 +57,11 @@ const DateRangeInput: React.FC<DateRangeInputProps> = ({
   onToChange,
   placeholderFrom = "From Date",
   placeholderTo   = "To Date",
+  layout = "column",
+  pillWidth = 100,
+  pillHeight = 32,
+  pillBorderRadius = 999,
+  showLabels = false,
 }) => {
   const [open, setOpen]           = useState(false);
   const [viewYear, setViewYear]   = useState(new Date().getFullYear());
@@ -197,12 +207,12 @@ useEffect(() => {
   };
 
   const pillStyle = (hasVal: boolean): React.CSSProperties => ({
-    width: 100,
-    height: 32,
-    borderRadius: 999,
-    border: "1.5px solid #D0D0D0",
-    padding: "0 8px",
-    fontSize: 11,
+    width: pillWidth,
+    height: pillHeight,
+    borderRadius: pillBorderRadius,
+    border: "1.5px solid #E0D4F5",
+    padding: "0 12px",
+    fontSize: 12,
     background: "#fff",
     cursor: "pointer",
     display: "flex",
@@ -212,6 +222,7 @@ useEffect(() => {
     fontFamily: "GT Walsheim",
     boxSizing: "border-box",
     userSelect: "none",
+    transition: "border-color 0.2s",
   });
 
   const calIcon = (
@@ -321,23 +332,38 @@ useEffect(() => {
     document.body
   ) : null;
 
+  const labelStyle: React.CSSProperties = {
+    fontSize: 11,
+    fontWeight: 600,
+    color: "#555",
+    fontFamily: "GT Walsheim",
+    marginBottom: 6,
+    display: "block",
+  };
+
   return (
     <>
-      <div ref={wrapRef} style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", position: "relative" }}>
+      <div ref={wrapRef} style={{ display: "flex", flexDirection: layout, gap: layout === "row" ? 24 : 16, alignItems: "flex-start", position: "relative" }}>
         {/* From trigger */}
-        <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)}>
-          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            {fromValue || placeholderFrom}
-          </span>
-          {calIcon}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {showLabels && <label style={labelStyle}>Start Date <span style={{ color: "#FA6E6E" }}>*</span></label>}
+          <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#7029CF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {fromValue || placeholderFrom}
+            </span>
+            {calIcon}
+          </div>
         </div>
 
         {/* To trigger */}
-        <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)}>
-          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            {toValue || placeholderTo}
-          </span>
-          {calIcon}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {showLabels && <label style={labelStyle}>End Date <span style={{ color: "#FA6E6E" }}>*</span></label>}
+          <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#7029CF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {toValue || placeholderTo}
+            </span>
+            {calIcon}
+          </div>
         </div>
       </div>
 
