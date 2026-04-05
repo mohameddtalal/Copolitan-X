@@ -484,7 +484,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
                       <button onClick={event => { event.stopPropagation(); toggleExcludedPopover(e, event.currentTarget as HTMLElement); }}
                         style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 10px", borderRadius: 999, background: "none", cursor: "pointer", fontSize: 11, color: "#242424", fontFamily: "GT Walsheim" }}>
                         {e.excludedLocations.length} <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 6L8 10L12 6" stroke="#2C2C2C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M4 6L8 10L12 6" stroke="#2C2C2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                         </svg>
                       </button>
                     </td>
@@ -497,13 +497,13 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
                         <button onClick={() => openEditForm(e)} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M10.0909 3.25229L9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597L12.9193 6.08072C13.7003 5.29967 13.7003 4.03334 12.9193 3.25229C12.1382 2.47124 10.8719 2.47124 10.0909 3.25229Z" fill="#BD9DE9"></path>
-                          <path d="M9.5756 3.76755L10.0909 3.25229C10.8719 2.47124 12.1382 2.47124 12.9193 3.25229C13.7003 4.03334 13.7003 5.29967 12.9193 6.08072L12.404 6.59597M9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597M9.5756 3.76755L12.404 6.59597" stroke="#7029CF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          <path d="M9.5756 3.76755L10.0909 3.25229C10.8719 2.47124 12.1382 2.47124 12.9193 3.25229C13.7003 4.03334 13.7003 5.29967 12.9193 6.08072L12.404 6.59597M9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597M9.5756 3.76755L12.404 6.59597" stroke="#7029CF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                           </svg>        </button>
                         <button onClick={() => onUpdate(entries.filter(x => x.id !== e.id))} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" fill="#E46464"></path>
-                        <path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" stroke="#E46464" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M14 4.00016H10.25M2 4.00016H5.75M5.75 4.00016V2.66683C5.75 1.93045 6.34695 1.3335 7.08333 1.3335H8.91667C9.65307 1.3335 10.25 1.93045 10.25 2.66683V4.00016M5.75 4.00016H10.25" stroke="#E46464" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" stroke="#E46464" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M14 4.00016H10.25M2 4.00016H5.75M5.75 4.00016V2.66683C5.75 1.93045 6.34695 1.3335 7.08333 1.3335H8.91667C9.65307 1.3335 10.25 1.93045 10.25 2.66683V4.00016M5.75 4.00016H10.25" stroke="#E46464" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                         </svg>                        </button>
                         <button onClick={() => onUpdate(entries.map(x => x.id === e.id ? { ...x, active: !x.active } : x))}
                           style={{ width: 33, height: 18, borderRadius: 999, background: e.active ? "#7029CF" : "#D0D0D0", position: "relative", border: "none", cursor: "pointer", transition: "background 0.2s", flexShrink: 0 }}>
@@ -631,7 +631,7 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
 </svg>,
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z" fill="#00FF8B"></path>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M19.2139 11.0002C19.707 10.5071 20.507 10.5071 21.0001 11.0002C21.4931 11.4933 21.4931 12.2932 21.0001 12.7863L17.9639 15.8215C17.8655 15.92 17.8655 16.0803 17.9639 16.1789L21.0001 19.214C21.4931 19.7071 21.4931 20.5071 21.0001 21.0002C20.507 21.4933 19.707 21.4933 19.2139 21.0002L16.1788 17.964C16.0802 17.8656 15.9199 17.8656 15.8213 17.964L12.7862 21.0002C12.2931 21.4933 11.4931 21.4933 11.0001 21.0002C10.507 20.5071 10.507 19.7071 11.0001 19.214L14.0362 16.1789C14.1346 16.0803 14.1346 15.92 14.0362 15.8215L11.0001 12.7863C10.507 12.2932 10.507 11.4933 11.0001 11.0002C11.4931 10.5071 12.2931 10.5071 12.7862 11.0002L15.8213 14.0363C15.9199 14.1347 16.0802 14.1347 16.1788 14.0363L19.2139 11.0002Z" fill="black"></path>
+<path fillRule="evenodd" clipRule="evenodd" d="M19.2139 11.0002C19.707 10.5071 20.507 10.5071 21.0001 11.0002C21.4931 11.4933 21.4931 12.2932 21.0001 12.7863L17.9639 15.8215C17.8655 15.92 17.8655 16.0803 17.9639 16.1789L21.0001 19.214C21.4931 19.7071 21.4931 20.5071 21.0001 21.0002C20.507 21.4933 19.707 21.4933 19.2139 21.0002L16.1788 17.964C16.0802 17.8656 15.9199 17.8656 15.8213 17.964L12.7862 21.0002C12.2931 21.4933 11.4931 21.4933 11.0001 21.0002C10.507 20.5071 10.507 19.7071 11.0001 19.214L14.0362 16.1789C14.1346 16.0803 14.1346 15.92 14.0362 15.8215L11.0001 12.7863C10.507 12.2932 10.507 11.4933 11.0001 11.0002C11.4931 10.5071 12.2931 10.5071 12.7862 11.0002L15.8213 14.0363C15.9199 14.1347 16.0802 14.1347 16.1788 14.0363L19.2139 11.0002Z" fill="black"></path>
 </svg>
   ];
   const iconActions = [() => setShowModal(true), () => {}, onClose];
