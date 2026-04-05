@@ -105,7 +105,7 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 2000, display: "flex", alignItems: "center", justifyContent: "center" }} onClick={onClose}>
       <div style={{ background: "#fff", borderRadius: 22, padding: "28px 32px", width: "min(860px, 94vw)", maxHeight: "90vh", overflowY: "auto"}} onClick={e => e.stopPropagation()}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
-          <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 22, color: "#7029CF", margin: 0 }}>Lock Calendar</h3>
+          <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", marginLeft: 10 }}>Lock Calendar</h3>
          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18 15.8571L14.3571 12.2143C14.2388 12.0959 14.2388 11.9041 14.3571 11.7857L18 8.14286C18.5917 7.55116 18.5917 6.59169 18 6C17.4083 5.40831 16.4488 5.40831 15.8571 6L12.2143 9.64286C12.0959 9.7612 11.9041 9.7612 11.7857 9.64286L8.14286 6C7.55116 5.40831 6.59169 5.40831 6 6C5.40831 6.59169 5.40831 7.55116 6 8.14286L9.64286 11.7857C9.7612 11.9041 9.7612 12.0959 9.64286 12.2143L6 15.8571C5.40831 16.4488 5.40831 17.4083 6 18C6.59169 18.5917 7.55116 18.5917 8.14286 18L11.7857 14.3571C11.9041 14.2388 12.0959 14.2388 12.2143 14.3571L15.8571 18C16.4488 18.5917 17.4083 18.5917 18 18C18.5917 17.4083 18.5917 16.4488 18 15.8571Z" fill="#565656"></path>
               </svg>
@@ -175,10 +175,10 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
             {/* Column headers */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr 28px", gap: "12px", marginBottom: 8 }}>
               <span style={{ fontSize: 14, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim" }}>
-                Start Date <span style={{ color: "#FA6E6E" }}>*</span>
+              Select <span style={{ color: "#FA6E6E" }}>*</span>
               </span>
               <span style={{ fontSize: 14, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim" }}>
-                End Date <span style={{ color: "#FA6E6E" }}>*</span>
+                Select <span style={{ color: "#FA6E6E" }}>*</span>
               </span>
               <span style={{ fontSize: 14, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim" }}>Lock Name</span>
               <span />
@@ -187,15 +187,15 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
             {/* Active (editable) row */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr 28px", gap: "12px", marginBottom: 12, alignItems: "center" }}>
               <input readOnly value={activeRow.startDate} placeholder="From"
-                style={{ width: "100%", height: 38, borderRadius: 12, border: "1.5px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" }} />
+                style={{ width: "100%", height: 38, borderRadius: 12, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" }} />
               <input readOnly value={activeRow.endDate} placeholder="To"
-                style={{ width: "100%", height: 38, borderRadius: 12, border: "1.5px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" }} />
+                style={{ width: "100%", height: 38, borderRadius: 12, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" }} />
               <div style={{ position: "relative" }}>
                 <input
                   value={activeRow.lockName}
                   onChange={e => updateActive("lockName", e.target.value)}
                   placeholder="Labor Day"
-                  style={{ height: 38, borderRadius: 12, border: "1.5px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", width: "100%", boxSizing: "border-box", background: "#fff" }}
+                  style={{ height: 38, borderRadius: 12, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", width: "100%", boxSizing: "border-box", background: "#fff" }}
                   onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"}
                   onBlur={e => e.currentTarget.style.borderColor = "#B1B1B1"}
                 />
@@ -217,11 +217,11 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
                   <div key={row.id}
                     style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr 28px", gap: "12px", alignItems: "center" }}>
                     <input readOnly value={row.startDate}
-                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1.5px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#F5F5F5", boxSizing: "border-box" }} />
+                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#F5F5F5", boxSizing: "border-box" }} />
                     <input readOnly value={row.endDate}
-                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1.5px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#F5F5F5", boxSizing: "border-box" }} />
+                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#F5F5F5", boxSizing: "border-box" }} />
                     <input readOnly value={row.lockName}
-                      style={{ height: 38, borderRadius: 16, border: "1.5px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", width: "100%", boxSizing: "border-box", background: "#F5F5F5" }} />
+                      style={{ height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", width: "100%", boxSizing: "border-box", background: "#F5F5F5" }} />
                     <button
                       onClick={() => remRow(row.id)}
                       style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0, display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -237,7 +237,7 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
 
         <div style={{ display: "flex", gap: 12, justifyContent: "flex-end",marginTop:"10px" }}>
           <button onClick={() => allValid.length > 0 && onSave(allValid)}
-            style={{ padding: "10px 48px", borderRadius: 999, border: "none", background: allValid.length > 0 ? "#7029CF" : "#D0D0D0", color: "#fff", fontSize: 14, fontWeight: 600, cursor: allValid.length > 0 ? "pointer" : "not-allowed", fontFamily: "GT Walsheim", transition: "all 0.2s", boxShadow: allValid.length > 0 ? "0 4px 12px rgba(112,41,207,0.2)" : "none" }}>Save</button>
+            style={{ padding: "10px 48px", borderRadius: 999, border: "none", background: allValid.length > 0 ? "#7029CF" : "#7029CF8F", color: "#fff", fontSize: 14, fontWeight: 600, cursor: allValid.length > 0 ? "pointer" : "not-allowed", fontFamily: "GT Walsheim", transition: "all 0.2s", boxShadow: allValid.length > 0 ? "0 4px 12px rgba(112,41,207,0.2)" : "none" }}>Save</button>
           <button onClick={onClose} style={{ padding: "10px 42px", borderRadius: 999, border: "2px solid #7029CF", background: "#fff", color: "#7029CF", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>Cancel</button>
         </div>
       </div>
@@ -245,32 +245,66 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
   );
 };
 
-// ── Location multi-select ─────────────────────────────────────────────────────
-const LocationSelect = ({ selected, onChange }: { selected: string[]; onChange: (v: string[]) => void }) => {
+// ── Searchable dropdown ─────────────────────────────────────────────────────
+const SearchDropdown = ({
+  selected,
+  options,
+  onChange,
+  placeholder,
+  multi = true,
+}: {
+  selected: string[];
+  options: string[];
+  onChange: (v: string[]) => void;
+  placeholder?: string;
+  multi?: boolean;
+}) => {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const fn = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
     document.addEventListener("mousedown", fn);
     return () => document.removeEventListener("mousedown", fn);
   }, []);
+
+  const filtered = options.filter(opt => opt.toLowerCase().includes(query.toLowerCase()));
+  const displayValue = selected.length === 0 ? placeholder || "Select" : multi ? `${selected.length} selected` : selected[0];
+
   return (
-    <div ref={ref} style={{ position: "relative", width: "100%" }}>
-      <button onClick={() => setOpen(o => !o)} style={{ width: "100%", height: 40, borderRadius: 8, border: "1.5px solid #E0E0E0", background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px", fontSize: 12, color: selected.length ? "#333" : "#aaa", cursor: "pointer", fontFamily: "GT Walsheim", boxSizing: "border-box" }}>
-        <span>{selected.length ? `${selected.length} selected` : "Select"}</span>
+    <div ref={ref} style={{ position: "relative", width: "100%", fontFamily: "GT Walsheim" }}>
+      <button onClick={() => setOpen(o => !o)} style={{ width: "100%", height: 40, borderRadius: 16, border: "1px solid #B1B1B1", background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px", fontSize: 12, color: selected.length ? "#333" : "#aaa", cursor: "pointer", boxSizing: "border-box" }}>
+        <span>{displayValue}</span>
         <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#888" strokeWidth="1.5" strokeLinecap="round"/></svg>
       </button>
       {open && (
-        <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 9999, background: "#fff", borderRadius: 10, boxShadow: "0 4px 16px rgba(0,0,0,0.12)", minWidth: "100%", maxHeight: 160, overflowY: "auto" }}>
-          {ALL_LOCATIONS.map((loc, idx) => (
-            <div key={loc} onClick={() => onChange(selected.includes(loc) ? selected.filter(s => s !== loc) : [...selected, loc])}
-              style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", cursor: "pointer", borderTop: idx > 0 ? "1px solid #f5f5f5" : "none", fontSize: 12, color: "#333", fontFamily: "GT Walsheim" }}>
-              <span style={{ width: 15, height: 15, borderRadius: 3, border: selected.includes(loc) ? "none" : "1.5px solid #CCC", background: selected.includes(loc) ? "#7029CF" : "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                {selected.includes(loc) && <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3L3.5 5.5L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-              </span>
-              {loc}
-            </div>
-          ))}
+        <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 9999, width: "100%", background: "#fff", borderRadius: 16, boxShadow: "0 10px 30px rgba(0,0,0,0.12)", overflow: "hidden" }}>
+          <div style={{ padding: "8px 12px", borderBottom: "1px solid #F2F2F2" }}>
+            <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search..." style={{ width: "100%", height: 36, borderRadius: 12, border: "1px solid #B1B1B1", padding: "0 10px", fontSize: 12, fontFamily: "GT Walsheim", outline: "none" }} />
+          </div>
+          <div style={{ maxHeight: 180, overflowY: "auto" }}>
+            {filtered.map((opt, idx) => {
+              const isSelected = selected.includes(opt);
+              return (
+                <button key={opt} type="button" onClick={() => {
+                  if (multi) {
+                    onChange(isSelected ? selected.filter(s => s !== opt) : [...selected, opt]);
+                  } else {
+                    onChange([opt]);
+                    setOpen(false);
+                  }
+                }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 8, padding: "10px 12px", background: "none", border: "none", textAlign: "left", cursor: "pointer", borderBottom: idx < filtered.length - 1 ? "1px solid #F2F2F2" : "none", color: "#333", fontSize: 12 }}>
+                  {multi && (
+                    <span style={{ minWidth: 18, minHeight: 18, borderRadius: 4, border: isSelected ? "none" : "1.5px solid #B1B1B1", background: isSelected ? "#7029CF" : "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                      {isSelected && <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3L3.5 5.5L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                    </span>
+                  )}
+                  <span>{opt}</span>
+                </button>
+              );
+            })}
+            {filtered.length === 0 && <div style={{ padding: "10px 12px", color: "#999", fontSize: 12 }}>No results</div>}
+          </div>
         </div>
       )}
     </div>
@@ -285,49 +319,63 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
   const valid = !!(form.lob && form.closureStart && form.closureEnd && form.propertyLabel && form.appMessage);
   const lbl: React.CSSProperties = { fontSize: 11, fontWeight: 600, color: "#555", fontFamily: "GT Walsheim", marginBottom: 4, display: "block" };
   const req = <span style={{ color: "#FA6E6E" }}> *</span>;
-  const selStyle: React.CSSProperties = { width: "100%", height: 40, borderRadius: 8, border: "1.5px solid #E0E0E0", padding: "0 12px", fontSize: 12, color: form.lob ? "#333" : "#aaa", outline: "none", fontFamily: "GT Walsheim", background: "#fff", cursor: "pointer", appearance: "none" };
-  const inpStyle: React.CSSProperties = { width: "100%", height: 40, borderRadius: 8, border: "1.5px solid #E0E0E0", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" };
+  const selStyle: React.CSSProperties = { width: "100%", height: 40, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: form.lob ? "#333" : "#aaa", outline: "none", fontFamily: "GT Walsheim", background: "#fff", cursor: "pointer", appearance: "none" };
+  const inpStyle: React.CSSProperties = { width: "100%", height: 40, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" };
 
   return (
     <div style={{ padding: "14px 0" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "12px 16px" }}>
         <div>
           <label style={lbl}>LOB{req}</label>
-          <div style={{ position: "relative" }}>
-            <select value={form.lob} onChange={e => setForm(f => ({ ...f, lob: e.target.value }))} style={selStyle}>
-              <option value="">Select</option>
-              {UNIQUE_LOBS.map(l => <option key={l} value={l}>{l}</option>)}
-            </select>
-            <svg style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#888" strokeWidth="1.5" strokeLinecap="round"/></svg>
-          </div>
+          <SearchDropdown
+            selected={form.lob ? [form.lob] : []}
+            options={UNIQUE_LOBS}
+            multi={false}
+            placeholder="Select LOB"
+            onChange={v => setForm(f => ({ ...f, lob: v[0] || "" }))}
+          />
         </div>
         <div>
           <label style={lbl}>Excluded Locations{req}</label>
-          <LocationSelect selected={form.excludedLocations} onChange={v => setForm(f => ({ ...f, excludedLocations: v }))} />
+          <SearchDropdown
+            selected={form.excludedLocations}
+            options={ALL_LOCATIONS}
+            placeholder="Select locations"
+            onChange={v => setForm(f => ({ ...f, excludedLocations: v }))}
+          />
         </div>
-        <div>
-          <label style={lbl}>Closure Start{req}</label>
-          <DateInput fromValue={form.closureStart} toValue={""} onFromChange={v => setForm(f => ({ ...f, closureStart: v }))} onToChange={() => {}} placeholderFrom="Start Date" placeholderTo="" />
-        </div>
-        <div>
-          <label style={lbl}>Closure End{req}</label>
-          <DateInput fromValue={form.closureEnd} toValue={""} onFromChange={v => setForm(f => ({ ...f, closureEnd: v }))} onToChange={() => {}} placeholderFrom="End Date" placeholderTo="" />
+        <div style={{ gridColumn: "span 2" }}>
+          <DateInput
+            fromValue={form.closureStart}
+            toValue={form.closureEnd}
+            onFromChange={v => setForm(f => ({ ...f, closureStart: v }))}
+            onToChange={v => setForm(f => ({ ...f, closureEnd: v }))}
+            placeholderFrom="Select"
+            placeholderTo="Select"
+            labelFrom="Closure Start"
+            labelTo="Closure End"
+            layout="row"
+            showLabels={true}
+            pillWidth={"clamp(6.25rem, -0.0625rem + 16.8333vw, 18.875rem)"}
+            pillHeight={40}
+            pillBorderRadius={16}
+          />
         </div>
         <div>
           <label style={lbl}>Property Label{req}</label>
-          <input value={form.propertyLabel} onChange={e => setForm(f => ({ ...f, propertyLabel: e.target.value }))} placeholder="e.g. Closed For Holiday" style={inpStyle} onFocus={e => e.currentTarget.style.borderColor = "#7029CF"} onBlur={e => e.currentTarget.style.borderColor = "#E0E0E0"} />
+          <input value={form.propertyLabel} onChange={e => setForm(f => ({ ...f, propertyLabel: e.target.value }))} placeholder="Insert" style={inpStyle} onFocus={e => e.currentTarget.style.borderColor = "#E0E0E0"} onBlur={e => e.currentTarget.style.borderColor = "#E0E0E0"} />
         </div>
         <div style={{ gridColumn: "span 3" }}>
           <label style={lbl}>App. Message{req}</label>
-          <textarea value={form.appMessage} onChange={e => setForm(f => ({ ...f, appMessage: e.target.value }))} placeholder="Insert message shown to users" rows={1}
-            style={{ width: "100%", borderRadius: 8, border: "1.5px solid #E0E0E0", padding: "8px 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", resize: "vertical", boxSizing: "border-box", minHeight: 40 }}
-            onFocus={e => e.currentTarget.style.borderColor = "#7029CF"} onBlur={e => e.currentTarget.style.borderColor = "#E0E0E0"} />
+          <textarea value={form.appMessage} onChange={e => setForm(f => ({ ...f, appMessage: e.target.value }))} placeholder="Insert" rows={1}
+            style={{ width: "100%", borderRadius: 16, border: "1px solid #B1B1B1", padding: "9px 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", resize: "vertical", boxSizing: "border-box", minHeight: 20, maxHeight: 160 }}
+            onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"} onBlur={e => e.currentTarget.style.borderColor = "#E0E0E0"} />
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 12 }}>
-        {onCancel && <button onClick={onCancel} style={{ padding: "7px 20px", borderRadius: 999, border: "1.5px solid #E0E0E0", background: "none", color: "#888", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>Cancel</button>}
-        <button disabled={!valid} onClick={() => valid && onSave({ ...form, id: uid(), active: true })}
-          style={{ padding: "7px 28px", borderRadius: 999, border: "none", background: valid ? "#7029CF" : "#D0D0D0", color: "#fff", fontSize: 12, fontWeight: 600, cursor: valid ? "pointer" : "not-allowed", fontFamily: "GT Walsheim", opacity: valid ? 1 : 0.65, transition: "all 0.2s" }}>Save</button>
+        {onCancel && <button onClick={onCancel} style={{ padding: "7px 20px", borderRadius: 999, border: "1px solid #B1B1B1", background: "none", color: "#888", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>Cancel</button>}
+        <button disabled={!valid} onClick={() => valid && onSave({ ...form, id: form.id || uid(), active: form.active ?? true })}
+          style={{ padding: "7px 28px", borderRadius: 999, border: "none", background: valid ? "#7029CF" : "#7029CF8F", color: "#fff", fontSize: 12, fontWeight: 600, cursor: valid ? "pointer" : "not-allowed", fontFamily: "GT Walsheim", opacity: valid ? 1 : 0.65, transition: "all 0.2s" }}>Save</button>
       </div>
     </div>
   );
@@ -335,69 +383,165 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
 
 // ── LOB Closures Section ──────────────────────────────────────────────────────
 const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: LOBEntry[]) => void }) => {
-  const [showForm, setShowForm] = useState(entries.length === 0);
-  const [editId, setEditId]     = useState<string | null>(null);
-  const [drop, setDrop]         = useState<string | null>(null);
+  const [editingEntry, setEditingEntry] = useState<LOBEntry | null>(null);
+  const [isModalOpen, setIsModalOpen]   = useState(false);
+  const [popoverTarget, setPopoverTarget] = useState<{ id: string; top: number; left: number; width: number } | null>(null);
+  const [popoverLocations, setPopoverLocations] = useState<string[]>([]);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
   const affected = (lob: string) => [...new Set(BASE_PROPERTIES.filter(p => p.lob === lob).map(p => p.location))].length;
-  const thS: React.CSSProperties = { padding: "10px 12px", fontSize: 11, fontWeight: 600, color: "#333", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1.5px solid #EEE", whiteSpace: "nowrap" as const };
-  const tdS: React.CSSProperties = { padding: "10px 12px", fontSize: 11, color: "#555", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1px solid #F5F5F5", verticalAlign: "middle" as const };
+
+  const columnWidths = {
+    lob: { maxWidth: 300, minWidth: 100, flex: "0 1 300px" },
+    affected: { maxWidth: 200, minWidth: 80, flex: "0 1 150px" },
+    excluded: { maxWidth: 300, minWidth: 130, flex: "0 1 300px" },
+    closureStart: { maxWidth: 302, minWidth: 100, flex: "0 1 302px" },
+    closureEnd: { maxWidth: 302, minWidth: 100, flex: "0 1 302px" },
+    propertyLabel: { maxWidth: 300, minWidth: 100, flex: "0 1 300px" },
+    appMessage: { maxWidth: 643, minWidth: 150, flex: "0 1 643px" },
+    action: { maxWidth: 100, minWidth: 50, flex: "0 1 60px" }
+  };
+
+  const thS: React.CSSProperties = { padding: "10px 12px", fontSize: 11, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1.5px solid #EEE", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" };  
+  const tdS: React.CSSProperties = { padding: "10px 12px", fontSize: 11, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1px dashed #F5F5F5", verticalAlign: "middle" as const, overflow: "hidden", textOverflow: "ellipsis" };
+
+  const openNewForm = () => {
+    setEditingEntry(null);
+    setIsModalOpen(true);
+    setPopoverTarget(null);
+  };
+
+  const openEditForm = (entry: LOBEntry) => {
+    setEditingEntry(entry);
+    setIsModalOpen(true);
+    setPopoverTarget(null);
+  };
+
+  const toggleExcludedPopover = (entry: LOBEntry, button: HTMLElement) => {
+    if (popoverTarget?.id === entry.id) {
+      setPopoverTarget(null);
+      return;
+    }
+    const rect = button.getBoundingClientRect();
+    setPopoverLocations(entry.excludedLocations);
+    setPopoverTarget({ id: entry.id, top: rect.bottom + 8, left: rect.left, width: rect.width });
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popoverRef.current && event.target instanceof Node && !popoverRef.current.contains(event.target)) {
+        setPopoverTarget(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingEntry(null);
+    setPopoverTarget(null);
+  };
+
+  const handleSave = (entry: LOBEntry) => {
+    if (editingEntry) {
+      onUpdate(entries.map(x => x.id === editingEntry.id ? { ...entry, id: editingEntry.id } : x));
+    } else {
+      onUpdate([...entries, entry]);
+    }
+    closeModal();
+  };
+
   return (
     <div style={{ marginTop: 14 }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-        <h4 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 700, fontSize: 16, color: "#7029CF", margin: 0 }}>LOB Closures</h4>
-        {entries.length > 0 && !showForm && (
-          <button onClick={() => setShowForm(true)} style={{ padding: "5px 16px", borderRadius: 999, border: "1.5px solid #7029CF", background: "none", color: "#7029CF", fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>+ Add New</button>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+        <h4 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", margin: 0 }}>LOB Closures</h4>
+        {entries.length > 0 && (
+          <button onClick={openNewForm} style={{ padding: "5px 16px", borderRadius: 999, border: "1.5px solid #7029CF", background: "none", color: "#7029CF", fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>+ Add New</button>
         )}
       </div>
-      {entries.length > 0 && (
-        <div style={{ overflowX: "auto", background: "#FAFAFA", borderRadius: 12, border: "1px solid #EFEFEF" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead><tr>{["LOB","Affected Locations","Locations Excluded","Closure Start","Closure End","Property Label","App. Message","Action"].map(h => <th key={h} style={thS}>{h}</th>)}</tr></thead>
-            <tbody>
-              {entries.map(e => editId === e.id ? (
-                <tr key={e.id}><td colSpan={8} style={{ padding: "8px 12px" }}>
-                  <LOBForm initial={e} onSave={d => { onUpdate(entries.map(x => x.id === e.id ? { ...d, id: e.id } : x)); setEditId(null); }} onCancel={() => setEditId(null)} />
-                </td></tr>
-              ) : (
-                <tr key={e.id} style={{ opacity: e.active ? 1 : 0.5 }}>
-                  <td style={tdS}>{e.lob}</td>
-                  <td style={tdS}>{affected(e.lob)}</td>
-                  <td style={{ ...tdS, position: "relative" as const }}>
-                    <button onClick={() => setDrop(drop === e.id ? null : e.id)}
-                      style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 10px", borderRadius: 999, border: "1px solid #D0D0D0", background: "none", cursor: "pointer", fontSize: 11, color: "#555", fontFamily: "GT Walsheim" }}>
-                      {e.excludedLocations.length}<svg width="7" height="5" viewBox="0 0 7 5" fill="none"><path d="M1 1L3.5 4L6 1" stroke="#888" strokeWidth="1.2" strokeLinecap="round"/></svg>
-                    </button>
-                    {drop === e.id && e.excludedLocations.length > 0 && (
-                      <div style={{ position: "absolute" as const, top: "calc(100%+4px)", left: "50%", transform: "translateX(-50%)", zIndex: 100, background: "#fff", borderRadius: 10, boxShadow: "0 4px 16px rgba(0,0,0,0.12)", padding: "8px 0", minWidth: 160 }}>
-                        {e.excludedLocations.map(l => <div key={l} style={{ padding: "5px 14px", fontSize: 11, color: "#333", fontFamily: "GT Walsheim" }}>• {l}</div>)}
-                      </div>
-                    )}
-                  </td>
-                  <td style={tdS}>{e.closureStart}</td>
-                  <td style={tdS}>{e.closureEnd}</td>
-                  <td style={tdS}>{e.propertyLabel}</td>
-                  <td style={{ ...tdS, maxWidth: 130, wordBreak: "break-word" as const }}>{e.appMessage}</td>
-                  <td style={tdS}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
-                      <button onClick={() => setEditId(e.id)} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
-                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M7.5 2.5L10.5 5.5L4 12H1V9L7.5 2.5Z" stroke="#7029CF" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </button>
-                      <button onClick={() => onUpdate(entries.filter(x => x.id !== e.id))} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
-                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M10.5 4L9.9 10.8C9.84 11.25 9.5 11.5 9.08 11.5H3.92C3.5 11.5 3.16 11.25 3.1 10.8L2.5 4" stroke="#FA6E6E" strokeWidth="1.2" strokeLinecap="round"/><path d="M1 2.5H12M4.5 2.5V1.5C4.5 1.22 4.72 1 5 1H8C8.28 1 8.5 1.22 8.5 1.5V2.5" stroke="#FA6E6E" strokeWidth="1.2" strokeLinecap="round"/></svg>
-                      </button>
-                      <button onClick={() => onUpdate(entries.map(x => x.id === e.id ? { ...x, active: !x.active } : x))}
-                        style={{ width: 34, height: 18, borderRadius: 999, background: e.active ? "#7029CF" : "#D0D0D0", position: "relative", border: "none", cursor: "pointer", transition: "background 0.2s", flexShrink: 0 }}>
-                        <span style={{ position: "absolute", top: 2, left: e.active ? 16 : 2, width: 14, height: 14, borderRadius: "50%", background: "#fff", transition: "left 0.2s", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
-                      </button>
-                    </div>
+      {entries.length === 0 ? (
+        <LOBForm initial={undefined} onSave={handleSave} />
+      ) : (
+        <div style={{ position: "relative" }}>
+          <div className="hideScrollbar" style={{ overflowX: "auto", msOverflowStyle: "none", scrollbarWidth: "none", background: "#FFFFFF", borderRadius: 12, border: "1px solid #0000001A" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+              <thead>
+                <tr>
+                  {["LOB", "Affected Locations", "Locations Excluded", "Closure Start", "Closure End", "Property Label", "App. Message", "Action"].map(h => <th key={h} style={thS}>{h}</th>)}
+                </tr>
+                <tr aria-hidden="true">
+                  <td colSpan={8} style={{ padding: 0, height: 0 }}>
+                    <div style={{ borderTop: "1.5px solid #B1B1B1", margin: "0 4px 8px" }} />
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {entries.map(e => (
+                  <tr key={e.id} style={{ opacity: e.active ? 1 : 0.5 }}>
+                    <td style={{ ...tdS, maxWidth: columnWidths.lob.maxWidth, minWidth: columnWidths.lob.minWidth, flex: columnWidths.lob.flex }}>{e.lob}</td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.affected.maxWidth, minWidth: columnWidths.affected.minWidth, flex: columnWidths.affected.flex }}>{affected(e.lob)}</td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.excluded.maxWidth, minWidth: columnWidths.excluded.minWidth, flex: columnWidths.excluded.flex }}>
+                      <button onClick={event => { event.stopPropagation(); toggleExcludedPopover(e, event.currentTarget as HTMLElement); }}
+                        style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 10px", borderRadius: 999, background: "none", cursor: "pointer", fontSize: 11, color: "#242424", fontFamily: "GT Walsheim" }}>
+                        {e.excludedLocations.length} <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6L8 10L12 6" stroke="#2C2C2C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </button>
+                    </td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.closureStart.maxWidth, minWidth: columnWidths.closureStart.minWidth, flex: columnWidths.closureStart.flex }}>{e.closureStart}</td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.closureEnd.maxWidth, minWidth: columnWidths.closureEnd.minWidth, flex: columnWidths.closureEnd.flex }}>{e.closureEnd}</td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.propertyLabel.maxWidth, minWidth: columnWidths.propertyLabel.minWidth, flex: columnWidths.propertyLabel.flex }}>{e.propertyLabel}</td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.appMessage.maxWidth, minWidth: columnWidths.appMessage.minWidth, flex: columnWidths.appMessage.flex, wordBreak: "break-word" as const }}>{e.appMessage}</td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.action.maxWidth, minWidth: columnWidths.action.minWidth, flex: columnWidths.action.flex }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
+                        <button onClick={() => openEditForm(e)} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10.0909 3.25229L9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597L12.9193 6.08072C13.7003 5.29967 13.7003 4.03334 12.9193 3.25229C12.1382 2.47124 10.8719 2.47124 10.0909 3.25229Z" fill="#BD9DE9"></path>
+                          <path d="M9.5756 3.76755L10.0909 3.25229C10.8719 2.47124 12.1382 2.47124 12.9193 3.25229C13.7003 4.03334 13.7003 5.29967 12.9193 6.08072L12.404 6.59597M9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597M9.5756 3.76755L12.404 6.59597" stroke="#7029CF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </svg>        </button>
+                        <button onClick={() => onUpdate(entries.filter(x => x.id !== e.id))} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" fill="#E46464"></path>
+                        <path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" stroke="#E46464" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M14 4.00016H10.25M2 4.00016H5.75M5.75 4.00016V2.66683C5.75 1.93045 6.34695 1.3335 7.08333 1.3335H8.91667C9.65307 1.3335 10.25 1.93045 10.25 2.66683V4.00016M5.75 4.00016H10.25" stroke="#E46464" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>                        </button>
+                        <button onClick={() => onUpdate(entries.map(x => x.id === e.id ? { ...x, active: !x.active } : x))}
+                          style={{ width: 33, height: 18, borderRadius: 999, background: e.active ? "#7029CF" : "#D0D0D0", position: "relative", border: "none", cursor: "pointer", transition: "background 0.2s", flexShrink: 0 }}>
+                          <span style={{ position: "absolute", top: 1, left: e.active ? 16 : 2, width: 16, height: 16, borderRadius: "50%", background: "#fff", transition: "left 0.2s", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
-      {showForm && <LOBForm onSave={d => { onUpdate([...entries, d]); setShowForm(false); }} onCancel={entries.length > 0 ? () => setShowForm(false) : undefined} />}
+
+      {popoverTarget && typeof document !== "undefined" ? createPortal(
+        <div ref={popoverRef} style={{ position: "fixed", top: popoverTarget.top, left: popoverTarget.left, zIndex: 10001, background: "#fff", borderRadius: 10, boxShadow: "0 20px 60px rgba(0,0,0,0.12)", padding: "10px 0", minWidth: 220, maxWidth: 260 }}>
+          {popoverLocations.length > 0 ? popoverLocations.map(location => (
+            <div key={location} style={{ padding: "8px 14px", fontSize: 11, color: "#333", fontFamily: "GT Walsheim", whiteSpace: "nowrap" }}>{location}</div>
+          )) : <div style={{ padding: "8px 14px", fontSize: 11, color: "#999", fontFamily: "GT Walsheim" }}>No excluded locations</div>}
+        </div>,
+        document.body
+      ) : null}
+
+      {isModalOpen && typeof document !== "undefined" ? createPortal(
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }} onClick={closeModal}>
+          <div style={{ background: "#fff", borderRadius: 22, maxWidth: "80vw", overflowY: "auto", padding: "28px 32px", boxShadow: "0 20px 60px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+              <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", margin: 0 }}>{editingEntry ? " LOB Closure" : " LOB Closure"}</h3>
+              <button onClick={closeModal} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M6 18L18 6" stroke="#242424" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              </button>
+            </div>
+            <LOBForm initial={editingEntry ?? undefined} onSave={handleSave} onCancel={closeModal} />
+          </div>
+        </div>,
+        document.body
+      ) : null}
     </div>
   );
 };
@@ -409,12 +553,8 @@ const LockCardItem = ({ card, onDelete, onUpdate }: { card: LockCard; onDelete: 
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 24 }}>
           <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", margin: 0, paddingLeft: 22 }}>{card.lockName || "Add New Lock"}</h3>
-          <button onClick={onDelete} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0, opacity: 0.45, transition: "opacity 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "1"} onMouseLeave={e => e.currentTarget.style.opacity = "0.45"}>
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" fill="#E46464"/><path d="M14 4H10.25M2 4H5.75M5.75 4V2.665C5.75 1.93 6.347 1.333 7.083 1.333H8.917C9.653 1.333 10.25 1.93 10.25 2.665V4M5.75 4H10.25" stroke="#E46464" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          </button>
         </div>
-        <div style={{ display: "flex", gap: 24, marginBottom: 24, flexWrap: "wrap", paddingLeft: 22 }}>
+        <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap", paddingLeft: 22, alignItems: "center" }}>
           <DateInput 
             fromValue={card.startDate} 
             toValue={card.endDate} 
@@ -423,15 +563,17 @@ const LockCardItem = ({ card, onDelete, onUpdate }: { card: LockCard; onDelete: 
             placeholderFrom="Select Date"
             placeholderTo="Select Date"
             layout="row"
-            pillWidth={180}
-            pillHeight={40}
-            pillBorderRadius={12}
+            pillWidth={"clamp(15.625rem, 14rem + 4.3333vw, 18.875rem)"}
+            pillHeight={50}
+            pillBorderRadius={16}
             showLabels={true}
           />
+          <button onClick={onDelete} style={{ width: 40, height: 40, borderRadius: 12, background: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "end", justifyContent: "center", transition: "background 0.2s" }}>
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" fill="#E46464"/><path d="M14 4H10.25M2 4H5.75M5.75 4V2.665C5.75 1.93 6.347 1.333 7.083 1.333H8.917C9.653 1.333 10.25 1.93 10.25 2.665V4M5.75 4H10.25" stroke="#E46464" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
         </div>
-        <div style={{ height: 1.5, background: "#F0EAFF", margin: "0 -27px 24px -28px" }} />
         <div style={{ padding: "0 22px" }}>
-          <div style={{ background: "#fff", borderRadius: 16, border: "1.5px solid #F0EAFF", padding: "20px" }}>
+          <div style={{ background: "#fff", borderRadius: 48, border: "1.5px solid #0000001A", padding: "24px" }}>
             <LOBSection entries={card.lobEntries} onUpdate={entries => onUpdate({ ...card, lobEntries: entries })} />
           </div>
         </div>
@@ -508,7 +650,7 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
       <div className="w-full min-h-screen bg-[#F7F7F7]" style={{ padding: "22px 64px 40px", position: "relative", fontFamily: "GT Walsheim" }}>
 
         {/* ── Right-side icons (fixed) ── */}
-        <div style={{ position: "absolute", right: "16px", top: "30%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", zIndex: 30 }}>
+        <div style={{ position: "absolute", right: "16px", top: "clamp(220px, 25vh, 300px)", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", zIndex: 30 }}>
           {icons.map((icon, i) => (
             <div key={i} style={{ position: "relative" }}>
               <button onClick={iconActions[i]}
@@ -525,7 +667,7 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         {/* ── Country tabs (absolute top-right) ── */}
-        <div className="absolute top-[3%] right-[calc(45%-250px)] z-40">
+        <div className="absolute  right-[calc(45%-250px)] z-40">
           <div className="flex bg-[#FFFFFF] rounded-full py-4 px-7 shadow-inner">
             {UNIQUE_COUNTRIES.map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
@@ -557,7 +699,7 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
 
           {/* Individual Lock Cards as "Main Cards" */}
           <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 24 }}>
-            {filtered.length === 0 && !showModal && (
+            {filtered.length === 0  && (
               <div style={{ width: "100%", minHeight: 600, backgroundColor: "white", clipPath: "url(#almClip)", WebkitClipPath: "url(#almClip)", boxShadow: "0 2px 24px rgba(0,0,0,0.07)", display: "flex", flexDirection: "column", padding: "40px 27px 40px 28px" }}>
                 <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", margin: 0, paddingLeft: 22 }}>Add New Lock</h3>
               </div>
@@ -572,7 +714,8 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
                 borderRadius: idx === 0 ? 0 : 20,
                 clipPath: idx === 0 ? "url(#almClip)" : "none",
                 WebkitClipPath: idx === 0 ? "url(#almClip)" : "none",
-                position: "relative"
+                position: "relative",
+                 minHeight: 600,
               }}>
                 <LockCardItem card={card}
                   onDelete={() => setLockCards(prev => prev.filter(c => c.id !== card.id))}

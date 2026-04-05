@@ -613,8 +613,8 @@ if (searchLaunchTo)   { const t = parseDMY(searchLaunchTo);   const d = parseRow
       toValue={searchEndTo}
       onFromChange={(v) => { setSearchEndFrom(v); setCurrentPage(1); }}
       onToChange={(v) => { setSearchEndTo(v); setCurrentPage(1); }}
-      placeholderFrom="From Date"
-      placeholderTo="To Date"
+      placeholderFrom="From "
+      placeholderTo="To "
     />
   </td>
 )}
@@ -627,8 +627,8 @@ if (searchLaunchTo)   { const t = parseDMY(searchLaunchTo);   const d = parseRow
       toValue={searchLaunchTo}
       onFromChange={(v) => { setSearchLaunchFrom(v); setCurrentPage(1); }}
       onToChange={(v) => { setSearchLaunchTo(v); setCurrentPage(1); }}
-      placeholderFrom="From Date"
-      placeholderTo="To Date"
+      placeholderFrom="From "
+      placeholderTo="To "
     />
   </td>
 )}

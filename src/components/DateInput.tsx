@@ -10,6 +10,8 @@ interface DateRangeInputProps {
   onToChange: (v: string) => void;
   placeholderFrom?: string;
   placeholderTo?: string;
+  labelFrom?: string;
+  labelTo?: string;
   layout?: "row" | "column";
   pillWidth?: number | string;
   pillHeight?: number;
@@ -57,6 +59,8 @@ const DateRangeInput: React.FC<DateRangeInputProps> = ({
   onToChange,
   placeholderFrom = "From Date",
   placeholderTo   = "To Date",
+  labelFrom = "Start Date",
+  labelTo = "End Date",
   layout = "column",
   pillWidth = 100,
   pillHeight = 32,
@@ -210,7 +214,7 @@ useEffect(() => {
     width: pillWidth,
     height: pillHeight,
     borderRadius: pillBorderRadius,
-    border: "1.5px solid #E0D4F5",
+    border: "1.5px solid #B1B1B1",
     padding: "0 12px",
     fontSize: 12,
     background: "#fff",
@@ -247,8 +251,8 @@ useEffect(() => {
         background: "#fff",
         borderRadius: 18,
         padding: 8,
-        width: 200,
-        border: "1.5px solid #e8dff7",
+        width: 220,
+        border: "1.5px solid #B1B1B1",
       }}
     >
       {/* ── Month nav ── */}
@@ -346,8 +350,8 @@ useEffect(() => {
       <div ref={wrapRef} style={{ display: "flex", flexDirection: layout, gap: layout === "row" ? 24 : 16, alignItems: "flex-start", position: "relative" }}>
         {/* From trigger */}
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {showLabels && <label style={labelStyle}>Start Date <span style={{ color: "#FA6E6E" }}>*</span></label>}
-          <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#7029CF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
+          {showLabels && <label style={labelStyle}>{labelFrom} <span style={{ color: "#FA6E6E" }}>*</span></label>}
+          <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#E0D4F5"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {fromValue || placeholderFrom}
             </span>
@@ -357,8 +361,8 @@ useEffect(() => {
 
         {/* To trigger */}
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {showLabels && <label style={labelStyle}>End Date <span style={{ color: "#FA6E6E" }}>*</span></label>}
-          <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#7029CF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
+          {showLabels && <label style={labelStyle}>{labelTo} <span style={{ color: "#FA6E6E" }}>*</span></label>}
+          <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#E0D4F5"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {toValue || placeholderTo}
             </span>
