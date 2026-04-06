@@ -226,7 +226,7 @@ useEffect(() => {
     fontFamily: "GT Walsheim",
     boxSizing: "border-box",
     userSelect: "none",
-    transition: "border-color 0.2s",
+    
   });
 
   const calIcon = (
@@ -351,7 +351,7 @@ useEffect(() => {
         {/* From trigger */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           {showLabels && <label style={labelStyle}>{labelFrom} <span style={{ color: "#FA6E6E" }}>*</span></label>}
-          <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#E0D4F5"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
+          <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#B1B1B1"} onMouseLeave={e => e.currentTarget.style.borderColor = "#B1B1B1"}>
             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {fromValue || placeholderFrom}
             </span>
@@ -362,7 +362,7 @@ useEffect(() => {
         {/* To trigger */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           {showLabels && <label style={labelStyle}>{labelTo} <span style={{ color: "#FA6E6E" }}>*</span></label>}
-          <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#E0D4F5"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E0D4F5"}>
+          <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#B1B1B1"} onMouseLeave={e => e.currentTarget.style.borderColor = "#B1B1B1"}>
             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {toValue || placeholderTo}
             </span>

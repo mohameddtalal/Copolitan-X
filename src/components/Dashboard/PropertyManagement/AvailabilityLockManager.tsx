@@ -43,11 +43,9 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
     setActiveRow(prev => ({ ...prev, [field]: val }));
 
   const addRow = () => {
-    // Save current active row to the list if it has any data
     if (activeRow.lockName.trim() || activeRow.startDate || activeRow.endDate) {
       setRows(prev => [activeRow, ...prev]);
     }
-    // Start a fresh active row
     setActiveRow({ id: uid(), startDate: "", endDate: "", lockName: "" });
   };
 
@@ -106,18 +104,20 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
       <div style={{ background: "#fff", borderRadius: 22, padding: "28px 32px", width: "min(860px, 94vw)", maxHeight: "90vh", overflowY: "auto"}} onClick={e => e.stopPropagation()}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
           <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", marginLeft: 10 }}>Lock Calendar</h3>
-         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0, padding: 0 }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18 15.8571L14.3571 12.2143C14.2388 12.0959 14.2388 11.9041 14.3571 11.7857L18 8.14286C18.5917 7.55116 18.5917 6.59169 18 6C17.4083 5.40831 16.4488 5.40831 15.8571 6L12.2143 9.64286C12.0959 9.7612 11.9041 9.7612 11.7857 9.64286L8.14286 6C7.55116 5.40831 6.59169 5.40831 6 6C5.40831 6.59169 5.40831 7.55116 6 8.14286L9.64286 11.7857C9.7612 11.9041 9.7612 12.0959 9.64286 12.2143L6 15.8571C5.40831 16.4488 5.40831 17.4083 6 18C6.59169 18.5917 7.55116 18.5917 8.14286 18L11.7857 14.3571C11.9041 14.2388 12.0959 14.2388 12.2143 14.3571L15.8571 18C16.4488 18.5917 17.4083 18.5917 18 18C18.5917 17.4083 18.5917 16.4488 18 15.8571Z" fill="#565656"></path>
-              </svg>
+            </svg>
+          </button>
         </div>
 
         <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
           {/* Left: Calendar */}
           <div style={{ width: 260, flexShrink: 0 ,boxShadow: "0px 0px 8px 0px #00000040",borderRadius:"24px",padding:"12px"}}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F5F5F5", borderRadius: 24, padding: "6px 10px", marginBottom: 12 }}>
-              <button onClick={() => { let m = mo-1, y = yr; if (m<0){m=11;y--;} setMo(m); setYr(y); }} style={{ background: "#fff", border: "none", cursor: "pointer", fontSize: 18, width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }}>‹</button>
+              <button onClick={() => { let m = mo-1, y = yr; if (m<0){m=11;y--;} setMo(m); setYr(y); }} style={{ background: "#fff", border: "none", cursor: "pointer", fontSize: 18, width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }}>&#8249;</button>
               <div style={{ fontSize: 13, fontWeight: 600, color: "#333", fontFamily: "GT Walsheim" }}>{MONTH_FULL[mo]} {yr}</div>
-              <button onClick={() => { let m = mo+1, y = yr; if (m>11){m=0;y++;} setMo(m); setYr(y); }} style={{ background: "#fff", border: "none", cursor: "pointer", fontSize: 18, width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }}>›</button>
+              <button onClick={() => { let m = mo+1, y = yr; if (m>11){m=0;y++;} setMo(m); setYr(y); }} style={{ background: "#fff", border: "none", cursor: "pointer", fontSize: 18, width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }}>&#8250;</button>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 0, marginBottom: 4 }}>
               {DAY_LABELS.map((d: string) => (
@@ -199,7 +199,6 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
                   onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"}
                   onBlur={e => e.currentTarget.style.borderColor = "#B1B1B1"}
                 />
-                {/* + Add New button — always visible below lock name */}
                 <button
                   onClick={addRow}
                   style={{ position: "absolute", top: "calc(100% + 10px)", right: 0, background: "none", border: "1.5px solid #7029CF", borderRadius: 999, cursor: "pointer", color: "#7029CF", fontSize: 10, fontWeight: 600, fontFamily: "GT Walsheim", padding: "2px 10px", whiteSpace: "nowrap", zIndex: 10 }}
@@ -210,7 +209,7 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
               <span />
             </div>
 
-            {/* Saved rows — appear below active row with trash icon */}
+            {/* Saved rows */}
             {rows.length > 0 && (
               <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 10 }}>
                 {rows.map(row => (
@@ -261,12 +260,38 @@ const SearchDropdown = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [dropPos, setDropPos] = useState<{ top: number; left: number; width: number } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const dropRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const fn = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    const fn = (e: MouseEvent) => {
+      if (
+        ref.current && !ref.current.contains(e.target as Node) &&
+        dropRef.current && !dropRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
     document.addEventListener("mousedown", fn);
     return () => document.removeEventListener("mousedown", fn);
   }, []);
+
+  useEffect(() => {
+    if (!open || !ref.current) return;
+    const update = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      setDropPos({ top: rect.bottom + 4, left: rect.left, width: rect.width });
+    };
+    update();
+    window.addEventListener("scroll", update, true);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [open]);
 
   const filtered = options.filter(opt => opt.toLowerCase().includes(query.toLowerCase()));
   const displayValue = selected.length === 0 ? placeholder || "Select" : multi ? `${selected.length} selected` : selected[0];
@@ -277,8 +302,9 @@ const SearchDropdown = ({
         <span>{displayValue}</span>
         <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#888" strokeWidth="1.5" strokeLinecap="round"/></svg>
       </button>
-      {open && (
-        <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 9999, width: "100%", background: "#fff", borderRadius: 16, boxShadow: "0 10px 30px rgba(0,0,0,0.12)", overflow: "hidden" }}>
+
+      {open && dropPos && typeof document !== "undefined" && createPortal(
+        <div ref={dropRef} style={{ position: "fixed", top: dropPos.top, left: dropPos.left, width: dropPos.width, zIndex: 9999, background: "#fff", borderRadius: 16, boxShadow: "0 10px 30px rgba(0,0,0,0.12)", overflow: "hidden" }}>
           <div style={{ padding: "8px 12px", borderBottom: "1px solid #F2F2F2" }}>
             <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search..." style={{ width: "100%", height: 36, borderRadius: 12, border: "1px solid #B1B1B1", padding: "0 10px", fontSize: 12, fontFamily: "GT Walsheim", outline: "none" }} />
           </div>
@@ -305,7 +331,131 @@ const SearchDropdown = ({
             })}
             {filtered.length === 0 && <div style={{ padding: "10px 12px", color: "#999", fontSize: 12 }}>No results</div>}
           </div>
-        </div>
+        </div>,
+        document.body
+      )}
+    </div>
+  );
+};
+
+const YearDropdown = ({
+  selectedYear,
+  options,
+  onChange,
+}: {
+  selectedYear: number;
+  options: number[];
+  onChange: (year: number) => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const [dropPos, setDropPos] = useState<{ top: number; left: number; width: number } | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const dropRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (
+        ref.current && !ref.current.contains(event.target as Node) &&
+        dropRef.current && !dropRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  useEffect(() => {
+    if (!open || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    setDropPos({ top: rect.bottom + 8, left: rect.left, width: rect.width });
+
+    const update = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      setDropPos({ top: rect.bottom + 8, left: rect.left, width: rect.width });
+    };
+
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} style={{ position: "relative", fontFamily: "GT Walsheim" }}>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        style={{
+          borderRadius: 16,
+          border: "1px solid #B1B1B1",
+          background: "#7029CF",
+          color: "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 12px",
+          minHeight: 34,
+          minWidth:80,
+          fontSize: 12,
+          fontFamily: "GT Walsheim",
+          cursor: "pointer",
+          boxSizing: "border-box",
+        }}
+      >
+        <span>{selectedYear}</span>
+        <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/></svg>
+      </button>
+
+      {open && dropPos && typeof document !== "undefined" && createPortal(
+        <div
+          ref={dropRef}
+          style={{
+            position: "fixed",
+            top: dropPos.top,
+            left: dropPos.left,
+            width: dropPos.width,
+            zIndex: 9999,
+            background: "#fff",
+            borderRadius: 16,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+            overflow: "hidden",
+          }}
+        >
+          {options.map(year => {
+            const isSelected = year === selectedYear;
+            return (
+              <button
+                key={year}
+                type="button"
+                onClick={() => {
+                  onChange(year);
+                  setOpen(false);
+                }}
+                style={{
+                  
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "10px 12px",
+                  border: "none",
+                  background: isSelected ? "#7029CF" : "#fff",
+                  color: isSelected ? "#fff" : "#000",
+                  cursor: "pointer",
+                  fontSize: 12,
+                  fontFamily: "GT Walsheim",
+                  
+                }}
+              >
+                {year}
+              </button>
+            );
+          })}
+        </div>,
+        document.body,
       )}
     </div>
   );
@@ -319,7 +469,6 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
   const valid = !!(form.lob && form.closureStart && form.closureEnd && form.propertyLabel && form.appMessage);
   const lbl: React.CSSProperties = { fontSize: 11, fontWeight: 600, color: "#555", fontFamily: "GT Walsheim", marginBottom: 4, display: "block" };
   const req = <span style={{ color: "#FA6E6E" }}> *</span>;
-  const selStyle: React.CSSProperties = { width: "100%", height: 40, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: form.lob ? "#333" : "#aaa", outline: "none", fontFamily: "GT Walsheim", background: "#fff", cursor: "pointer", appearance: "none" };
   const inpStyle: React.CSSProperties = { width: "100%", height: 40, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" };
 
   return (
@@ -330,9 +479,11 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
           <SearchDropdown
             selected={form.lob ? [form.lob] : []}
             options={UNIQUE_LOBS}
-            multi={false}
-            placeholder="Select LOB"
-            onChange={v => setForm(f => ({ ...f, lob: v[0] || "" }))}
+            placeholder="Select"
+            onChange={v => {
+              const value = v.length ? v[v.length - 1] : "";
+              setForm(f => ({ ...f, lob: value }));
+            }}
           />
         </div>
         <div>
@@ -340,7 +491,7 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
           <SearchDropdown
             selected={form.excludedLocations}
             options={ALL_LOCATIONS}
-            placeholder="Select locations"
+            placeholder="Select "
             onChange={v => setForm(f => ({ ...f, excludedLocations: v }))}
           />
         </div>
@@ -363,18 +514,18 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
         </div>
         <div>
           <label style={lbl}>Property Label{req}</label>
-          <input value={form.propertyLabel} onChange={e => setForm(f => ({ ...f, propertyLabel: e.target.value }))} placeholder="Insert" style={inpStyle} onFocus={e => e.currentTarget.style.borderColor = "#E0E0E0"} onBlur={e => e.currentTarget.style.borderColor = "#E0E0E0"} />
+          <input value={form.propertyLabel} onChange={e => setForm(f => ({ ...f, propertyLabel: e.target.value }))} placeholder="Insert" style={inpStyle} onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"} onBlur={e => e.currentTarget.style.borderColor = "#B1B1B1"} />
         </div>
         <div style={{ gridColumn: "span 3" }}>
           <label style={lbl}>App. Message{req}</label>
           <textarea value={form.appMessage} onChange={e => setForm(f => ({ ...f, appMessage: e.target.value }))} placeholder="Insert" rows={1}
             style={{ width: "100%", borderRadius: 16, border: "1px solid #B1B1B1", padding: "9px 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", resize: "vertical", boxSizing: "border-box", minHeight: 20, maxHeight: 160 }}
-            onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"} onBlur={e => e.currentTarget.style.borderColor = "#E0E0E0"} />
+            onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"} onBlur={e => e.currentTarget.style.borderColor = "#B1B1B1"} />
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 12 }}>
         {onCancel && <button onClick={onCancel} style={{ padding: "7px 20px", borderRadius: 999, border: "1px solid #B1B1B1", background: "none", color: "#888", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>Cancel</button>}
-        <button disabled={!valid} onClick={() => valid && onSave({ ...form, id: form.id || uid(), active: form.active ?? true })}
+        <button disabled={!valid} onClick={() => valid && onSave({ ...form, id: (form as any).id || uid(), active: (form as any).active ?? true })}
           style={{ padding: "7px 28px", borderRadius: 999, border: "none", background: valid ? "#7029CF" : "#7029CF8F", color: "#fff", fontSize: 12, fontWeight: 600, cursor: valid ? "pointer" : "not-allowed", fontFamily: "GT Walsheim", opacity: valid ? 1 : 0.65, transition: "all 0.2s" }}>Save</button>
       </div>
     </div>
@@ -385,7 +536,8 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
 const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: LOBEntry[]) => void }) => {
   const [editingEntry, setEditingEntry] = useState<LOBEntry | null>(null);
   const [isModalOpen, setIsModalOpen]   = useState(false);
-  const [popoverTarget, setPopoverTarget] = useState<{ id: string; top: number; left: number; width: number } | null>(null);
+  const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null);
+  const [popoverTarget, setPopoverTarget] = useState<{ id: string; top: number; left: number } | null>(null);
   const [popoverLocations, setPopoverLocations] = useState<string[]>([]);
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const affected = (lob: string) => [...new Set(BASE_PROPERTIES.filter(p => p.lob === lob).map(p => p.location))].length;
@@ -408,38 +560,59 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
     setEditingEntry(null);
     setIsModalOpen(true);
     setPopoverTarget(null);
+    setPopoverAnchor(null);
   };
 
   const openEditForm = (entry: LOBEntry) => {
     setEditingEntry(entry);
     setIsModalOpen(true);
     setPopoverTarget(null);
+    setPopoverAnchor(null);
   };
 
   const toggleExcludedPopover = (entry: LOBEntry, button: HTMLElement) => {
     if (popoverTarget?.id === entry.id) {
       setPopoverTarget(null);
+      setPopoverAnchor(null);
       return;
     }
     const rect = button.getBoundingClientRect();
     setPopoverLocations(entry.excludedLocations);
-    setPopoverTarget({ id: entry.id, top: rect.bottom + 8, left: rect.left, width: rect.width });
+    setPopoverAnchor(button);
+    setPopoverTarget({ id: entry.id, top: rect.bottom + 8, left: rect.left });
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (popoverRef.current && event.target instanceof Node && !popoverRef.current.contains(event.target)) {
         setPopoverTarget(null);
+        setPopoverAnchor(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (!popoverAnchor || !popoverTarget) return;
+    const update = () => {
+      if (!popoverAnchor) return;
+      const rect = popoverAnchor.getBoundingClientRect();
+      setPopoverTarget(prev => prev ? { ...prev, top: rect.bottom + 8, left: rect.left } : null);
+    };
+    window.addEventListener("scroll", update, true);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [popoverAnchor, popoverTarget?.id]);
+
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingEntry(null);
     setPopoverTarget(null);
+    setPopoverAnchor(null);
   };
 
   const handleSave = (entry: LOBEntry) => {
@@ -463,7 +636,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
         <LOBForm initial={undefined} onSave={handleSave} />
       ) : (
         <div style={{ position: "relative" }}>
-          <div className="hideScrollbar" style={{ overflowX: "auto", msOverflowStyle: "none", scrollbarWidth: "none", background: "#FFFFFF", borderRadius: 12, border: "1px solid #0000001A" }}>
+          <div className="hideScrollbar" style={{ overflowX: "auto", msOverflowStyle: "none", scrollbarWidth: "none", background: "#FFFFFF", borderRadius: 12, boxShadow: "0 2px 16px rgba(0, 0, 0, 0.08)" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
               <thead>
                 <tr>
@@ -498,13 +671,15 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M10.0909 3.25229L9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597L12.9193 6.08072C13.7003 5.29967 13.7003 4.03334 12.9193 3.25229C12.1382 2.47124 10.8719 2.47124 10.0909 3.25229Z" fill="#BD9DE9"></path>
                           <path d="M9.5756 3.76755L10.0909 3.25229C10.8719 2.47124 12.1382 2.47124 12.9193 3.25229C13.7003 4.03334 13.7003 5.29967 12.9193 6.08072L12.404 6.59597M9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597M9.5756 3.76755L12.404 6.59597" stroke="#7029CF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>        </button>
+                          </svg>
+                        </button>
                         <button onClick={() => onUpdate(entries.filter(x => x.id !== e.id))} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" fill="#E46464"></path>
                         <path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" stroke="#E46464" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                         <path d="M14 4.00016H10.25M2 4.00016H5.75M5.75 4.00016V2.66683C5.75 1.93045 6.34695 1.3335 7.08333 1.3335H8.91667C9.65307 1.3335 10.25 1.93045 10.25 2.66683V4.00016M5.75 4.00016H10.25" stroke="#E46464" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>                        </button>
+                        </svg>
+                        </button>
                         <button onClick={() => onUpdate(entries.map(x => x.id === e.id ? { ...x, active: !x.active } : x))}
                           style={{ width: 33, height: 18, borderRadius: 999, background: e.active ? "#7029CF" : "#D0D0D0", position: "relative", border: "none", cursor: "pointer", transition: "background 0.2s", flexShrink: 0 }}>
                           <span style={{ position: "absolute", top: 1, left: e.active ? 16 : 2, width: 16, height: 16, borderRadius: "50%", background: "#fff", transition: "left 0.2s", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
@@ -520,9 +695,9 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
       )}
 
       {popoverTarget && typeof document !== "undefined" ? createPortal(
-        <div ref={popoverRef} style={{ position: "fixed", top: popoverTarget.top, left: popoverTarget.left, zIndex: 10001, background: "#fff", borderRadius: 10, boxShadow: "0 20px 60px rgba(0,0,0,0.12)", padding: "10px 0", minWidth: 220, maxWidth: 260 }}>
+        <div ref={popoverRef} style={{ position: "fixed", top: popoverTarget.top, left: popoverTarget.left, zIndex: 10001, background: "#fff", borderRadius: 6, boxShadow: "0 20px 60px rgba(0,0,0,0.12)", minWidth: 220, maxWidth: 260, padding:"16px 16px 0px 16px"}}>
           {popoverLocations.length > 0 ? popoverLocations.map(location => (
-            <div key={location} style={{ padding: "8px 14px", fontSize: 11, color: "#333", fontFamily: "GT Walsheim", whiteSpace: "nowrap" }}>{location}</div>
+            <div key={location} style={{ padding: "4px 32px", fontSize: 11, color: "#333", fontFamily: "GT Walsheim", whiteSpace: "nowrap" ,border:"1.5px solid #CACACA",borderRadius:"4px",marginBottom:"16px"}}>&#8226;{location}</div>
           )) : <div style={{ padding: "8px 14px", fontSize: 11, color: "#999", fontFamily: "GT Walsheim" }}>No excluded locations</div>}
         </div>,
         document.body
@@ -573,7 +748,7 @@ const LockCardItem = ({ card, onDelete, onUpdate }: { card: LockCard; onDelete: 
           </button>
         </div>
         <div style={{ padding: "0 22px" }}>
-          <div style={{ background: "#fff", borderRadius: 48, border: "1.5px solid #0000001A", padding: "24px" }}>
+          <div style={{ background: "#fff", borderRadius: 48, padding: "24px", boxShadow: "0 2px 16px rgba(0, 0, 0, 0.08)" }}>
             <LOBSection entries={card.lobEntries} onUpdate={entries => onUpdate({ ...card, lobEntries: entries })} />
           </div>
         </div>
@@ -583,10 +758,26 @@ const LockCardItem = ({ card, onDelete, onUpdate }: { card: LockCard; onDelete: 
 };
 
 
-// ── Month Helper ──────────────────────────────────────────────────────────────
-const getMonthIdx = (dateStr: string): number | null => {
-  const m = dateStr.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
-  return m ? parseInt(m[2]) - 1 : null;
+// ── Month Helpers ─────────────────────────────────────────────────────────────
+const parseCardDate = (str: string): Date | null => {
+  if (!str) return null;
+  const m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  if (!m) return null;
+  const d = new Date(+m[3], +m[2] - 1, +m[1]);
+  return isNaN(d.getTime()) ? null : d;
+};
+
+const countDaysInMonth = (startStr: string, endStr: string, monthIdx: number, year: number): number => {
+  const start  = parseCardDate(startStr);
+  const end    = parseCardDate(endStr);
+  if (!start) return 0;
+  const finish     = end ?? start;
+  const monthStart = new Date(year, monthIdx, 1);
+  const monthEnd   = new Date(year, monthIdx + 1, 0);
+  const clampStart = start  > monthStart ? start  : monthStart;
+  const clampEnd   = finish < monthEnd   ? finish : monthEnd;
+  if (clampStart > clampEnd) return 0;
+  return Math.round((clampEnd.getTime() - clampStart.getTime()) / 86400000) + 1;
 };
 
 // ── Main Component ────────────────────────────────────────────────────────────
@@ -596,18 +787,20 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
   const [lockCards, setLockCards]     = useState<LockCard[]>([]);
   const [activeMonth, setActiveMonth] = useState<string | null>(null);
   const [activeTab, setActiveTab]     = useState(UNIQUE_COUNTRIES[0]);
-  const [activeYear]                  = useState(new Date().getFullYear());
+  const [activeYear, setActiveYear]   = useState(new Date().getFullYear());
 
-  // Set navbar title
   useEffect(() => {
     setSelectedButton("Availability Lock Manager");
   }, [setSelectedButton]);
 
-  // Monthly summary
   const monthlyCounts: Record<string, number> = {};
   lockCards.forEach(c => {
-    const mi = getMonthIdx(c.startDate);
-    if (mi !== null) { const k = MONTH_SHORT[mi]; monthlyCounts[k] = (monthlyCounts[k] || 0) + 1; }
+    MONTH_SHORT.forEach((label, mi) => {
+      const days = countDaysInMonth(c.startDate, c.endDate, mi, activeYear);
+      if (days > 0) {
+        monthlyCounts[label] = (monthlyCounts[label] || 0) + days;
+      }
+    });
   });
 
   const handleSave = (rows: LockRow[]) => {
@@ -616,7 +809,10 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
   };
 
   const filtered = activeMonth
-    ? lockCards.filter(c => { const mi = getMonthIdx(c.startDate); return mi !== null && MONTH_SHORT[mi] === activeMonth; })
+    ? lockCards.filter(c => {
+        const mi = MONTH_SHORT.indexOf(activeMonth);
+        return mi !== -1 && countDaysInMonth(c.startDate, c.endDate, mi, activeYear) > 0;
+      })
     : lockCards;
 
   const icons = [
@@ -666,9 +862,13 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
           ))}
         </div>
 
-        {/* ── Country tabs (absolute top-right) ── */}
-        <div className="absolute  right-[calc(45%-250px)] z-40">
-          <div className="flex bg-[#FFFFFF] rounded-full py-4 px-7 shadow-inner">
+        {/* ── Country tabs: top-[11vh] when lock cards exist, no top offset otherwise ── */}
+          <div
+            className="absolute right-[calc(45%-250px)] z-40"
+            style={{
+              top: lockCards.length > 0 ? "75px" : undefined,
+            }}
+          >          <div className="flex bg-[#FFFFFF] rounded-full py-4 px-7 shadow-inner">
             {UNIQUE_COUNTRIES.map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-5 py-3 rounded-full text-xs transition-all duration-300 ${activeTab === tab ? "bg-[#7029CF8F] text-[#242424] shadow-md" : "text-[#7029CF] hover:bg-[#E0CCFF]"}`}>
@@ -682,18 +882,26 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%", alignItems: "center" }}>
 
           {/* Monthly bar — horizontal row */}
-          {Object.keys(monthlyCounts).length > 0 && (
+          {lockCards.length > 0 && (
             <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", width: "100%", justifyContent: "center" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "5px 14px", borderRadius: 999, background: "#7029CF", color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "GT Walsheim", userSelect: "none" }}>
-                {activeYear}
-                <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/></svg>
-              </div>
-              {Object.entries(monthlyCounts).map(([month, count]) => (
-                <button key={month} onClick={() => setActiveMonth(activeMonth === month ? null : month)}
-                  style={{ padding: "5px 14px", borderRadius: 999, border: "1.5px solid #D0D0D0", background: activeMonth === month ? "#7029CF" : "#fff", color: activeMonth === month ? "#fff" : "#333", fontSize: 12, fontWeight: activeMonth === month ? 700 : 500, cursor: "pointer", fontFamily: "GT Walsheim", transition: "all 0.2s" }}>
-                  {month} ({count})
-                </button>
-              ))}
+              <YearDropdown
+                selectedYear={activeYear}
+                options={Array.from({ length: 5 }, (_, idx) => new Date().getFullYear() - 2 + idx)}
+                onChange={setActiveYear}
+              />
+
+              {Object.keys(monthlyCounts).length > 0 ? (
+                Object.entries(monthlyCounts).map(([month, count]) => (
+                  <button key={month} onClick={() => setActiveMonth(activeMonth === month ? null : month)}
+                    style={{ padding: "5px 14px", borderRadius: 999, border: "1.5px solid #D0D0D0", background: activeMonth === month ? "#242424" : "#CACACA", color: activeMonth === month ? "#fff" : "#333", fontSize: 12, fontWeight: activeMonth === month ? 700 : 500, cursor: "pointer", fontFamily: "GT Walsheim", transition: "all 0.2s" }}>
+                    {month} ({count})
+                  </button>
+                ))
+              ) : (
+                <span style={{ color: "#CACACA", fontSize: 12, fontFamily: "GT Walsheim" }}>
+                  No lock days for {activeYear}
+                </span>
+              )}
             </div>
           )}
 
@@ -715,7 +923,7 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
                 clipPath: idx === 0 ? "url(#almClip)" : "none",
                 WebkitClipPath: idx === 0 ? "url(#almClip)" : "none",
                 position: "relative",
-                 minHeight: 600,
+                minHeight: 600,
               }}>
                 <LockCardItem card={card}
                   onDelete={() => setLockCards(prev => prev.filter(c => c.id !== card.id))}
@@ -726,7 +934,6 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
         </div>
       </div>
 
-      {/* Modal — closeable via Cancel, backdrop, or ✕ */}
       {showModal && <AddNewLockModal onSave={handleSave} onClose={() => setShowModal(false)} />}
     </>
   );
