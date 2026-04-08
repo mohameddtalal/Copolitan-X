@@ -866,6 +866,10 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
       return mi !== -1 && countDaysInMonth(c.startDate, c.endDate, mi, activeYear) > 0;
     }
     return true;
+  }).sort((a, b) => {
+    const da = parseCardDate(a.startDate)?.getTime() || 0;
+    const db = parseCardDate(b.startDate)?.getTime() || 0;
+    return da - db;
   });
 
   const icons = [
@@ -943,13 +947,17 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
                 onChange={setActiveYear}
               />
 
-              {Object.keys(monthlyCounts).length > 0 ? (
-                Object.entries(monthlyCounts).map(([month, count]) => (
-                  <button key={month} onClick={() => setActiveMonth(activeMonth === month ? null : month)}
-                    style={{ padding: "5px 14px", borderRadius: 999, border: "1.5px solid #D0D0D0", background: activeMonth === month ? "#242424" : "#CACACA", color: activeMonth === month ? "#fff" : "#333", fontSize: 12, fontWeight: activeMonth === month ? 700 : 500, cursor: "pointer", fontFamily: "GT Walsheim", transition: "all 0.2s" }}>
-                    {month} ({count})
-                  </button>
-                ))
+              {MONTH_SHORT.some(label => monthlyCounts[label] > 0) ? (
+                MONTH_SHORT.map(label => {
+                  const count = monthlyCounts[label];
+                  if (!count) return null;
+                  return (
+                    <button key={label} onClick={() => setActiveMonth(activeMonth === label ? null : label)}
+                      style={{ padding: "5px 14px", borderRadius: 999, border: "1.5px solid #D0D0D0", background: activeMonth === label ? "#242424" : "#CACACA", color: activeMonth === label ? "#fff" : "#333", fontSize: 12, fontWeight: activeMonth === label ? 700 : 500, cursor: "pointer", fontFamily: "GT Walsheim", transition: "all 0.2s" }}>
+                      {label} ({count})
+                    </button>
+                  );
+                })
               ) : (
                 <span style={{ color: "#CACACA", fontSize: 12, fontFamily: "GT Walsheim" }}>
                   No lock days for {activeYear}
