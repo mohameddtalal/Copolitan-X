@@ -113,7 +113,8 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
 
         <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
           {/* Left: Calendar */}
-          <div style={{ width: 260, flexShrink: 0 ,boxShadow: "0px 0px 8px 0px #00000040",borderRadius:"24px",padding:"12px"}}>
+          <div style={{ width: 260, minWidth: 260, maxWidth: 260, height: 310, flexShrink: 0, boxSizing: "border-box", boxShadow: "0px 0px 8px 0px #00000040", borderRadius: "24px", padding: "12px" }}>
+
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F5F5F5", borderRadius: 24, padding: "6px 10px", marginBottom: 12 }}>
               <button onClick={() => { let m = mo-1, y = yr; if (m<0){m=11;y--;} setMo(m); setYr(y); }} style={{ background: "#fff", border: "none", cursor: "pointer", fontSize: 18, width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }}>&#8249;</button>
               <div style={{ fontSize: 13, fontWeight: 600, color: "#333", fontFamily: "GT Walsheim" }}>{MONTH_FULL[mo]} {yr}</div>
@@ -124,8 +125,8 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
                 <div key={d} style={{ textAlign: "center", fontSize: 10, color: "#aaa", fontWeight: 600, padding: "4px 0" }}>{d}</div>
               ))}
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 0 }}>
-              {Array.from({ length: startDow }, (_, i) => (
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 0, alignContent: "start", overflow: "hidden"}}>              {Array.from({ length: startDow }, (_, i) => (
                 <div key={`p${i}`} style={{ height: 32, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#ddd" }}>{prevMonthDays - startDow + i + 1}</div>
               ))}
               {Array.from({ length: daysInMonth }, (_, i) => {
@@ -157,7 +158,7 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
                 );
               })}
             </div>
-            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
+            <div style={{ marginTop: "auto", display: "flex", justifyContent: "flex-end" }}>
               <button 
                 onClick={() => {
                   updateActive("startDate", "");
@@ -201,7 +202,7 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
                 />
                 <button
                   onClick={addRow}
-                  style={{ position: "absolute", top: "calc(100% + 10px)", right: 0, background: "none", border: "1.5px solid #7029CF", borderRadius: 999, cursor: "pointer", color: "#7029CF", fontSize: 10, fontWeight: 600, fontFamily: "GT Walsheim", padding: "2px 10px", whiteSpace: "nowrap", zIndex: 10 }}
+                  style={{ position: "absolute", top: "calc(100% + 16px)", right: 0, background: "none", border: "1.5px solid #7029CF", borderRadius: 999, cursor: "pointer", color: "#7029CF", fontSize: 11, fontWeight: 400, fontFamily: "GT Walsheim", padding: "5px 8px", whiteSpace: "nowrap", zIndex: 10 }}
                 >
                   + Add New
                 </button>
@@ -211,16 +212,16 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
 
             {/* Saved rows */}
             {rows.length > 0 && (
-              <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 10 }}>
+              <div style={{ marginTop: 40, display: "flex", flexDirection: "column", gap: 10 }}>
                 {rows.map(row => (
                   <div key={row.id}
-                    style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr 28px", gap: "12px", alignItems: "center" }}>
+                    style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr 28px", gap: "12px", alignItems: "center" ,marginTop: 16}}>
                     <input readOnly value={row.startDate}
-                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#F5F5F5", boxSizing: "border-box" }} />
+                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#E4E4E4", boxSizing: "border-box" }} />
                     <input readOnly value={row.endDate}
-                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#F5F5F5", boxSizing: "border-box" }} />
+                      style={{ width: "100%", height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#E4E4E4", boxSizing: "border-box" }} />
                     <input readOnly value={row.lockName}
-                      style={{ height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", width: "100%", boxSizing: "border-box", background: "#F5F5F5" }} />
+                      style={{ height: 38, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", width: "100%", boxSizing: "border-box", background: "#E4E4E4" }} />
                     <button
                       onClick={() => remRow(row.id)}
                       style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0, display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -294,12 +295,12 @@ const SearchDropdown = ({
   }, [open]);
 
   const filtered = options.filter(opt => opt.toLowerCase().includes(query.toLowerCase()));
-  const displayValue = selected.length === 0 ? placeholder || "Select" : multi ? `${selected.length} selected` : selected[0];
+  const displayValue = selected.length === 0 ? placeholder || "Select" : selected.join(", ");
 
   return (
     <div ref={ref} style={{ position: "relative", width: "100%", fontFamily: "GT Walsheim" }}>
-      <button onClick={() => setOpen(o => !o)} style={{ width: "100%", height: 40, borderRadius: 16, border: "1px solid #B1B1B1", background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px", fontSize: 12, color: selected.length ? "#333" : "#aaa", cursor: "pointer", boxSizing: "border-box" }}>
-        <span>{displayValue}</span>
+      <button onClick={() => setOpen(o => !o)} style={{ width: "100%", height: 50, borderRadius: 16, border: "1px solid #B1B1B1", background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px", fontSize: 12, color: selected.length ? "#333" : "#aaa", cursor: "pointer", boxSizing: "border-box" }}>
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginRight: "8px", textAlign: "left", flex: 1 }}>{displayValue}</span>
         <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#888" strokeWidth="1.5" strokeLinecap="round"/></svg>
       </button>
 
@@ -397,7 +398,7 @@ const YearDropdown = ({
           color: "#fff",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
           padding: "0 12px",
           minHeight: 34,
           minWidth:80,
@@ -407,7 +408,7 @@ const YearDropdown = ({
           boxSizing: "border-box",
         }}
       >
-        <span>{selectedYear}</span>
+        <span style={{marginRight:"8px"}}>{selectedYear}</span>
         <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/></svg>
       </button>
 
@@ -469,66 +470,114 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
   const valid = !!(form.lob && form.closureStart && form.closureEnd && form.propertyLabel && form.appMessage);
   const lbl: React.CSSProperties = { fontSize: 11, fontWeight: 600, color: "#555", fontFamily: "GT Walsheim", marginBottom: 4, display: "block" };
   const req = <span style={{ color: "#FA6E6E" }}> *</span>;
-  const inpStyle: React.CSSProperties = { width: "100%", height: 40, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" };
+  const inpStyle: React.CSSProperties = { width: "100%", height: 50, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" };
 
   return (
     <div style={{ padding: "14px 0" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "12px 16px" }}>
-        <div>
-          <label style={lbl}>LOB{req}</label>
-          <SearchDropdown
-            selected={form.lob ? [form.lob] : []}
-            options={UNIQUE_LOBS}
-            placeholder="Select"
-            onChange={v => {
-              const value = v.length ? v[v.length - 1] : "";
-              setForm(f => ({ ...f, lob: value }));
-            }}
-          />
-        </div>
-        <div>
-          <label style={lbl}>Excluded Locations{req}</label>
-          <SearchDropdown
-            selected={form.excludedLocations}
-            options={ALL_LOCATIONS}
-            placeholder="Select "
-            onChange={v => setForm(f => ({ ...f, excludedLocations: v }))}
-          />
-        </div>
-        <div style={{ gridColumn: "span 2" }}>
-          <DateInput
-            fromValue={form.closureStart}
-            toValue={form.closureEnd}
-            onFromChange={v => setForm(f => ({ ...f, closureStart: v }))}
-            onToChange={v => setForm(f => ({ ...f, closureEnd: v }))}
-            placeholderFrom="Select"
-            placeholderTo="Select"
-            labelFrom="Closure Start"
-            labelTo="Closure End"
-            layout="row"
-            showLabels={true}
-            pillWidth={"clamp(6.25rem, -0.0625rem + 16.8333vw, 18.875rem)"}
-            pillHeight={40}
-            pillBorderRadius={16}
-          />
-        </div>
-        <div>
-          <label style={lbl}>Property Label{req}</label>
-          <input value={form.propertyLabel} onChange={e => setForm(f => ({ ...f, propertyLabel: e.target.value }))} placeholder="Insert" style={inpStyle} onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"} onBlur={e => e.currentTarget.style.borderColor = "#B1B1B1"} />
-        </div>
-        <div style={{ gridColumn: "span 3" }}>
-          <label style={lbl}>App. Message{req}</label>
-          <textarea value={form.appMessage} onChange={e => setForm(f => ({ ...f, appMessage: e.target.value }))} placeholder="Insert" rows={1}
-            style={{ width: "100%", borderRadius: 16, border: "1px solid #B1B1B1", padding: "9px 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", resize: "vertical", boxSizing: "border-box", minHeight: 20, maxHeight: 160 }}
-            onFocus={e => e.currentTarget.style.borderColor = "#B1B1B1"} onBlur={e => e.currentTarget.style.borderColor = "#B1B1B1"} />
-        </div>
-      </div>
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 12 }}>
-        {onCancel && <button onClick={onCancel} style={{ padding: "7px 20px", borderRadius: 999, border: "1px solid #B1B1B1", background: "none", color: "#888", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>Cancel</button>}
-        <button disabled={!valid} onClick={() => valid && onSave({ ...form, id: (form as any).id || uid(), active: (form as any).active ?? true })}
-          style={{ padding: "7px 28px", borderRadius: 999, border: "none", background: valid ? "#7029CF" : "#7029CF8F", color: "#fff", fontSize: 12, fontWeight: 600, cursor: valid ? "pointer" : "not-allowed", fontFamily: "GT Walsheim", opacity: valid ? 1 : 0.65, transition: "all 0.2s" }}>Save</button>
-      </div>
+  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "31px" }}>
+    
+     
+    {/* Row 1 */}
+    <div>
+      <label style={lbl}>LOB{req}</label>
+      <SearchDropdown
+        selected={form.lob ? [form.lob] : []}
+        options={UNIQUE_LOBS}
+        placeholder="Select"
+        onChange={v => {
+          const value = v.length ? v[v.length - 1] : "";
+          setForm(f => ({ ...f, lob: value }));
+        }}
+      />
     </div>
+
+    <div>
+      <label style={lbl}>Excluded Locations{req}</label>
+      <SearchDropdown
+        selected={form.excludedLocations}
+        options={ALL_LOCATIONS}
+        placeholder="Select"
+        onChange={v => setForm(f => ({ ...f, excludedLocations: v }))}
+      />
+    </div>
+
+    <div>
+      <label style={lbl}>Closure Start{req}</label>
+      <DateInput
+        fromValue={form.closureStart}
+        toValue={form.closureEnd}
+        onFromChange={v => setForm(f => ({ ...f, closureStart: v }))}
+        onToChange={v => setForm(f => ({ ...f, closureEnd: v }))}
+        placeholderFrom="Select"
+        placeholderTo="Select"
+        labelFrom="Closure Start"
+        labelTo="Closure End"
+        layout="single-from"
+        showLabels={false}
+        pillWidth="100%"
+        pillHeight={50}
+        pillBorderRadius={16}
+      />
+    </div>
+
+    <div>
+      <label style={lbl}>Closure End{req}</label>
+      <DateInput
+        fromValue={form.closureStart}
+        toValue={form.closureEnd}
+        onFromChange={v => setForm(f => ({ ...f, closureStart: v }))}
+        onToChange={v => setForm(f => ({ ...f, closureEnd: v }))}
+        placeholderFrom="Select"
+        placeholderTo="Select"
+        labelFrom="Closure Start"
+        labelTo="Closure End"
+        layout="single-to"
+        showLabels={false}
+        pillWidth="100%"
+        pillHeight={50}
+        pillBorderRadius={16}
+      />
+    </div>
+
+    {/* Row 2 */}
+    <div>
+      <label style={lbl}>Property Label{req}</label>
+      <input
+        value={form.propertyLabel}
+        onChange={e => setForm(f => ({ ...f, propertyLabel: e.target.value }))}
+        placeholder="Select"
+        style={inpStyle}
+      />
+    </div>
+
+    <div style={{ gridColumn: "span 3" }}>
+      <label style={lbl}>App. Message{req}</label>
+      <textarea
+        value={form.appMessage}
+        onChange={e => setForm(f => ({ ...f, appMessage: e.target.value }))}
+        placeholder="Insert"
+        rows={1}
+        style={{ width: "70%", borderRadius: 16, border: "1px solid #B1B1B1", padding: "9px 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", resize: "vertical", boxSizing: "border-box", minHeight: 50, maxHeight: 160 }}
+      />
+    </div>
+
+  </div>
+
+  <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 12 }}>
+    {onCancel && (
+      <button onClick={onCancel} style={{ padding: "7px 20px", borderRadius: 999, border: "1px solid #B1B1B1", background: "none", color: "#888", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>
+        Cancel
+      </button>
+    )}
+    <button
+      disabled={!valid}
+      onClick={() => valid && onSave({ ...form, id: (form as any).id || uid(), active: (form as any).active ?? true })}
+      style={{ padding: "12px 35px", borderRadius: 999, border: "none", background: valid ? "#7029CF" : "#7029CF8F", color: "#fff", fontSize: 12, fontWeight: 600, cursor: valid ? "pointer" : "not-allowed", fontFamily: "GT Walsheim", opacity: valid ? 1 : 0.65, transition: "all 0.2s" }}
+    >
+      Save
+    </button>
+  </div>
+</div>
   );
 };
 
@@ -553,8 +602,8 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
     action: { maxWidth: 100, minWidth: 50, flex: "0 1 60px" }
   };
 
-  const thS: React.CSSProperties = { padding: "10px 12px", fontSize: 11, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1.5px solid #EEE", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" };  
-  const tdS: React.CSSProperties = { padding: "10px 12px", fontSize: 11, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1px dashed #F5F5F5", verticalAlign: "middle" as const, overflow: "hidden", textOverflow: "ellipsis" };
+  const thS: React.CSSProperties = { padding: "10px 12px", fontSize: 16, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1.5px solid #EEE", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" };  
+  const tdS: React.CSSProperties = { padding: "10px 12px", fontSize: 14, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1px dashed #F5F5F5", verticalAlign: "middle" as const, overflow: "hidden", textOverflow: "ellipsis" };
 
   const openNewForm = () => {
     setEditingEntry(null);
@@ -655,7 +704,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
                     <td style={{ ...tdS, maxWidth: columnWidths.affected.maxWidth, minWidth: columnWidths.affected.minWidth, flex: columnWidths.affected.flex }}>{affected(e.lob)}</td>
                     <td style={{ ...tdS, maxWidth: columnWidths.excluded.maxWidth, minWidth: columnWidths.excluded.minWidth, flex: columnWidths.excluded.flex }}>
                       <button onClick={event => { event.stopPropagation(); toggleExcludedPopover(e, event.currentTarget as HTMLElement); }}
-                        style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 10px", borderRadius: 999, background: "none", cursor: "pointer", fontSize: 11, color: "#242424", fontFamily: "GT Walsheim" }}>
+                        style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "2px 10px", borderRadius: 999, background: "none", cursor: "pointer", fontSize: 14, color: "#242424", fontFamily: "GT Walsheim" }}>
                         {e.excludedLocations.length} <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 6L8 10L12 6" stroke="#2C2C2C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                         </svg>
@@ -705,7 +754,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
 
       {isModalOpen && typeof document !== "undefined" ? createPortal(
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }} onClick={closeModal}>
-          <div style={{ background: "#fff", borderRadius: 22, maxWidth: "80vw", overflowY: "auto", padding: "28px 32px", boxShadow: "0 20px 60px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
+          <div style={{ background: "#fff", borderRadius: 22, minWidth: "70vw",maxWidth: "70vw", overflowY: "auto", padding: "28px 32px", boxShadow: "0 20px 60px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
               <h3 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", margin: 0 }}>{editingEntry ? " LOB Closure" : " LOB Closure"}</h3>
               <button onClick={closeModal} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
@@ -808,12 +857,16 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
     setShowModal(false);
   };
 
-  const filtered = activeMonth
-    ? lockCards.filter(c => {
-        const mi = MONTH_SHORT.indexOf(activeMonth);
-        return mi !== -1 && countDaysInMonth(c.startDate, c.endDate, mi, activeYear) > 0;
-      })
-    : lockCards;
+  const filtered = lockCards.filter(c => {
+    // Check if lock has days in activeYear
+    const hasDaysInYear = MONTH_SHORT.some((_, mi) => countDaysInMonth(c.startDate, c.endDate, mi, activeYear) > 0);
+    if (!hasDaysInYear) return false;
+    if (activeMonth) {
+      const mi = MONTH_SHORT.indexOf(activeMonth);
+      return mi !== -1 && countDaysInMonth(c.startDate, c.endDate, mi, activeYear) > 0;
+    }
+    return true;
+  });
 
   const icons = [
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -843,7 +896,7 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
         </defs>
       </svg>
 
-      <div className="w-full min-h-screen bg-[#F7F7F7]" style={{ padding: "22px 64px 40px", position: "relative", fontFamily: "GT Walsheim" }}>
+      <div className="w-full min-h-screen bg-[#F7F7F7]" style={{ padding: "8px 64px 40px", position: "relative", fontFamily: "GT Walsheim" }}>
 
         {/* ── Right-side icons (fixed) ── */}
         <div style={{ position: "absolute", right: "16px", top: "clamp(220px, 25vh, 300px)", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: "8px", zIndex: 30 }}>
@@ -866,7 +919,7 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
           <div
             className="absolute right-[calc(45%-250px)] z-40"
             style={{
-              top: lockCards.length > 0 ? "75px" : undefined,
+              top: lockCards.length > 0 ? "65px" : undefined,
             }}
           >          <div className="flex bg-[#FFFFFF] rounded-full py-4 px-7 shadow-inner">
             {UNIQUE_COUNTRIES.map(tab => (

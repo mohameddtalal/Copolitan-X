@@ -12,7 +12,7 @@ interface DateRangeInputProps {
   placeholderTo?: string;
   labelFrom?: string;
   labelTo?: string;
-  layout?: "row" | "column";
+  layout?: "row" | "column" | "single-from" | "single-to";
   pillWidth?: number | string;
   pillHeight?: number;
   pillBorderRadius?: number;
@@ -67,6 +67,11 @@ const DateRangeInput: React.FC<DateRangeInputProps> = ({
   pillBorderRadius = 999,
   showLabels = false,
 }) => {
+  const singleMode = layout === "single-from" || layout === "single-to";
+  const showFrom = layout !== "single-to";
+  const showTo = layout !== "single-from";
+  const outerDirection = singleMode ? "row" : layout;
+  const outerGap = singleMode ? 16 : layout === "row" ? 24 : 16;
   const [open, setOpen]           = useState(false);
   const [viewYear, setViewYear]   = useState(new Date().getFullYear());
   const [viewMonth, setViewMonth] = useState(new Date().getMonth());
@@ -195,6 +200,33 @@ useEffect(() => {
   const daysInMonth   = new Date(viewYear, viewMonth + 1, 0).getDate();
   const startDow      = new Date(viewYear, viewMonth, 1).getDay();
   const prevMonthDays = new Date(viewYear, viewMonth, 0).getDate();
+  const totalRows     = Math.ceil((startDow + daysInMonth) / 7);
+  const totalCells    = totalRows * 7; 
+  const dayCells = Array.from({ length: totalCells }, (_, index) => {
+    if (index < startDow) {
+      return {
+        key: `p${index}`,
+        label: prevMonthDays - startDow + index + 1,
+        type: "prev",
+      };
+    }
+
+    const currentDayIndex = index - startDow;
+    if (currentDayIndex >= daysInMonth) {
+      return {
+        key: `n${currentDayIndex - daysInMonth}`,
+        label: currentDayIndex - daysInMonth + 1,
+        type: "next",
+      };
+    }
+
+    return {
+      key: String(currentDayIndex + 1),
+      label: currentDayIndex + 1,
+      type: "current",
+      date: new Date(viewYear, viewMonth, currentDayIndex + 1),
+    };
+  });
   const effectiveTo   = toDate ?? (fromDate && hoverDate && hoverDate >= fromDate ? hoverDate : null);
 
   const getDayStyle = (date: Date): React.CSSProperties => {
@@ -291,26 +323,26 @@ useEffect(() => {
       </div>
 
       {/* Day grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 0 }}>
-        {Array.from({ length: startDow }, (_, i) => (
-          <div key={`p${i}`} style={{ height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#ddd" }}>
-            {prevMonthDays - startDow + i + 1}
-          </div>
-        ))}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 0, height: 30 * totalRows, gridAutoRows: "30px" }}>
+        {dayCells.map(cell => {
+          if (cell.type === "prev" || cell.type === "next") {
+            return (
+              <div key={cell.key} style={{ height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#ddd" }}>
+                {cell.label}
+              </div>
+            );
+          }
 
-        {Array.from({ length: daysInMonth }, (_, i) => {
-          const d    = i + 1;
-          const date = new Date(viewYear, viewMonth, d);
-          const ds   = getDayStyle(date);
+          const ds = getDayStyle(cell.date as Date);
           return (
             <div
-              key={d}
-              onMouseDown={(e) => { e.stopPropagation(); e.preventDefault(); handleDayClick(viewYear, viewMonth, d); }}
-              onMouseEnter={() => { if (fromDate && !toDate) setHoverDate(date); }}
+              key={cell.key}
+              onMouseDown={(e) => { e.stopPropagation(); e.preventDefault(); handleDayClick(viewYear, viewMonth, cell.label); }}
+              onMouseEnter={() => { if (fromDate && !toDate) setHoverDate(cell.date as Date); }}
               onMouseLeave={() => setHoverDate(null)}
               style={{ height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, cursor: "pointer", transition: "background 0.1s", ...ds }}
             >
-              {d}
+              {cell.label}
             </div>
           );
         })}
@@ -345,30 +377,36 @@ useEffect(() => {
     display: "block",
   };
 
+  const combinedLabel = fromValue && toValue ? `${fromValue} - ${toValue}` : showFrom ? fromValue || placeholderFrom : toValue || placeholderTo;
+
   return (
     <>
-      <div ref={wrapRef} style={{ display: "flex", flexDirection: layout, gap: layout === "row" ? 24 : 16, alignItems: "flex-start", position: "relative" }}>
+      <div ref={wrapRef} style={{ display: "flex", flexDirection: outerDirection, gap: outerGap, alignItems: "flex-start", position: "relative" }}>
         {/* From trigger */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {showLabels && <label style={labelStyle}>{labelFrom} <span style={{ color: "#FA6E6E" }}>*</span></label>}
-          <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#B1B1B1"} onMouseLeave={e => e.currentTarget.style.borderColor = "#B1B1B1"}>
-            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {fromValue || placeholderFrom}
-            </span>
-            {calIcon}
+        {showFrom && (
+          <div style={{ display: "flex", flexDirection: "column", flex: singleMode ? 1 : undefined }}>
+            {showLabels && <label style={labelStyle}>{labelFrom} <span style={{ color: "#FA6E6E" }}>*</span></label>}
+            <div ref={fromRef} onClick={() => openCalendar("from")} style={pillStyle(!!fromValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#B1B1B1"} onMouseLeave={e => e.currentTarget.style.borderColor = "#B1B1B1"}>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {layout === "single-from" ? fromValue || placeholderFrom : fromValue || placeholderFrom}
+              </span>
+              {calIcon}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* To trigger */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {showLabels && <label style={labelStyle}>{labelTo} <span style={{ color: "#FA6E6E" }}>*</span></label>}
-          <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#B1B1B1"} onMouseLeave={e => e.currentTarget.style.borderColor = "#B1B1B1"}>
-            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {toValue || placeholderTo}
-            </span>
-            {calIcon}
+        {showTo && (
+          <div style={{ display: "flex", flexDirection: "column", flex: singleMode ? 1 : undefined }}>
+            {showLabels && <label style={labelStyle}>{labelTo} <span style={{ color: "#FA6E6E" }}>*</span></label>}
+            <div ref={toRef} onClick={() => openCalendar("to")} style={pillStyle(!!toValue)} onMouseEnter={e => e.currentTarget.style.borderColor = "#B1B1B1"} onMouseLeave={e => e.currentTarget.style.borderColor = "#B1B1B1"}>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {toValue || placeholderTo}
+              </span>
+              {calIcon}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Portal popover — rendered outside all parent stacking contexts */}
