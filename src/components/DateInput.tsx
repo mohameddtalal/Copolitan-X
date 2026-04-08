@@ -369,9 +369,9 @@ useEffect(() => {
   ) : null;
 
   const labelStyle: React.CSSProperties = {
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: 600,
-    color: "#555",
+    color: "#242424",
     fontFamily: "GT Walsheim",
     marginBottom: 6,
     display: "block",

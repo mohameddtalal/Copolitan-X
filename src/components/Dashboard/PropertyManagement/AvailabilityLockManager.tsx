@@ -17,7 +17,7 @@ const BASE_PROPERTIES = [
   { lob: "Copolitan X", location: "Copolitan X", country: "Egypt" },
 ];
 const UNIQUE_COUNTRIES = [...new Set(BASE_PROPERTIES.map(p => p.country))];
-const UNIQUE_LOBS      = [...new Set(BASE_PROPERTIES.map(p => p.lob))];
+const UNIQUE_LOBS      = [...new Set(BASE_PROPERTIES.map(p => p.lob.trim()))];
 const ALL_LOCATIONS    = [...new Set(BASE_PROPERTIES.map(p => p.location.trim()))];
 const MONTH_SHORT = ["Jan.","Feb.","Mar.","Apr.","May.","Jun.","Jul.","Aug.","Sept.","Oct.","Nov.","Dec."];
 const MONTH_FULL  = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -26,7 +26,7 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type LockRow  = { id: string; startDate: string; endDate: string; lockName: string };
-type LOBEntry = { id: string; lob: string; excludedLocations: string[]; closureStart: string; closureEnd: string; propertyLabel: string; appMessage: string; active: boolean };
+type LOBEntry = { id: string; lob: string[]; excludedLocations: string[]; closureStart: string; closureEnd: string; propertyLabel: string; appMessage: string; active: boolean };
 type LockCard = { id: string; lockName: string; startDate: string; endDate: string; lobEntries: LOBEntry[] };
 
 
@@ -111,9 +111,9 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
           </button>
         </div>
 
-        <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
+        <div style={{ display: "flex", gap: 32, alignItems: "flex-start"}}>
           {/* Left: Calendar */}
-          <div style={{ width: 260, minWidth: 260, maxWidth: 260, height: 310, flexShrink: 0, boxSizing: "border-box", boxShadow: "0px 0px 8px 0px #00000040", borderRadius: "24px", padding: "12px" }}>
+          <div style={{ position: "relative", width: 260, minWidth: 260, maxWidth: 260, height: 310, flexShrink: 0, boxSizing: "border-box", boxShadow: "0px 0px 8px 0px #00000040", borderRadius: "24px", padding: "12px" }}>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F5F5F5", borderRadius: 24, padding: "6px 10px", marginBottom: 12 }}>
               <button onClick={() => { let m = mo-1, y = yr; if (m<0){m=11;y--;} setMo(m); setYr(y); }} style={{ background: "#fff", border: "none", cursor: "pointer", fontSize: 18, width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", boxShadow: "0 1px 4px rgba(0,0,0,0.1)" }}>&#8249;</button>
@@ -158,7 +158,7 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
                 );
               })}
             </div>
-            <div style={{ marginTop: "auto", display: "flex", justifyContent: "flex-end" }}>
+            <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)" }}>
               <button 
                 onClick={() => {
                   updateActive("startDate", "");
@@ -295,12 +295,16 @@ const SearchDropdown = ({
   }, [open]);
 
   const filtered = options.filter(opt => opt.toLowerCase().includes(query.toLowerCase()));
-  const displayValue = selected.length === 0 ? placeholder || "Select" : selected.join(", ");
+  const displayValue = selected.length === 0 
+    ? placeholder || "Select" 
+    : selected.length > 2 
+      ? selected.slice(0, 2).join(", ") + ", ....."
+      : selected.join(", ");
 
   return (
     <div ref={ref} style={{ position: "relative", width: "100%", fontFamily: "GT Walsheim" }}>
-      <button onClick={() => setOpen(o => !o)} style={{ width: "100%", height: 50, borderRadius: 16, border: "1px solid #B1B1B1", background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px", fontSize: 12, color: selected.length ? "#333" : "#aaa", cursor: "pointer", boxSizing: "border-box" }}>
-        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginRight: "8px", textAlign: "left", flex: 1 }}>{displayValue}</span>
+      <button onClick={() => setOpen(o => !o)} style={{ width: "100%", height: 50, borderRadius: 16, border: "1px solid #B1B1B1", background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 12px", fontSize: 12, color: selected.length ? "#333" : "#aaa", cursor: "pointer", boxSizing: "border-box", minWidth: 0 }}>
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginRight: "8px", textAlign: "left", flex: 1, minWidth: 0 }}>{displayValue}</span>
         <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="#888" strokeWidth="1.5" strokeLinecap="round"/></svg>
       </button>
 
@@ -463,12 +467,12 @@ const YearDropdown = ({
 };
 
 // ── LOB Form ─────────────────────────────────────────────────────────────────
-const emptyLOB: Omit<LOBEntry, "id" | "active"> = { lob: "", excludedLocations: [], closureStart: "", closureEnd: "", propertyLabel: "", appMessage: "" };
+const emptyLOB: Omit<LOBEntry, "id" | "active"> = { lob: [], excludedLocations: [], closureStart: "", closureEnd: "", propertyLabel: "", appMessage: "" };
 
 const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void; onCancel?: () => void; initial?: Partial<LOBEntry> }) => {
   const [form, setForm] = useState({ ...emptyLOB, ...initial });
-  const valid = !!(form.lob && form.closureStart && form.closureEnd && form.propertyLabel && form.appMessage);
-  const lbl: React.CSSProperties = { fontSize: 11, fontWeight: 600, color: "#555", fontFamily: "GT Walsheim", marginBottom: 4, display: "block" };
+  const valid = !!(form.lob.length > 0 && form.closureStart && form.closureEnd && form.propertyLabel && form.appMessage);
+  const lbl: React.CSSProperties = { fontSize: 14, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim", marginBottom: 4, display: "block" };
   const req = <span style={{ color: "#FA6E6E" }}> *</span>;
   const inpStyle: React.CSSProperties = { width: "100%", height: 50, borderRadius: 16, border: "1px solid #B1B1B1", padding: "0 12px", fontSize: 12, color: "#333", outline: "none", fontFamily: "GT Walsheim", background: "#fff", boxSizing: "border-box" };
 
@@ -481,13 +485,10 @@ const LOBForm = ({ onSave, onCancel, initial }: { onSave: (e: LOBEntry) => void;
     <div>
       <label style={lbl}>LOB{req}</label>
       <SearchDropdown
-        selected={form.lob ? [form.lob] : []}
+        selected={form.lob}
         options={UNIQUE_LOBS}
         placeholder="Select"
-        onChange={v => {
-          const value = v.length ? v[v.length - 1] : "";
-          setForm(f => ({ ...f, lob: value }));
-        }}
+        onChange={v => setForm(f => ({ ...f, lob: v }))}
       />
     </div>
 
@@ -589,7 +590,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
   const [popoverTarget, setPopoverTarget] = useState<{ id: string; top: number; left: number } | null>(null);
   const [popoverLocations, setPopoverLocations] = useState<string[]>([]);
   const popoverRef = useRef<HTMLDivElement | null>(null);
-  const affected = (lob: string) => [...new Set(BASE_PROPERTIES.filter(p => p.lob === lob).map(p => p.location))].length;
+  const affected = (lobs: string[]) => [...new Set(BASE_PROPERTIES.filter(p => lobs.includes(p.lob)).map(p => p.location))].length;
 
   const columnWidths = {
     lob: { maxWidth: 300, minWidth: 100, flex: "0 1 300px" },
@@ -602,8 +603,8 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
     action: { maxWidth: 100, minWidth: 50, flex: "0 1 60px" }
   };
 
-  const thS: React.CSSProperties = { padding: "10px 12px", fontSize: 16, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1.5px solid #EEE", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" };  
-  const tdS: React.CSSProperties = { padding: "10px 12px", fontSize: 14, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1px dashed #F5F5F5", verticalAlign: "middle" as const, overflow: "hidden", textOverflow: "ellipsis" };
+  const thS: React.CSSProperties = { padding: "10px 12px", fontSize: 14, fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1.5px solid #EEE", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" };  
+  const tdS: React.CSSProperties = { padding: "10px 12px", fontSize: 14,fontWeight: 600, color: "#242424", fontFamily: "GT Walsheim", textAlign: "center" as const, borderBottom: "1px dashed #F5F5F5", verticalAlign: "middle" as const, overflow: "hidden", textOverflow: "ellipsis" };
 
   const openNewForm = () => {
     setEditingEntry(null);
@@ -676,7 +677,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
   return (
     <div style={{ marginTop: 14 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
-        <h4 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 24, color: "#7029CF", margin: 0 }}>LOB Closures</h4>
+        <h4 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 16, color: "#7029CF", margin: 0 }}>LOB Closures</h4>
         {entries.length > 0 && (
           <button onClick={openNewForm} style={{ padding: "5px 16px", borderRadius: 999, border: "1.5px solid #7029CF", background: "none", color: "#7029CF", fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim" }}>+ Add New</button>
         )}
@@ -700,7 +701,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
               <tbody>
                 {entries.map(e => (
                   <tr key={e.id} style={{ opacity: e.active ? 1 : 0.5 }}>
-                    <td style={{ ...tdS, maxWidth: columnWidths.lob.maxWidth, minWidth: columnWidths.lob.minWidth, flex: columnWidths.lob.flex }}>{e.lob}</td>
+                    <td style={{ ...tdS, maxWidth: columnWidths.lob.maxWidth, minWidth: columnWidths.lob.minWidth, flex: columnWidths.lob.flex }}>{e.lob.join(", ")}</td>
                     <td style={{ ...tdS, maxWidth: columnWidths.affected.maxWidth, minWidth: columnWidths.affected.minWidth, flex: columnWidths.affected.flex }}>{affected(e.lob)}</td>
                     <td style={{ ...tdS, maxWidth: columnWidths.excluded.maxWidth, minWidth: columnWidths.excluded.minWidth, flex: columnWidths.excluded.flex }}>
                       <button onClick={event => { event.stopPropagation(); toggleExcludedPopover(e, event.currentTarget as HTMLElement); }}
@@ -715,7 +716,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
                     <td style={{ ...tdS, maxWidth: columnWidths.propertyLabel.maxWidth, minWidth: columnWidths.propertyLabel.minWidth, flex: columnWidths.propertyLabel.flex }}>{e.propertyLabel}</td>
                     <td style={{ ...tdS, maxWidth: columnWidths.appMessage.maxWidth, minWidth: columnWidths.appMessage.minWidth, flex: columnWidths.appMessage.flex, wordBreak: "break-word" as const }}>{e.appMessage}</td>
                     <td style={{ ...tdS, maxWidth: columnWidths.action.maxWidth, minWidth: columnWidths.action.minWidth, flex: columnWidths.action.flex }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 20, justifyContent: "center" }}>
                         <button onClick={() => openEditForm(e)} style={{ background: "none", border: "none", cursor: "pointer", lineHeight: 0 }}>
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M10.0909 3.25229L9.5756 3.76755L3.33651 10.0066C3.00444 10.3387 2.79981 10.7771 2.75848 11.2449L2.65343 12.434C2.59866 13.054 3.11754 13.5729 3.73755 13.5181L4.92672 13.4131C5.39452 13.3718 5.83286 13.1671 6.16494 12.8351L12.404 6.59597L12.9193 6.08072C13.7003 5.29967 13.7003 4.03334 12.9193 3.25229C12.1382 2.47124 10.8719 2.47124 10.0909 3.25229Z" fill="#BD9DE9"></path>
@@ -746,7 +747,7 @@ const LOBSection = ({ entries, onUpdate }: { entries: LOBEntry[]; onUpdate: (e: 
       {popoverTarget && typeof document !== "undefined" ? createPortal(
         <div ref={popoverRef} style={{ position: "fixed", top: popoverTarget.top, left: popoverTarget.left, zIndex: 10001, background: "#fff", borderRadius: 6, boxShadow: "0 20px 60px rgba(0,0,0,0.12)", minWidth: 220, maxWidth: 260, padding:"16px 16px 0px 16px"}}>
           {popoverLocations.length > 0 ? popoverLocations.map(location => (
-            <div key={location} style={{ padding: "4px 32px", fontSize: 11, color: "#333", fontFamily: "GT Walsheim", whiteSpace: "nowrap" ,border:"1.5px solid #CACACA",borderRadius:"4px",marginBottom:"16px"}}>&#8226;{location}</div>
+            <div key={location} style={{ padding: "4px 4px",fontWeight:400,fontSize: 11, color: "#555555", fontFamily: "GT Walsheim", whiteSpace: "nowrap" ,border:"1.5px solid #CACACA",borderRadius:"4px",marginBottom:"16px"}}>• {location}</div>
           )) : <div style={{ padding: "8px 14px", fontSize: 11, color: "#999", fontFamily: "GT Walsheim" }}>No excluded locations</div>}
         </div>,
         document.body
@@ -791,6 +792,7 @@ const LockCardItem = ({ card, onDelete, onUpdate }: { card: LockCard; onDelete: 
             pillHeight={50}
             pillBorderRadius={16}
             showLabels={true}
+          
           />
           <button onClick={onDelete} style={{ width: 40, height: 40, borderRadius: 12, background: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "end", justifyContent: "center", transition: "background 0.2s" }}>
             <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M13.3332 6L12.0032 13.5642C11.8911 14.2017 11.3373 14.6667 10.69 14.6667H5.30966C4.66236 14.6667 4.10857 14.2017 3.99648 13.5642L2.6665 6" fill="#E46464"/><path d="M14 4H10.25M2 4H5.75M5.75 4V2.665C5.75 1.93 6.347 1.333 7.083 1.333H8.917C9.653 1.333 10.25 1.93 10.25 2.665V4M5.75 4H10.25" stroke="#E46464" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -844,12 +846,23 @@ const AvailabilityLockManager = ({ onClose }: { onClose: () => void }) => {
 
   const monthlyCounts: Record<string, number> = {};
   lockCards.forEach(c => {
-    MONTH_SHORT.forEach((label, mi) => {
-      const days = countDaysInMonth(c.startDate, c.endDate, mi, activeYear);
-      if (days > 0) {
-        monthlyCounts[label] = (monthlyCounts[label] || 0) + days;
-      }
-    });
+    const start = parseCardDate(c.startDate);
+    if (!start) return;
+    const end = parseCardDate(c.endDate) || start;
+
+    // Count of unique active "lock names" (lobEntries) in this card
+    const activeCount = c.lobEntries.filter(e => e.active).length;
+    if (activeCount === 0) return;
+
+    // Iterate through all months this card covers
+    let curr = new Date(start.getFullYear(), start.getMonth(), 1);
+    const stop = new Date(end.getFullYear(), end.getMonth(), 1);
+    
+    while (curr <= stop) {
+      const monthLabel = MONTH_SHORT[curr.getMonth()];
+      monthlyCounts[monthLabel] = (monthlyCounts[monthLabel] || 0) + activeCount;
+      curr.setMonth(curr.getMonth() + 1);
+    }
   });
 
   const handleSave = (rows: LockRow[]) => {
