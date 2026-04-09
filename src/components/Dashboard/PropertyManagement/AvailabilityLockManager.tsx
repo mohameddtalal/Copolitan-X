@@ -36,7 +36,7 @@ type LockCard = { id: string; lockName: string; startDate: string; endDate: stri
 // ── Shared date parser ────────────────────────────────────────────────────────
 const parseAnyDate = (str: string): Date | null => {
   if (!str) return null;
-  const m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+ const m = str.match(/^(\d{1,2})[.\-](\d{1,2})[.\-](\d{4})$/);
   if (!m) return null;
   const d = new Date(+m[3], +m[2] - 1, +m[1]);
   return isNaN(d.getTime()) ? null : d;
@@ -44,9 +44,9 @@ const parseAnyDate = (str: string): Date | null => {
 
 // Rewrite the year part of a DD/MM/YYYY string
 const replaceYear = (dateStr: string, newYear: number): string => {
-  const m = dateStr.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  const m = dateStr.match(/^(\d{1,2})[.\-](\d{1,2})[.\-](\d{4})$/);
   if (!m) return dateStr;
-  return `${m[1]}/${m[2]}/${newYear}`;
+  return `${m[1]}.${m[2]}.${newYear}`;
 };
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
@@ -76,7 +76,7 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
 
   const parseDate = (str: string): Date | null => {
     if (!str) return null;
-    const m = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const m = str.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
     if (!m) return null;
     const d = new Date(+m[3], +m[2]-1, +m[1]);
     return isNaN(d.getTime()) ? null : d;
@@ -149,7 +149,8 @@ const AddNewLockModal = ({ onSave, onClose }: { onSave: (rows: LockRow[]) => voi
                     onMouseEnter={() => { if (fromDate && !toDate) setHoverDate(date); }}
                     onMouseLeave={() => setHoverDate(null)}
                     onClick={() => {
-                      const formatted = `${String(d).padStart(2, "0")}/${String(mo + 1).padStart(2, "0")}/${yr}`;
+                      const formatted = `${String(d).padStart(2, "0")}.${String(mo + 1).padStart(2, "0")}.${yr}`;
+
                       if (!fromDate || (fromDate && toDate)) {
                         updateActive("startDate", formatted);
                         updateActive("endDate", "");

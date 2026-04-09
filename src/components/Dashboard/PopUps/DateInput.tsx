@@ -27,11 +27,11 @@ const MONTHS = [
 const DAYS = ["Su","Mo","Tu","We","Th","Fr","Sa"];
 
 const pad2 = (n: number) => String(n).padStart(2, "0");
-const fmt  = (d: Date)   => `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}/${d.getFullYear()}`;
+const fmt  = (d: Date)   => `${pad2(d.getDate())}.${pad2(d.getMonth()+1)}.${d.getFullYear()}`;
 
 const parseDate = (str: string): Date | null => {
   if (!str) return null;
-  const m = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+const m = str.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
   if (!m) return null;
   const d = new Date(+m[3], +m[2]-1, +m[1]);
   return isNaN(d.getTime()) ? null : d;
@@ -44,10 +44,11 @@ const sameDay = (a: Date, b: Date) =>
 
 const isBetween = (d: Date, a: Date, b: Date) => d > a && d < b;
 
-const autoSlash = (val: string, prev: string): string => {
-  let v = val.replace(/[^\d/]/g, "");
-  if (v.length === 2 && prev.length === 1 && !v.includes("/")) v += "/";
-  if (v.length === 5 && prev.length === 4 && v.split("/").length === 2) v += "/";
+// AFTER
+const autoDot = (val: string, prev: string): string => {
+  let v = val.replace(/[^\d.]/g, "");
+  if (v.length === 2 && prev.length === 1 && !v.includes(".")) v += ".";
+  if (v.length === 5 && prev.length === 4 && v.split(".").length === 2) v += ".";
   return v;
 };
 
