@@ -3,10 +3,14 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import * as XLSX from "xlsx";
 import styles from "./PropertyManagement.module.css"
-import Link from "next/link";
-import DateInput from "@/components/DateInput";
+import DateInput from "@/components/Dashboard/PopUps/DateInput";
 import AvailabilityLockManager from "./AvailabilityLockManager";
-import { useNav } from "@/components/Dashboard/Context/Navcontext";
+import PublishModal from "../PopUps/publishModal";
+import UnpublishModal from "../PopUps/UnpublishModal";
+import DeleteModal from "../PopUps/DeleteModal";
+import ExportModal from "../PopUps/ExportModal";
+import FilterModal from "../PopUps/FilterModal";
+import Pagination from "@/components/Pagination";
 
 const ROWS_PER_PAGE = 6;
 
@@ -122,6 +126,18 @@ const PropertyManagement = () => {
     setCurrentPage(1);
   };
 
+  //filteroptions
+
+  const filterOptions = [
+    { key: "all", label: "All" },
+    { key: "gross", label: "Gross" },
+    { key: "net", label: "Net" },
+    { key: "end", label: "Contract Start" },
+    { key: "duration", label: "Contract Duration" },
+    { key: "launch", label: "Launch Date" }
+  ];
+
+
   // Delete: remove from inactive
   const confirmDelete = () => {
     if (!deleteModalRow) return;
@@ -231,27 +247,18 @@ if (searchLaunchTo)   { const t = parseDMY(searchLaunchTo);   const d = parseRow
     return true;
   });
 
+
+const pageStart = (currentPage - 1) * ROWS_PER_PAGE;
+const pageEnd = pageStart + ROWS_PER_PAGE;
+
+const properties = filteredProperties.slice(pageStart, pageEnd);
+
+const handlePageChange = (page: number) => {
   const totalPages = Math.ceil(filteredProperties.length / ROWS_PER_PAGE);
-  const pageStart = (currentPage - 1) * ROWS_PER_PAGE;
-  const pageEnd = pageStart + ROWS_PER_PAGE;
-  const properties = filteredProperties.slice(pageStart, pageEnd);
-
-  const handlePageChange = (page: number) => {
-    if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
-    setExpandedRow(null);
-  };
-
-  const getPageNumbers = () => {
-    const pages: (number | "...")[] = [];
-    if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
-    pages.push(1);
-    if (currentPage > 3) pages.push("...");
-    for (let p = Math.max(2, currentPage - 1); p <= Math.min(totalPages - 1, currentPage + 1); p++) pages.push(p);
-    if (currentPage < totalPages - 2) pages.push("...");
-    pages.push(totalPages);
-    return pages;
-  };
+  const validatedPage = Math.max(1, Math.min(page, totalPages));
+  setCurrentPage(validatedPage);
+  setExpandedRow(null);
+};
 
   const iconTooltips = [ "Add New Property", "Search", "Export", "Filter", "Availability Lock Manager" ];
 
@@ -710,40 +717,14 @@ if (searchLaunchTo)   { const t = parseDMY(searchLaunchTo);   const d = parseRow
           </div>
 
           {/* Pagination */}
-          <div className=" mt-2 flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <button onClick={() => handlePageChange(1)} disabled={currentPage === 1} className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M15.707 5.293a1 1 0 010 1.414L12.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /><path d="M9.707 5.293a1 1 0 010 1.414L6.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
-              </button>
-              <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
-              </button>
-              {getPageNumbers().map((p, i) =>
-                p === "..." ? (
-                  <span key={`dots-${i}`} className="w-8 h-8 flex items-center justify-center text-xs text-[#999]">…</span>
-                ) : (
-                  <button key={p} onClick={() => handlePageChange(p as number)}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${currentPage === p ? "bg-[#7029CF] text-white shadow-md" : "text-[#666] hover:bg-[#F0E6FF] hover:text-[#7029CF]"}`}
-                  >{p}</button>
-                )
-              )}
-              <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40">
-                <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
-              </button>
-              <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages} className="w-8 h-8 rounded-full bg-[#E5E5E5] flex items-center justify-center text-[#666] hover:bg-[#D5D5D5] transition-colors disabled:opacity-40">
-                <svg className="w-4 h-4 rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M15.707 5.293a1 1 0 010 1.414L12.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /><path d="M9.707 5.293a1 1 0 010 1.414L6.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" /></svg>
-              </button>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-[#999] font-medium">
-                Displaying {pageStart + 1} – {Math.min(pageEnd, filteredProperties.length)} of {filteredProperties.length} records
-              </span>
-              <button onClick={() => { setCurrentPage(1); }} className="bg-[#E5E5E5] px-6 py-2 rounded-full text-xs font-bold text-[#666] hover:bg-[#D5D5D5] transition-colors">All</button>
-            </div>
-          </div>
-
+         <Pagination
+            currentPage={currentPage}
+            totalItems={filteredProperties.length}
+            pageSize={ROWS_PER_PAGE}
+            onPageChange={handlePageChange}
+          />
         </div>
-      </div>
+      </div>  
 
       {/* ── Add Property Modal ── */}
       {showAddModal && (
@@ -795,228 +776,57 @@ if (searchLaunchTo)   { const t = parseDMY(searchLaunchTo);   const d = parseRow
 
       {/* ── PUBLISH MODAL (Inactive → Active) ── */}
       {publishModalRow !== null && (
-        <div className="fixed inset-0 z-[20000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-[40px] p-10 max-w-[400px] w-full relative flex flex-col items-center text-center shadow-2xl">
-            <button onClick={() => setPublishModalRow(null)} className="absolute top-6 right-6 cursor-pointer text-gray-400 hover:text-gray-600 transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15.8571L14.3571 12.2143C14.2388 12.0959 14.2388 11.9041 14.3571 11.7857L18 8.14286C18.5917 7.55116 18.5917 6.59169 18 6C17.4083 5.40831 16.4488 5.40831 15.8571 6L12.2143 9.64286C12.0959 9.7612 11.9041 9.7612 11.7857 9.64286L8.14286 6C7.55116 5.40831 6.59169 5.40831 6 6C5.40831 6.59169 5.40831 7.55116 6 8.14286L9.64286 11.7857C9.7612 11.9041 9.7612 12.0959 9.64286 12.2143L6 15.8571C5.40831 16.4488 5.40831 17.4083 6 18C6.59169 18.5917 7.55116 18.5917 8.14286 18L11.7857 14.3571C11.9041 14.2388 12.0959 14.2388 12.2143 14.3571L15.8571 18C16.4488 18.5917 17.4083 18.5917 18 18C18.5917 17.4083 18.5917 16.4488 18 15.8571Z" fill="#565656"></path>
-                </svg>
-            </button>
-            <div className="w-32 h-32 mb-6 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none">
-                <g clipPath="url(#clip0_publish)">
-                  <path d="M173.127 0.288672C173.042 0.315742 172.952 0.278476 172.868 0.309765L4.11754 63.5911C2.26867 64.2865 0.960859 65.96 0.7341 67.9273C0.507342 69.8947 1.39855 71.8205 3.04633 72.9174L40.0424 97.5782L53.5769 154.131C53.6124 154.279 53.7038 154.398 53.7512 154.541C54.9676 158.251 59.6396 159.428 62.4345 156.633L88.9093 130.159L129.609 157.293C132.558 159.27 136.623 157.794 137.607 154.352L179.794 6.69556C180.927 2.72149 177.197 -1.01774 173.127 0.288672ZM66.4051 107.556C65.5318 108.44 65.2688 109.157 64.9626 110.272C64.9587 110.293 64.9496 110.312 64.9457 110.333L59.0612 131.729L50.6772 96.6947L132.354 40.69L66.4051 107.556Z" fill="#7029CF" />
-                  <path d="M35.3691 144.607C33.3093 142.548 29.9719 142.547 27.9121 144.607L1.54486 170.975C-0.514952 173.035 -0.514952 176.372 1.54486 178.432C3.60502 180.492 6.9417 180.492 9.00186 178.432L35.3691 152.064C37.4289 150.005 37.4289 146.667 35.3691 144.607Z" fill="#7029CF" />
-                  <path d="M35.3691 112.967C33.3093 110.907 29.9719 110.907 27.9121 112.967L1.54486 139.334C-0.514952 141.394 -0.514952 144.731 1.54486 146.791C3.60502 148.851 6.9417 148.851 9.00186 146.791L35.3691 120.424C37.4289 118.364 37.4289 115.027 35.3691 112.967Z" fill="#7029CF" />
-                </g>
-                <defs><clipPath id="clip0_publish"><rect width="180" height="180" fill="white" /></clipPath></defs>
-              </svg>
-            </div>
-            <h2 className="text-[#242424] mb-4 tracking-tight" style={{ fontFamily: "Lora", fontWeight: "500", fontSize: "24px", fontStyle: "italic" }}>Publish</h2>
-            <p className="text-[#2C2C2C] mb-2 leading-relaxed" style={{ fontFamily: "GT Walsheim", fontWeight: "500", fontSize: "18px" }}>
-              Are you sure you want to<br />publish this location?
-            </p>
-            <span className="text-[#7029CF] mb-8 leading-relaxed" style={{ fontFamily: "GT Walsheim", fontWeight: "500", fontSize: "18px" }}>
-              {publishModalRow.location}
-            </span>
-            <div className="flex gap-4 w-full">
-              <button onClick={confirmPublish} className="flex-1 bg-[#7029CF] cursor-pointer text-white py-3 rounded-[1536px] hover:bg-[#5214a3] transition-all active:scale-95">Confirm</button>
-              <button onClick={() => setPublishModalRow(null)} className="flex-1 bg-white cursor-pointer text-[#7029CF] py-3 rounded-[1536px] border-2 border-[#7029CF] hover:bg-purple-50 transition-all active:scale-95">Cancel</button>
-            </div>
-          </div>
-        </div>
+      <PublishModal 
+      publishModalRow={publishModalRow}
+      setPublishModalRow={setPublishModalRow}
+      confirmPublish={confirmPublish} 
+      />
       )}
 
       {/* ── UNPUBLISH MODAL (Active → Inactive) ── */}
       {unpublishModalRow !== null && (
-        <div className="fixed inset-0 z-[20000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-[40px] p-10 max-w-[400px] w-full relative flex flex-col items-center text-center shadow-2xl">
-            <button onClick={() => setUnpublishModalRow(null)} className="absolute top-6 right-6 cursor-pointer text-gray-400 hover:text-gray-600 transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15.8571L14.3571 12.2143C14.2388 12.0959 14.2388 11.9041 14.3571 11.7857L18 8.14286C18.5917 7.55116 18.5917 6.59169 18 6C17.4083 5.40831 16.4488 5.40831 15.8571 6L12.2143 9.64286C12.0959 9.7612 11.9041 9.7612 11.7857 9.64286L8.14286 6C7.55116 5.40831 6.59169 5.40831 6 6C5.40831 6.59169 5.40831 7.55116 6 8.14286L9.64286 11.7857C9.7612 11.9041 9.7612 12.0959 9.64286 12.2143L6 15.8571C5.40831 16.4488 5.40831 17.4083 6 18C6.59169 18.5917 7.55116 18.5917 8.14286 18L11.7857 14.3571C11.9041 14.2388 12.0959 14.2388 12.2143 14.3571L15.8571 18C16.4488 18.5917 17.4083 18.5917 18 18C18.5917 17.4083 18.5917 16.4488 18 15.8571Z" fill="#565656"></path>
-                </svg>
-            </button>
-            <div className="w-32 h-32 mb-6 flex items-center justify-center">
-              <svg width="165" height="165" viewBox="0 0 165 165" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M43.0762 143.344L66.7718 126.908L43.205 109.248L43.0762 143.344Z" fill="#7029CF"></path>
-                <path d="M40.1145 44.2148L3.73403 55.9453C-4.70109 58.6523 3.79842 66.6445 3.79842 66.6445L32.2589 90.4277L66.1926 70.3184L40.1145 44.2148Z" fill="#7029CF"></path>
-                <path d="M42.7539 98.4199L104.504 145.148C114.291 151.594 116.803 146.437 116.803 146.437L121.117 136.254L124.014 128.197L71.7939 75.9258C59.9461 85.0137 48.9354 93.5215 42.7539 98.4199Z" fill="#7029CF"></path>
-                <path d="M156.726 6.76642L69.8635 34.6746L90.9191 55.7508L120.925 37.9617C120.925 37.9617 108.884 47.243 93.9455 58.7801L134.383 99.2567L164.646 15.0164C166.256 10.7625 161.62 5.92853 156.726 6.76642Z" fill="#7029CF"></path>
-                <path d="M36.059 11.9238C33.9985 9.86133 30.5858 9.86133 28.461 11.9238C26.3361 13.9863 26.4005 17.4023 28.461 19.5293L149 140.186C151.06 142.248 154.473 142.248 156.598 140.186C158.722 138.123 158.658 134.707 156.598 132.58L36.059 11.9238Z" fill="#7029CF"></path>
-              </svg>
-            </div>
-            <h2 className="text-[#242424] mb-4 tracking-tight" style={{ fontFamily: "Lora", fontWeight: "500", fontSize: "24px", fontStyle: "italic" }}>Unpublish</h2>
-            <p className="text-[#2C2C2C] mb-2 leading-relaxed" style={{ fontFamily: "GT Walsheim", fontWeight: "500", fontSize: "18px" }}>
-              Are you sure you want to<br />unpublish this location?
-            </p>
-            <span className="text-[#7029CF] mb-8 leading-relaxed" style={{ fontFamily: "GT Walsheim", fontWeight: "500", fontSize: "18px" }}>
-              {unpublishModalRow.location}
-            </span>
-            <div className="flex gap-4 w-full">
-              <button onClick={confirmUnpublish} className="flex-1 bg-[#7029CF] cursor-pointer text-white py-3 rounded-[1536px] hover:bg-[#5214a3] transition-all active:scale-95">Confirm</button>
-              <button onClick={() => setUnpublishModalRow(null)} className="flex-1 bg-white cursor-pointer text-[#7029CF] py-3 rounded-[1536px] border-2 border-[#7029CF] hover:bg-purple-50 transition-all active:scale-95">Cancel</button>
-            </div>
-          </div>
-        </div>
+      <UnpublishModal
+      unpublishModalRow={unpublishModalRow}
+      setUnpublishModalRow={setUnpublishModalRow}
+      confirmUnpublish={confirmUnpublish}
+       /> 
       )}
 
       {/* ── DELETE MODAL ── */}
       {deleteModalRow !== null && (
-        <div className="fixed inset-0 z-[20000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-[40px] p-10 max-w-[400px] w-full relative flex flex-col items-center text-center shadow-2xl">
-            <button onClick={() => setDeleteModalRow(null)} className="absolute top-6 right-6 cursor-pointer text-gray-400 hover:text-gray-600 transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 15.8571L14.3571 12.2143C14.2388 12.0959 14.2388 11.9041 14.3571 11.7857L18 8.14286C18.5917 7.55116 18.5917 6.59169 18 6C17.4083 5.40831 16.4488 5.40831 15.8571 6L12.2143 9.64286C12.0959 9.7612 11.9041 9.7612 11.7857 9.64286L8.14286 6C7.55116 5.40831 6.59169 5.40831 6 6C5.40831 6.59169 5.40831 7.55116 6 8.14286L9.64286 11.7857C9.7612 11.9041 9.7612 12.0959 9.64286 12.2143L6 15.8571C5.40831 16.4488 5.40831 17.4083 6 18C6.59169 18.5917 7.55116 18.5917 8.14286 18L11.7857 14.3571C11.9041 14.2388 12.0959 14.2388 12.2143 14.3571L15.8571 18C16.4488 18.5917 17.4083 18.5917 18 18C18.5917 17.4083 18.5917 16.4488 18 15.8571Z" fill="#565656"></path>
-              </svg>
-            </button>
-            <div className="w-32 h-32 mb-6 flex items-center justify-center">
-              <svg width="165" height="165" viewBox="0 0 165 165" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M61.547 0.624588C58.3265 1.49702 55.5434 3.08327 53.0783 5.42299C50.2554 8.11961 49.1422 10.1024 46.8759 16.725C44.888 22.5941 44.4108 23.5062 42.8602 24.4977C41.8663 25.1322 40.0771 25.2115 22.8217 25.4097C4.41325 25.608 3.81687 25.6477 2.74337 26.4408C0.636145 27.9874 0 29.2564 0 31.7547C0 34.2531 0.636145 35.5221 2.74337 37.0687C3.73735 37.8222 4.49277 37.9015 10.5759 38.0204C16.7386 38.1394 17.2952 38.2187 17.2952 38.8532C17.2952 39.2498 18.647 59.5538 20.2771 83.9424C21.9072 108.371 23.4181 131.173 23.6566 134.663C24.094 141.761 24.6904 144.458 26.6386 148.582C29.4614 154.491 34.153 159.131 40.1566 162.026C46.5181 165.079 45.2855 165 82.5795 165C114.347 165 115.818 164.96 119.039 164.207C131.245 161.272 140.23 150.724 141.184 138.232C141.582 132.601 147.705 39.805 147.705 38.9722C147.705 38.1791 147.904 38.1394 154.424 38.0204C160.507 37.9015 161.263 37.8222 162.257 37.0687C164.364 35.5221 165 34.2531 165 31.7547C165 29.2564 164.364 27.9874 162.257 26.4408C161.183 25.6477 160.587 25.608 142.178 25.4097C124.923 25.2115 123.134 25.1322 122.14 24.4977C120.589 23.5062 120.112 22.5941 118.124 16.725C115.858 10.1024 114.745 8.11961 111.922 5.42299C109.417 3.04361 106.673 1.49702 103.294 0.624588C100.073 -0.208206 64.688 -0.208206 61.547 0.624588ZM101.584 13.4732C103.493 14.4646 104.487 16.0905 105.998 20.5717C106.673 22.6735 107.349 24.6563 107.469 24.8942C107.588 25.2908 102.419 25.4097 82.5 25.4097C62.5807 25.4097 57.412 25.2908 57.5313 24.8942C57.6506 24.6563 58.3265 22.6338 59.0422 20.4527C59.7578 18.2716 60.7518 15.9319 61.2687 15.2577C63.1373 12.7197 62.9783 12.7197 82.5 12.7197C98.9602 12.7197 100.312 12.7594 101.584 13.4732ZM134.982 38.8532C134.982 39.5274 128.899 131.728 128.461 137.359C127.984 143.704 123.452 149.415 117.17 151.556C115.102 152.27 113.353 152.31 82.5 152.31C51.647 152.31 49.8976 152.27 47.8301 151.556C41.5482 149.415 37.0157 143.704 36.5386 137.359C36.1012 131.728 30.0181 39.5274 30.0181 38.8532C30.0181 38.1394 31.6084 38.0998 82.5 38.0998C133.392 38.0998 134.982 38.1394 134.982 38.8532Z" fill="#FA6E6E"></path>
-                <path d="M59.0289 58.0627C58.1176 58.7303 56.8706 60.271 56.295 61.5549L55.1919 63.8146V92.3688V120.923L56.295 123.183C57.8778 126.572 60.0362 127.959 63.3936 127.702C66.5112 127.445 68.6216 126.059 69.7727 123.491C70.4442 121.95 70.5401 118.407 70.5401 92.3688C70.5401 59.9629 70.5881 60.7332 67.5184 58.3708C65.2642 56.6247 61.1873 56.522 59.0289 58.0627Z" fill="#FA6E6E"></path>
-                <path d="M100.371 57.8081C99.5072 58.2703 98.3082 59.3488 97.7326 60.2219L96.6774 61.8139L96.5335 91.7547C96.4376 118.665 96.4856 121.85 97.205 123.493C98.3561 126.061 100.467 127.447 103.584 127.704C106.75 127.91 108.908 126.677 110.539 123.698C111.546 121.952 111.546 121.233 111.546 92.371C111.546 63.5087 111.546 62.7897 110.539 61.0436C108.476 57.2432 104.112 55.8052 100.371 57.8081Z" fill="#FA6E6E"></path>
-              </svg>
-            </div>
-            <h2 className="text-[#242424] mb-4 tracking-tight" style={{ fontFamily: "Lora", fontWeight: "500", fontSize: "24px", fontStyle: "italic" }}>Delete!</h2>
-            <p className="text-[#2C2C2C] mb-2 leading-relaxed" style={{ fontFamily: "GT Walsheim", fontWeight: "500", fontSize: "18px" }}>
-              Are you sure you want to delete this<br />location &amp; all spaces linked to it?
-            </p>
-            <span className="text-[#FA6E6E] mb-8 leading-relaxed" style={{ fontFamily: "GT Walsheim", fontWeight: "500", fontSize: "18px" }}>
-              {deleteModalRow.location}
-            </span>
-            <div className="flex gap-4 w-full">
-              <button onClick={confirmDelete} className="flex-1 bg-[#FA6E6E] cursor-pointer text-white py-3 rounded-[1536px] hover:opacity-90 transition-all active:scale-95">Confirm</button>
-              <button onClick={() => setDeleteModalRow(null)} className="flex-1 bg-white cursor-pointer text-[#FA6E6E] py-3 rounded-[1536px] border-2 border-[#FA6E6E] hover:bg-red-50 transition-all active:scale-95">Cancel</button>
-            </div>
-          </div>
-        </div>
+        <DeleteModal
+        deleteModalRow={deleteModalRow}
+        setDeleteModalRow={setDeleteModalRow}
+        confirmDelete={confirmDelete}
+         />
       )}
 
       {/* ── EXPORT MODAL ── */}
       {showExportModal && (
-        <div className="fixed inset-0 z-[20000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-[40px] p-10 max-w-[400px] w-full relative flex flex-col items-center text-center shadow-2xl">
-            <button onClick={() => setShowExportModal(false)} className="absolute top-6 right-6 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 15.8571L14.3571 12.2143C14.2388 12.0959 14.2388 11.9041 14.3571 11.7857L18 8.14286C18.5917 7.55116 18.5917 6.59169 18 6C17.4083 5.40831 16.4488 5.40831 15.8571 6L12.2143 9.64286C12.0959 9.7612 11.9041 9.7612 11.7857 9.64286L8.14286 6C7.55116 5.40831 6.59169 5.40831 6 6C5.40831 6.59169 5.40831 7.55116 6 8.14286L9.64286 11.7857C9.7612 11.9041 9.7612 12.0959 9.64286 12.2143L6 15.8571C5.40831 16.4488 5.40831 17.4083 6 18C6.59169 18.5917 7.55116 18.5917 8.14286 18L11.7857 14.3571C11.9041 14.2388 12.0959 14.2388 12.2143 14.3571L15.8571 18C16.4488 18.5917 17.4083 18.5917 18 18C18.5917 17.4083 18.5917 16.4488 18 15.8571Z" fill="#565656"></path>
-              </svg>
-            </button>
-            <div className="w-32 h-32 mb-6 flex items-center justify-center">
-              <svg width="165" height="165" viewBox="0 0 165 165" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clipPath="url(#clip0_1088_12745)">
-                  <path d="M130.045 114.893H48.8986C46.5142 114.893 44.5815 112.96 44.5815 110.576V6.73406C44.5815 4.34962 46.5145 2.41699 48.8986 2.41699H130.045C132.43 2.41699 134.362 4.34994 134.362 6.73406V110.576C134.362 112.96 132.43 114.893 130.045 114.893Z" fill="#F8EBFF"></path>
-                  <path d="M134.365 6.73535V110.576C134.365 112.961 132.431 114.894 130.046 114.894H122.276C124.661 114.894 126.595 112.961 126.595 110.576V6.73535C126.595 4.35059 124.661 2.41699 122.276 2.41699H130.046C132.431 2.41699 134.365 4.35059 134.365 6.73535Z" fill="#E0ABFF"></path>
-                  <path d="M105.94 128.969H24.7931C22.4087 128.969 20.4761 127.036 20.4761 124.652V20.8097C20.4761 18.4253 22.409 16.4927 24.7931 16.4927H105.94C108.324 16.4927 110.257 18.4256 110.257 20.8097V124.651C110.257 127.036 108.324 128.969 105.94 128.969Z" fill="white"></path>
-                  <path d="M110.257 20.8098V124.653C110.257 127.038 108.323 128.972 105.939 128.972H98.3267C100.711 128.972 102.645 127.038 102.645 124.653V20.8098C102.645 18.4282 100.711 16.4946 98.3267 16.4946H105.939C108.323 16.4946 110.257 18.4282 110.257 20.8098Z" fill="#F8EBFF"></path>
-                  <path d="M144.856 61.3402V143.924C144.856 150.002 139.928 154.929 133.85 154.929H20.9896C14.9084 154.929 9.98096 150.002 9.98096 143.924V80.6021C9.98096 74.5241 14.9084 69.5967 20.9896 69.5967H71.5659C75.6877 69.5967 79.4356 67.2022 81.1694 63.4607L83.1965 59.0876C84.0453 57.2554 85.4005 55.7042 87.1021 54.617C88.8037 53.5298 90.7807 52.952 92.8 52.9517H136.467C141.101 52.9517 144.856 56.7061 144.856 61.3402Z" fill="#FAFF00"></path>
-                  <path d="M144.857 61.3402V143.924C144.857 150.002 139.93 154.929 133.852 154.929H125.866C131.944 154.929 136.872 150.002 136.872 143.924V61.3402C136.872 56.7061 133.117 52.9517 128.486 52.9517H136.469C141.103 52.9517 144.857 56.7061 144.857 61.3402Z" fill="#FAFF00"></path>
-                  <path d="M144.856 98.9302V143.925C144.856 150.003 139.928 154.93 133.85 154.93H78.5849C77.6113 152.996 77.1057 150.86 77.1089 148.694V106.487C77.1089 98.8174 83.3286 92.5977 90.9985 92.5977H133.202C138.088 92.5977 142.381 95.1178 144.856 98.9302Z" fill="#FAFF00"></path>
-                  <path d="M141.131 162.583H98.9255C91.2542 162.583 85.0352 156.364 85.0352 148.693V106.488C85.0352 98.8167 91.2539 92.5977 98.9255 92.5977H141.13C148.802 92.5977 155.021 98.8164 155.021 106.488V148.693C155.021 156.364 148.802 162.583 141.131 162.583Z" fill="#7029CF"></path>
-                  <path d="M141.13 92.5977H133.205C140.876 92.5977 147.095 98.8164 147.095 106.488V148.693C147.095 156.364 140.876 162.583 133.205 162.583H141.13C148.801 162.583 155.02 156.364 155.02 148.693V106.488C155.02 98.8167 148.801 92.5977 141.13 92.5977Z" fill="#7029CF"></path>
-                  <path d="M137.519 132.734L124.985 148.353C122.44 151.523 117.614 151.523 115.07 148.353L102.536 132.734C99.4264 129.063 102.305 123.001 107.138 123.141H111.999V107.624C111.999 105.872 113.419 104.452 115.171 104.452H124.883C126.635 104.452 128.056 105.872 128.056 107.624V123.141H132.916C137.749 123.001 140.629 129.063 137.519 132.734Z" fill="#F8EBFF"></path>
-                  <path d="M137.519 132.734L124.985 148.353C122.441 151.523 117.615 151.523 115.071 148.353L114.375 147.487C116.266 147.53 118.172 146.744 119.478 145.116L129.593 132.734C132.704 129.063 129.823 123 124.992 123.141H122.869C122.143 123.141 121.446 122.852 120.933 122.339C120.419 121.825 120.131 121.129 120.131 120.403V107.624C120.131 105.872 118.711 104.452 116.959 104.452H124.884C126.636 104.452 128.056 105.872 128.056 107.624V123.141H132.917C137.749 123.001 140.63 129.063 137.519 132.734Z" fill="#E0ABFF"></path>
-                  <path d="M63.143 105.777H28.1759C25.9742 105.777 24.1895 103.993 24.1895 101.791V96.5841C24.1895 94.3824 25.9742 92.5977 28.1759 92.5977H63.143C65.3447 92.5977 67.1294 94.3824 67.1294 96.5841V101.791C67.1294 103.993 65.3447 105.777 63.143 105.777Z" fill="white"></path>
-                  <path d="M67.129 96.5841V101.792C67.129 103.993 65.3436 105.778 63.1426 105.778H56.7295C58.9338 105.778 60.7159 103.993 60.7159 101.792V96.5841C60.7159 94.383 58.9338 92.5977 56.7295 92.5977H63.1426C65.3436 92.5977 67.129 94.383 67.129 96.5841Z" fill="#F8EBFF"></path>
-                  <path d="M53.3601 38.5621H37.9571C35.5298 38.5621 33.562 36.5943 33.562 34.167C33.562 31.7397 35.5298 29.772 37.9571 29.772H53.3601C55.7874 29.772 57.7551 31.7397 57.7551 34.167C57.7551 36.5943 55.7874 38.5621 53.3601 38.5621Z" fill="#7029CF"></path>
-                  <path d="M57.7547 34.1677C57.7547 35.3794 57.2616 36.4815 56.4688 37.2743C55.6729 38.0703 54.5739 38.5634 53.3622 38.5634H46.8267C48.0416 38.5634 49.1405 38.0703 49.9365 37.2743C50.7325 36.4815 51.2224 35.3794 51.2224 34.1677C51.2224 31.741 49.2565 29.772 46.8267 29.772H53.3622C55.7889 29.772 57.7547 31.741 57.7547 34.1677Z" fill="#7029CF"></path>
-                  <path d="M147.274 91.3861V61.3391C147.274 55.3817 142.427 50.5348 136.469 50.5348H112.674V20.8103C112.674 17.0972 109.653 14.0762 105.94 14.0762H46.9996V6.73406C47.0002 6.23031 47.2006 5.74737 47.5568 5.39116C47.913 5.03496 48.396 4.83458 48.8997 4.83398H130.047C130.55 4.83458 131.033 5.03496 131.389 5.39116C131.746 5.74737 131.946 6.23031 131.947 6.73406V41.5584C131.947 42.8936 133.028 43.9754 134.364 43.9754C135.699 43.9754 136.781 42.8936 136.781 41.5584V6.73406C136.781 3.02092 133.76 0 130.047 0H48.8997C45.1866 0 42.1656 3.02092 42.1656 6.73406V14.0759H24.793C21.0798 14.0759 18.0589 17.0968 18.0589 20.81V67.5037C12.0625 68.8446 7.56592 74.2058 7.56592 80.6009V143.923C7.56592 151.325 13.5878 157.347 20.9892 157.347H74.3258C75.661 157.347 76.7428 156.265 76.7428 154.93C76.7428 153.595 75.661 152.513 74.3258 152.513H20.9892C16.2532 152.513 12.3999 148.66 12.3999 143.923V80.6012C12.3999 75.8652 16.2529 72.0119 20.9889 72.0119H71.5663C76.6113 72.0119 81.242 69.0541 83.3631 64.4766L85.3902 60.1022C86.7227 57.2266 89.6318 55.3688 92.8013 55.3688H136.469C139.761 55.3688 142.439 58.0471 142.439 61.3391V90.2379C142.004 90.2014 141.567 90.1823 141.13 90.1805H98.9247C89.9332 90.1805 82.6174 97.496 82.6174 106.488V148.693C82.6174 157.685 89.9328 165 98.9247 165H141.13C150.121 165 157.437 157.685 157.437 148.693V106.488C157.437 99.669 153.228 93.8176 147.274 91.3861ZM81.0045 58.0697L78.9774 62.4441C77.6448 65.3197 74.7357 67.1776 71.5663 67.1776H22.8925V20.8103C22.8931 20.3066 23.0935 19.8236 23.4497 19.4674C23.8059 19.1112 24.2889 18.9108 24.7926 18.9102H105.939C106.443 18.9108 106.926 19.1112 107.282 19.4674C107.639 19.8236 107.839 20.3066 107.84 20.8103V50.5345H92.8013C87.7566 50.5348 83.1259 53.4922 81.0045 58.0697ZM152.603 148.693C152.603 155.019 147.456 160.166 141.13 160.166H98.9247C92.5983 160.166 87.4514 155.019 87.4514 148.693V106.488C87.4514 100.161 92.5983 95.0145 98.9247 95.0145H141.13C146.911 94.8557 152.751 100.171 152.603 106.488V148.693H152.603Z" fill="#2C2C2C"></path>
-                  <path d="M132.884 120.723H130.473V107.623C130.473 104.541 127.965 102.034 124.884 102.034H115.171C112.089 102.034 109.581 104.541 109.581 107.623V120.723H107.17C103.99 120.644 101.127 122.452 99.6879 125.444C98.2422 128.449 98.619 131.827 100.669 134.268L113.185 149.865C114.858 151.95 117.352 153.147 120.026 153.147H120.027C121.341 153.15 122.638 152.856 123.823 152.288C125.008 151.72 126.049 150.891 126.869 149.865L139.384 134.268C141.435 131.827 141.812 128.449 140.366 125.444C138.927 122.452 136.067 120.639 132.884 120.723ZM135.674 131.17L135.633 131.22L123.099 146.839C122.731 147.3 122.263 147.672 121.731 147.927C121.199 148.182 120.617 148.314 120.027 148.313C118.826 148.313 117.706 147.776 116.955 146.839L104.421 131.22C104.408 131.203 104.394 131.187 104.38 131.171C103.4 130.014 103.564 128.537 104.044 127.54C104.271 127.069 105.143 125.554 106.97 125.554C107.003 125.554 107.035 125.555 107.068 125.556C107.091 125.557 107.115 125.557 107.138 125.557H111.998C113.334 125.557 114.415 124.475 114.415 123.14V107.623C114.416 107.423 114.495 107.231 114.637 107.089C114.779 106.948 114.971 106.868 115.171 106.868H124.884C125.084 106.868 125.276 106.948 125.417 107.089C125.559 107.231 125.638 107.423 125.639 107.623V123.14C125.639 124.475 126.721 125.557 128.056 125.557H132.916C132.94 125.557 132.963 125.557 132.987 125.556C134.885 125.492 135.78 127.061 136.01 127.54C136.49 128.537 136.653 130.014 135.674 131.17ZM28.1756 90.1807C24.6448 90.1807 21.7725 93.0534 21.7725 96.5841V101.791C21.7725 105.322 24.6448 108.194 28.1756 108.194H63.143C66.6737 108.194 69.5461 105.322 69.5461 101.791V96.5841C69.5461 93.0534 66.6737 90.1807 63.143 90.1807H28.1756ZM64.7121 96.5841V101.791C64.7116 102.207 64.5461 102.606 64.252 102.9C63.9578 103.194 63.559 103.36 63.143 103.36H28.1756C27.7596 103.36 27.3607 103.194 27.0666 102.9C26.7724 102.606 26.607 102.207 26.6064 101.791V96.5841C26.6069 96.168 26.7723 95.7691 27.0665 95.4749C27.3606 95.1807 27.7595 95.0152 28.1756 95.0147H63.143C63.559 95.0153 63.9578 95.1808 64.252 95.475C64.5461 95.7692 64.7116 96.1681 64.7121 96.5841ZM37.9576 40.9791H53.3606C57.1166 40.9791 60.1727 37.9234 60.1727 34.167C60.1727 30.4107 57.1169 27.355 53.3606 27.355H37.9576C34.2016 27.355 31.1456 30.4107 31.1456 34.167C31.1456 37.9234 34.2016 40.9791 37.9576 40.9791ZM37.9576 32.1893H53.3606C54.4515 32.1893 55.3387 33.0765 55.3387 34.1674C55.3387 35.2582 54.4515 36.1454 53.3606 36.1454H37.9576C36.8667 36.1454 35.9795 35.2582 35.9795 34.1674C35.9795 33.0765 36.8671 32.1893 37.9576 32.1893ZM97.7753 31.75H67.1668C65.8317 31.75 64.7498 32.8319 64.7498 34.167C64.7498 35.5022 65.8317 36.584 67.1668 36.584H97.7753C99.1104 36.584 100.192 35.5022 100.192 34.167C100.192 32.8319 99.1104 31.75 97.7753 31.75ZM71.8851 45.4724H51.8321C50.497 45.4724 49.4151 46.5543 49.4151 47.8894C49.4151 49.2246 50.497 50.3064 51.8321 50.3064H71.8851C73.2202 50.3064 74.3021 49.2246 74.3021 47.8894C74.3021 46.5543 73.2199 45.4724 71.8851 45.4724ZM33.5629 50.3064H40.3949C41.73 50.3064 42.8119 49.2246 42.8119 47.8894C42.8119 46.5543 41.73 45.4724 40.3949 45.4724H33.5629C32.2277 45.4724 31.1459 46.5543 31.1459 47.8894C31.1459 49.2246 32.2277 50.3064 33.5629 50.3064ZM71.8851 55.3273H33.5629C32.2277 55.3273 31.1459 56.4092 31.1459 57.7443C31.1459 59.0795 32.2277 60.1613 33.5629 60.1613H71.8851C73.2202 60.1613 74.3021 59.0795 74.3021 57.7443C74.3021 56.4092 73.2199 55.3273 71.8851 55.3273Z" fill="#2C2C2C"></path>
-                </g>
-                <defs>
-                  <clipPath id="clip0_1088_12745">
-                    <rect width="165" height="165" fill="white"></rect>
-                  </clipPath>
-                </defs>
-              </svg>
-            </div>
-            <h2 className="text-[#242424] mb-2 tracking-tight" style={{ fontFamily: "Lora", fontWeight: "500", fontSize: "24px", fontStyle: "italic" }}>Export Report!</h2>
-            <p className="text-[#2C2C2C] mb-8 leading-relaxed" style={{ fontFamily: "GT Walsheim", fontWeight: "500", fontSize: "18px" }}>
-              Are you sure you want to<br />extract this report?
-            </p>
-            <div className="flex gap-4 w-full">
-              <button onClick={handleExport} className="flex-1 bg-[#7029CF] text-white py-3 cursor-pointer rounded-[1536px] hover:bg-[#5214a3] transition-all active:scale-95">Confirm</button>
-              <button onClick={() => setShowExportModal(false)} className="flex-1 bg-white text-[#7029CF] cursor-pointer py-3 rounded-[1536px] border-2 border-[#7029CF] hover:bg-purple-50 transition-all active:scale-95">Cancel</button>
-            </div>
-          </div>
-        </div>
+        <ExportModal
+          handleExport={handleExport}
+          setShowExportModal={setShowExportModal} 
+          showExportModal={false}        
+         />
       )}
 
       {/* ── FILTER MODAL ── */}
       {showFilterModal && (() => {
-        const ALL_KEYS = ["gross", "net", "end", "duration", "launch"];
-        const allChecked = ALL_KEYS.every(k => pendingFields.has(k));
-        const filterOptions = [
-          { key: "all",      label: "All" },
-          { key: "gross",    label: "Gross" },
-          { key: "net",      label: "Net" },
-          { key: "end",      label: "Contract Start" },
-          { key: "duration", label: "Contract Duration" },
-          { key: "launch",   label: "Launch Date" },
-        ];
-        return (
-          <div className="fixed inset-0 z-[20000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFilterModal(false)}>
-            <div style={{ backgroundColor: "#fff", borderRadius: 40, padding: "36px 40px", width: "min(380px, 92vw)", position: "relative", boxShadow: "0 8px 48px rgba(112,41,207,0.18)" }} onClick={e => e.stopPropagation()}>
-              {/* Header */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 28 }}>
-                <h2 style={{ fontFamily: "Lora", fontStyle: "italic", fontWeight: 500, fontSize: 22, color: "#7029CF", margin: 0 }}>Custom Visible Fields</h2>
-                <button onClick={() => setShowFilterModal(false)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 20, color: "#aaa", lineHeight: 1, padding: 4, transition: "color 0.2s" }} onMouseEnter={e => (e.currentTarget.style.color = "#555")} onMouseLeave={e => (e.currentTarget.style.color = "#aaa")}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15.8571L14.3571 12.2143C14.2388 12.0959 14.2388 11.9041 14.3571 11.7857L18 8.14286C18.5917 7.55116 18.5917 6.59169 18 6C17.4083 5.40831 16.4488 5.40831 15.8571 6L12.2143 9.64286C12.0959 9.7612 11.9041 9.7612 11.7857 9.64286L8.14286 6C7.55116 5.40831 6.59169 5.40831 6 6C5.40831 6.59169 5.40831 7.55116 6 8.14286L9.64286 11.7857C9.7612 11.9041 9.7612 12.0959 9.64286 12.2143L6 15.8571C5.40831 16.4488 5.40831 17.4083 6 18C6.59169 18.5917 7.55116 18.5917 8.14286 18L11.7857 14.3571C11.9041 14.2388 12.0959 14.2388 12.2143 14.3571L15.8571 18C16.4488 18.5917 17.4083 18.5917 18 18C18.5917 17.4083 18.5917 16.4488 18 15.8571Z" fill="#565656"></path>
-                </svg></button>
-              </div>
-              {/* Checkboxes */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 20 }}>
-                {filterOptions.map(({ key, label }) => {
-                  const isAll = key === "all";
-                  const checked = isAll ? allChecked : pendingFields.has(key);
-                  const toggle = () => {
-                    if (isAll) {
-                      setPendingFields(allChecked ? new Set() : new Set(ALL_KEYS));
-                    } else {
-                      setPendingFields(prev => {
-                        const next = new Set(prev);
-                        next.has(key) ? next.delete(key) : next.add(key);
-                        return next;
-                      });
-                    }
-                  };
-                  return (
-                    <label key={key} onClick={toggle} style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer", fontSize: 14, color: "#333", fontFamily: "GT Walsheim", fontWeight: 400, userSelect: "none" }}>
-                      <span style={{
-                        width: 20, height: 20, minWidth: 20, borderRadius: 5,
-                        border: checked ? "none" : "2px solid #CACACA",
-                        background: checked ? "#7029CF" : "#fff",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        transition: "background 0.2s, border 0.2s", flexShrink: 0
-                      }}>
-                        {checked && (
-                          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
-                            <path d="M1 4L4.5 7.5L11 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        )}
-                      </span>
-                      {label}
-                    </label>
-                  );
-                })}
-              </div>
-              {/* Buttons */}
-              <div style={{ display: "flex", gap: 12 }}>
-                <button
-                  onClick={() => { setVisibleFields(new Set(pendingFields)); setShowFilterModal(false); }}
-                  style={{ flex: 1, padding: "12px", borderRadius: 999, border: "none", background: "#7029CF", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim", transition: "opacity 0.2s" }}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                >Apply</button>
-                <button
-                  onClick={() => setShowFilterModal(false)}
-                  style={{ flex: 1, padding: "12px", borderRadius: 999, border: "2px solid #7029CF", background: "none", color: "#7029CF", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "GT Walsheim", transition: "background 0.2s" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "#F7F3FF")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "none")}
-                >Cancel</button>
-              </div>
-            </div>
-          </div>
+        return(
+          <FilterModal      
+        show={showFilterModal}
+        onClose={() => setShowFilterModal(false)}
+        options={filterOptions}
+        pendingFields={pendingFields}
+        setPendingFields={setPendingFields}
+        onApply={(fields) => {
+          setVisibleFields(fields);
+          setShowFilterModal(false);
+        }}
+      />
         );
-      })()}
+
+         })()}
 
     </>
   );

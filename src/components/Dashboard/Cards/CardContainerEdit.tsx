@@ -7,7 +7,7 @@ import FlipCardEdit from "./CardTypes/FlipCardEdit";
 import CardTextImageEdit from "./CardTypes/CardTextImageEdit";
 import SplitCardEdit from "./CardTypes/SplitCardEdit";
 import BackCardEdit from "./CardTypes/BackCardEdit";
-import UploadModal from "../Modals/UploadModal";
+import UploadModal from "../PopUps/UploadModal";
 import styles from "./CardContainer.module.css"
 
 type LockedImageCardProps = {
